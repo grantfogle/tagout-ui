@@ -1,4 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {auth, signInWithEmail, signInWithGoogle} from '../../firebase'
+import {useAuthState} from 'react-firebase-hooks/auth';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 // import ElkBg from '../../assets/bryon-johnson-elk-unsplash.jpg';
@@ -6,6 +9,16 @@ import Grid from '@mui/material/Grid';
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (loading) {
+            // trigger loading screen
+            return;
+        }
+        if (user) navigate('/dashboard');
+    }, [user, loading]);
 
     return (
         <Box sx={{width: '100%', height: '100vh'}}>
@@ -26,7 +39,9 @@ const Login = () => {
                 <Grid item lg={4} md={4} sm={0}  sx={{width:'100%', height: '100%'}}>
                     {/* add form for signin */}
                     <Box sx={{width:'100%', height: '100%'}} bgcolor="#34495e">
-                        asdfaf
+                        <form>
+
+                        </form>
                     </Box>
                 </Grid>
             </Grid>
