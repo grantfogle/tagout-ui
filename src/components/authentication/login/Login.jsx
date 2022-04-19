@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, TextField, FormControl, Button } from '@mui/material';
 
-const Login = ({email, password, setEmail, setPassword, submitLogin}) => {
+const Login = ({email, password, setEmail, setPassword, submitLogin, submitLoginWithGoogle}) => {
     return (
         <Box>
             <FormControl>
@@ -11,6 +11,7 @@ const Login = ({email, password, setEmail, setPassword, submitLogin}) => {
                     onChange={event => setPassword(event.target.value)}/>
                 <Button variant="text">Forgot Password?</Button>
                 <Button onClick={e => submitLogin()} variant="contained" color="primary">Submit</Button>
+                <Button onClick={e => submitLoginWithGoogle()}>Login With Google</Button>
             </FormControl>
         </Box>
     );

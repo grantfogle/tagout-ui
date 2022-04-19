@@ -32,7 +32,7 @@ const Landing = () => {
 
     const displayLoginForm = () => {
         return loginTabValue === 'login' ? 
-            <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitLogin={submitLogin}/> :
+            <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitLogin={submitLogin} submitLoginWithGoogle={submitLoginWithGoogle}/> :
             <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitNewUser={submitNewUser}/>
     }
 
@@ -42,6 +42,10 @@ const Landing = () => {
     
     const submitNewUser = () => {
         console.log(email, password);
+    }
+
+    const submitLoginWithGoogle = () => {
+        console.log('bang')
     }
 
     return (
