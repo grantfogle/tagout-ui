@@ -7,8 +7,24 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 const Dashboard = () => {
+    const [season, setSeason] = useState('');
+    const [method, setMethod] = useState('') 
+    const [species, setSpecies] = useState('');
+    const [unit, setUnit] = useState('');
+
+    // error handling
+    // ghost loading
+    // dribbble mock https://dribbble.com/search/table
     return (
-        <Box>Welcome home</Box>
+        <Box sx={{height: '100vh'}}>
+            <Container maxWidth="lg">
+                {/* <AppBar contains sign out and settings /> */}
+                <Typography component="h1" variant="h3">Submit Form</Typography>
+                {/* <DashboardSearch /> */}
+                {/* <Display Graph for draw odds? /> */}
+                {/* <Display Graph for draw odds? /> */}
+            </Container>
+        </Box>
     )
 }
 

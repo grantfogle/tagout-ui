@@ -45,7 +45,7 @@ const Landing = () => {
     }
 
     const submitLoginWithGoogle = () => {
-        console.log('bang')
+        console.log('bang');
     }
 
     return (
