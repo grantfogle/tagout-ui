@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useNavigate, useHistory} from 'react-router-dom';
-import {auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword} from '../../firebase'
+import {auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword} from '../../firebase';
 import {useAuthState} from 'react-firebase-hooks/auth';
 
 import Box from '@mui/material/Box';

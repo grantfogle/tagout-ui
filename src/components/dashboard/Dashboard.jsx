@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import {auth, signInWithEmail, signInWithGoogle} from '../../firebase'
+import {auth, signInWithEmail, signInWithGoogle, logout} from '../../firebase'
 import {useAuthState} from 'react-firebase-hooks/auth';
 
 import {Box, Typography, Container} from '@mui/material';
-import Navbar from './navbar/Navbar'
+
+import Navbar from './navbar/Navbar';
+import DashboardSearch from './dashboardSearch/DashboardSearch';
 
 const Dashboard = () => {
     const [season, setSeason] = useState('');
@@ -17,10 +19,10 @@ const Dashboard = () => {
     // dribbble mock https://dribbble.com/search/table
     return (
         <Box sx={{height: '100vh'}}>
-            <Navbar />
+            <Navbar logout={logout}/>
             <Container maxWidth="lg">
+                <DashboardSearch />
                 {/* <AppBar contains sign out and settings /> */}
-                <Typography component="h1" variant="h3">Submit Form</Typography>
                 {/* <DashboardSearch /> */}
                 {/* <Display Graph for draw odds? /> */}
                 {/* <Display Graph for draw odds? /> */}
