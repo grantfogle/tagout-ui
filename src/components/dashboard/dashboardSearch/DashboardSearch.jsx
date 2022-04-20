@@ -5,10 +5,36 @@ export default function DashboardSearch() {
     const [species, setSpecies] = useState('elk');
     const [gender, setGender] = useState('either');
     const [method, setMethod] = useState('archery');
+    const [unit, setUnit] = useState('001');
     const [season, setSeason] = useState('o1');
 
+    const fetchDetails = () => {
+        const speciesHash = {
+            elk: 'e',
+        }
+        const genderHash = {
+            male: 'm',
+            either: 'e',
+            femaile: 'f'
+        }
+        const methodHash = {
+            muzzleloader: 'm',
+            archery: 'a',
+            rifle: 'r'
+        }
+        const searchStr = `${speciesHash[species]}${genderHash[gender]}${unit}${season}${methodHash[method]}`
+        // create code
+        // make call to firebase
+        // get draw odds
+        // get elk harvest stats
+        // send up to dashboard
+
+        console.log(searchStr);
+        // example search string ee001O1A: {
+    }
+
     return (
-        <Box sx={{ flexGrow: 1, marginTop: '2em' }}>
+        <Box sx={{ flexGrow: 1, marginTop: '2em', paddingBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
             <FormGroup sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
                     <InputLabel id="species-label">Species</InputLabel>
@@ -63,14 +89,24 @@ export default function DashboardSearch() {
                         value={season}
                         label="season"
                         onChange={(e, value) => setSeason(value.props.value)}>
+                        <MenuItem value={'e1'}>E1</MenuItem>
+                        <MenuItem value={'l1'}>L1</MenuItem>
                         <MenuItem value={'o1'}>O1</MenuItem>
                         <MenuItem value={'o2'}>O2</MenuItem>
                         <MenuItem value={'o3'}>O3</MenuItem>
                         <MenuItem value={'o4'}>O4</MenuItem>
+                        <MenuItem value={'o5'} disabled>O5</MenuItem>
+                        <MenuItem value={'p1'}>P1</MenuItem>
+                        <MenuItem value={'p2'}>P2</MenuItem>
+                        <MenuItem value={'p3'}>P3</MenuItem>
+                        <MenuItem value={'p4'}>P4</MenuItem>
+                        <MenuItem value={'p5'}>P5</MenuItem>
+                        <MenuItem value={'k2'}>K2</MenuItem>
+                        <MenuItem value={'k3'}>K3</MenuItem>
                     </Select>
                 </FormControl>
 
-            <Button variant="contained" sx={{backgroundColor: '#27ae60', width: '120px', height: '56px'}}>Submit</Button>
+            <Button onClick={() => fetchDetails()} variant="contained" sx={{backgroundColor: '#27ae60', width: '120px', height: '56px'}}>Submit</Button>
             </FormGroup>
         </Box>
     );
