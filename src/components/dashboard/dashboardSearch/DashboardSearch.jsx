@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem} from '@mui/material';
+import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material';
 
 export default function DashboardSearch() {
     const [species, setSpecies] = useState('elk');
@@ -7,6 +7,19 @@ export default function DashboardSearch() {
     const [method, setMethod] = useState('archery');
     const [unit, setUnit] = useState('001');
     const [season, setSeason] = useState('o1');
+
+    let coUnits = [
+        { label: '1', unit: '001' },
+        { label: '201', unit: '201' },
+        { label: '2', unit: '002' },
+        { label: '3', unit: '003' },
+        { label: '4', unit: '004' },
+        { label: '5', unit: '005' },
+        { label: '6', unit: '006' },
+        { label: '7', unit: '007' },
+        { label: '8', unit: '008' },
+        { label: '9', unit: '009' },
+    ]
 
     const fetchDetails = () => {
         const speciesHash = {
@@ -67,6 +80,18 @@ export default function DashboardSearch() {
                 </FormControl>
 
                 <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
+                  <Autocomplete 
+                    disablePortal
+                    id="combo-box-demo"
+                    options={coUnits}
+                    onChange={(event, newInputValue) => {
+                        console.log(newInputValue);
+                        setUnit(newInputValue.unit)
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Unit" />}/>
+                </FormControl>
+
+                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
                     <InputLabel id="method-label">Method</InputLabel>
                     <Select
                         labelId="method-label"
@@ -77,7 +102,6 @@ export default function DashboardSearch() {
                         <MenuItem value={'archery'}>Archery</MenuItem>
                         <MenuItem value={'muzzleloader'}>Muzzleloader</MenuItem>
                         <MenuItem value={'rifle'}>Rifle</MenuItem>
-                        
                     </Select>
                 </FormControl>
 
@@ -106,7 +130,9 @@ export default function DashboardSearch() {
                     </Select>
                 </FormControl>
 
-            <Button onClick={() => fetchDetails()} variant="contained" sx={{backgroundColor: '#27ae60', width: '120px', height: '56px'}}>Submit</Button>
+            <Button onClick={() => fetchDetails()} 
+                variant="contained"
+                sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}}>Submit</Button>
             </FormGroup>
         </Box>
     );
