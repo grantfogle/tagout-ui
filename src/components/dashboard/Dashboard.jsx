@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {auth, signInWithEmail, signInWithGoogle} from '../../firebase'
 import {useAuthState} from 'react-firebase-hooks/auth';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+
+import {Box, Typography, Container} from '@mui/material';
+import Navbar from './navbar/Navbar'
 
 const Dashboard = () => {
     const [season, setSeason] = useState('');
@@ -17,6 +17,7 @@ const Dashboard = () => {
     // dribbble mock https://dribbble.com/search/table
     return (
         <Box sx={{height: '100vh'}}>
+            <Navbar />
             <Container maxWidth="lg">
                 {/* <AppBar contains sign out and settings /> */}
                 <Typography component="h1" variant="h3">Submit Form</Typography>
