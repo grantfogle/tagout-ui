@@ -9,9 +9,9 @@ import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
 
 const Dashboard = () => {
-    const [season, setSeason] = useState('');
-    const [method, setMethod] = useState('') 
     const [species, setSpecies] = useState('');
+    const [method, setMethod] = useState('') 
+    const [season, seatSeason] = useState('');
     const [unit, setUnit] = useState('');
 
     // error handling

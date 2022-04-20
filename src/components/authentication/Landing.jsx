@@ -11,6 +11,7 @@ import { FormControl, Button, Tabs, Tab } from '@mui/material';
 import Login from './login/Login';
 import Register from './register/Register';
 // import ElkBg from '../../assets/bryon-johnson-elk-unsplash.jpg';
+// source for login -> https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
 const Landing = () => {
     const [loginTabValue, setLoginTabValue] = useState('login');
