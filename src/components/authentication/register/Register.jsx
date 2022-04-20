@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, TextField, FormControl, Button } from '@mui/material';
 
-const Register = ({email, password, setEmail, setPassword, submitNewUser}) => {
+const Register = ({email, password, setEmail, setPassword, submitNewUser, submitLoginWithGoogle}) => {
     return (
         <Box>
             <FormControl>
@@ -10,6 +10,7 @@ const Register = ({email, password, setEmail, setPassword, submitNewUser}) => {
                 <TextField sx={{marginBottom: '8px'}}  id="email" label="Password" variant="outlined"
                     onChange={event => setPassword(event.target.value)}/>
                 <Button onClick={e => submitNewUser()} variant="contained" color="primary">Submit</Button>
+                <Button onClick={e => submitLoginWithGoogle()}>Login With Google</Button>
             </FormControl>
         </Box>
     );

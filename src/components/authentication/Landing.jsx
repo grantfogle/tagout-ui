@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import {auth, signInWithEmail, signInWithGoogle} from '../../firebase'
+import {Link, useNavigate, useHistory} from 'react-router-dom';
+import {auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword} from '../../firebase'
 import {useAuthState} from 'react-firebase-hooks/auth';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -33,19 +34,19 @@ const Landing = () => {
     const displayLoginForm = () => {
         return loginTabValue === 'login' ? 
             <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitLogin={submitLogin} submitLoginWithGoogle={submitLoginWithGoogle}/> :
-            <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitNewUser={submitNewUser}/>
+            <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitNewUser={submitNewUser} submitLoginWithGoogle={submitLoginWithGoogle}/>
     }
 
     const submitLogin = () => {
-        console.log(email, password);
+        logInWithEmailAndPassword(email, password);
     }
     
     const submitNewUser = () => {
-        console.log(email, password);
+        registerWithEmailAndPassword(email, password);
     }
 
     const submitLoginWithGoogle = () => {
-        console.log('bang');
+        signInWithGoogle();
     }
 
     return (
