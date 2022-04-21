@@ -7,6 +7,7 @@ import {Box, Typography, Container} from '@mui/material';
 
 import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
+import DrawOdds from './drawOdds/DrawOdds';
 
 const Dashboard = () => {
     const [species, setSpecies] = useState('');
@@ -14,6 +15,8 @@ const Dashboard = () => {
     const [season, seatSeason] = useState('');
     const [unit, setUnit] = useState('');
 
+
+    // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
     // dribbble mock https://dribbble.com/search/table
@@ -22,6 +25,7 @@ const Dashboard = () => {
             <Navbar logout={logout}/>
             <Container maxWidth="lg">
                 <DashboardSearch />
+                <DrawOdds />
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
                 {/* <Display Graph for draw odds? /> */}

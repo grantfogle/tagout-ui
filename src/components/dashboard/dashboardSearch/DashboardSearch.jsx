@@ -41,9 +41,7 @@ export default function DashboardSearch() {
         // get draw odds
         // get elk harvest stats
         // send up to dashboard
-
         console.log(searchStr);
-        // example search string ee001O1A: {
     }
 
     return (
