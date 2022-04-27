@@ -19,12 +19,14 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
+
 // preference points on the y axis
 // res non res, pre draw applicants, post draw success
+// get all units
 // calculate percent
 // 0 points res 183
 
-export default function DrawOdds() {
+export default function DrawOdds({tableData}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
