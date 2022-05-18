@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {fetchDrawStats} from '../../../firebase';
 import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material';
 
 export default function DashboardSearch() {
@@ -21,7 +22,7 @@ export default function DashboardSearch() {
         { label: '9', unit: '009' },
     ]
 
-    const fetchDetails = () => {
+    const fetchDetails = async () => {
         const speciesHash = {
             elk: 'e',
         }
@@ -42,6 +43,7 @@ export default function DashboardSearch() {
         // get elk harvest stats
         // send up to dashboard
         console.log(searchStr);
+        let fetchStats = await fetchDrawStats(searchStr);
     }
 
     return (

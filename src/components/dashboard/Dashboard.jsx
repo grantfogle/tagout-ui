@@ -15,6 +15,7 @@ const Dashboard = () => {
     const [season, seatSeason] = useState('');
     const [unit, setUnit] = useState('');
 
+    // make call for firebase elk stats
 
     // check auth state, if !user false then navigate back to home page
     // error handling

@@ -99,6 +99,20 @@ const logout = () => {
     signOut(auth);
 }
 
+const fetchDrawStats = async (huntCode) => {
+    try {
+        console.log(huntCode);
+        await getFirestore(app)
+        return;
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+}
+
+
+
+
 export {
     auth,
     db,
@@ -107,4 +121,5 @@ export {
     registerWithEmailAndPassword,
     sendPasswordReset,
     logout,
+    fetchDrawStats
   };
