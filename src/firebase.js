@@ -17,6 +17,7 @@ import {
     where,
     addDoc
 } from 'firebase/firestore';
+import { getDatabase, useList } from 'firebase/database';
 import { getAnalytics } from "firebase/analytics";
 import { typography } from "@mui/system";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -41,6 +42,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const realTimeDB = getDatabase(app);
 
 const googleProvider = new GoogleAuthProvider();
 const signInWithGoogle = async () => {
@@ -101,16 +103,20 @@ const logout = () => {
 
 const fetchDrawStats = async (huntCode) => {
     try {
-        console.log(huntCode);
-        await getFirestore(app)
-        return;
+        // useList(ref(realTimeDB, 'elkDrawStats'))
+        // console.log(realTimeDB)
+        // const dbFetch = await realTimeDB.reference('elkDrawStats')
+        // const dbFetch = await realTimeDB.ref(`elkDrawStats/${huntCode}`)
+        // db.ref(`elkDrawStats/${searchStr}`);
+        // console.log(huntCode);
+        // const dbFetch = getDatabase('elkDrawStats');
+        // console.log(dbFetch);
+        // return dbFetch;
     } catch (err) {
         console.error(err);
         alert(err.message);
     }
 }
-
-
 
 
 export {
@@ -121,5 +127,6 @@ export {
     registerWithEmailAndPassword,
     sendPasswordReset,
     logout,
-    fetchDrawStats
+    fetchDrawStats,
+    app
   };

@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -27,7 +28,25 @@ const rows = [
 // calculate percent
 // 0 points res 183
 
-export default function DrawOdds({tableData}) {
+// function loadingState() {
+//   return (
+    // Ghost loader
+//   )
+// }
+
+function emptyState() {
+  return (
+    <Typography>There's nothing here blood</Typography>
+  )
+}
+
+
+export default function DrawOdds({searchResults}) {
+
+  React.useEffect(() => {
+    console.log(searchResults)
+  }, [searchResults])
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

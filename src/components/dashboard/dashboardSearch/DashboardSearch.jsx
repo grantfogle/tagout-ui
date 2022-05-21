@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {fetchDrawStats} from '../../../firebase';
 import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material';
 
-export default function DashboardSearch() {
+export default function DashboardSearch({fetchSearchResults}) {
     const [species, setSpecies] = useState('elk');
     const [gender, setGender] = useState('either');
     const [method, setMethod] = useState('archery');
@@ -36,14 +36,15 @@ export default function DashboardSearch() {
             archery: 'a',
             rifle: 'r'
         }
-        const searchStr = `${speciesHash[species]}${genderHash[gender]}${unit}${season}${methodHash[method]}`
+        const searchStr = `${speciesHash[species]}${genderHash[gender]}${unit}${season}${methodHash[method]}`.toUpperCase();
         // create code
         // make call to firebase
         // get draw odds
         // get elk harvest stats
         // send up to dashboard
         console.log(searchStr);
-        let fetchStats = await fetchDrawStats(searchStr);
+        // let fetchStats = await fetchDrawStats(searchStr);
+        fetchSearchResults(searchStr);
     }
 
     return (
