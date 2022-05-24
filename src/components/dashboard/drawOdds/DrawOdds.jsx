@@ -28,31 +28,52 @@ const rows = [
 // calculate percent
 // 0 points res 183
 
-// function loadingState() {
-//   return (
-    // Ghost loader
-//   )
-// }
+function loadingState() {
+  return (
+    <Typography>LOADING...</Typography>
+  )
+}
 
-function emptyState() {
+function errorState() {
   return (
     <Typography>There's nothing here blood</Typography>
   )
 }
 
+function resultsTable(results) {
+  console.log(results)
+  const firstChoiceMap = results.firstChoice.map(firstStats => {
+    console.log(firstStats)
+    return (
+      <TableRow>
+        <TableCell>{'asdf'}</TableCell>
+        <TableCell>{'asdf'}</TableCell>
+        <TableCell>{'asdf'}</TableCell>
+        <TableCell>{'adf'}</TableCell>
+        <TableCell>{'aser'}</TableCell>
+      </TableRow>
+    )
+  })
+  return (
+    <TableRow>
+        <TableCell>{'asdf'}</TableCell>
+        <TableCell>{'asdf'}</TableCell>
+        <TableCell>{'asdf'}</TableCell>
+        <TableCell>{'adf'}</TableCell>
+        <TableCell>{'aser'}</TableCell>
+      </TableRow>
+  )
+  }
 
-export default function DrawOdds({searchResults}) {
 
-  React.useEffect(() => {
-    console.log(searchResults)
-  }, [searchResults])
+function searchResultTable(results) {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 375 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{width: '10%'}}>Preference Points</TableCell>
+            <TableCell>Preference Points</TableCell>
             <TableCell align="right">Res Applicant</TableCell>
             <TableCell align="right">Res Success</TableCell>
             <TableCell align="right">Non Res Applicant</TableCell>
@@ -60,22 +81,24 @@ export default function DrawOdds({searchResults}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
+          {resultsTable(results)}
         </TableBody>
       </Table>
     </TableContainer>
+  )
+}
+
+export default function DrawOdds({searchResults, loading, error}) {
+
+  const displayResultsTable = () => {
+    return loading ? loadingState() : (
+      error ? 
+        errorState() :
+        searchResultTable(searchResults)
+    )
+  }
+
+  return (
+    displayResultsTable()
   );
 }

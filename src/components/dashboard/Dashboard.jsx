@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {auth, signInWithEmail, signInWithGoogle, logout, fetchDrawStats, db, app} from '../../firebase';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import { ref, getDatabase } from 'firebase/database';
-import { useList, useListVals } from 'react-firebase-hooks/database';
+import { useList, useListVals, useObjectVal } from 'react-firebase-hooks/database';
 import {Box, Typography, Container} from '@mui/material';
 
 import Navbar from './navbar/Navbar';
@@ -14,12 +14,14 @@ const database = getDatabase(app);
 
 const Dashboard = () => {
     const [results, setResults] = useState('');
-    // const [snapshots, loading, error] = useList(ref(database, 'elkDrawStats'));
-    const [values, loading, error] = useListVals(ref(database, 'elkDrawStats/EE001E1R'));
+    // const [snapshots, loading, error] = useList(ref(database, 'elkDrawStats/EE001E1R'));
+    const [values, loading, error] = useObjectVal(ref(database, 'elkDrawStats/EE001E1R'));
+
+    // const [values, loading, error] = useListVals(ref(database, 'elkDrawStats/EE001E1R'));
 
 
     useEffect(() => {
-        // console.log(snapshots, loading, error)
+        // console.log(snapshot, loading, error)
         console.log(values)
     }, [values])
 
@@ -50,7 +52,7 @@ const Dashboard = () => {
             <Navbar logout={logout}/>
             <Container maxWidth="lg">
                 <DashboardSearch fetchSearchResults={fetchSearchResults} />
-                <DrawOdds searchResults={values} />
+                <DrawOdds searchResults={values} loading={loading} error={error} />
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
                 {/* <Display Graph for draw odds? /> */}
