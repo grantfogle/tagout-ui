@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -36,35 +37,25 @@ function loadingState() {
 
 function errorState() {
   return (
-    <Typography>There's nothing here blood</Typography>
+    <Typography>There's nothing here blud</Typography>
   )
 }
 
 function resultsTable(results) {
-  console.log(results)
-  const firstChoiceMap = results.firstChoice.map(firstStats => {
-    console.log(firstStats)
+  console.log(results.firstChoice);
+  const firstChoiceMap = results.firstChoice.map((firstStats, index) => {
     return (
       <TableRow>
-        <TableCell>{'asdf'}</TableCell>
-        <TableCell>{'asdf'}</TableCell>
-        <TableCell>{'asdf'}</TableCell>
-        <TableCell>{'adf'}</TableCell>
-        <TableCell>{'aser'}</TableCell>
-      </TableRow>
+      <TableCell>{index}</TableCell>
+      <TableCell>{firstStats.resident.success}</TableCell>
+      <TableCell>{firstStats.resident.applications}</TableCell>
+      <TableCell>{firstStats.nonResident.success}</TableCell>
+      <TableCell>{firstStats.resident.applications}</TableCell>
+    </TableRow>
     )
   })
-  return (
-    <TableRow>
-        <TableCell>{'asdf'}</TableCell>
-        <TableCell>{'asdf'}</TableCell>
-        <TableCell>{'asdf'}</TableCell>
-        <TableCell>{'adf'}</TableCell>
-        <TableCell>{'aser'}</TableCell>
-      </TableRow>
-  )
-  }
-
+  return firstChoiceMap
+}
 
 function searchResultTable(results) {
 
@@ -73,7 +64,7 @@ function searchResultTable(results) {
       <Table sx={{ minWidth: 375 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Preference Points</TableCell>
+            <TableCell>Preference Pts/Choice</TableCell>
             <TableCell align="right">Res Applicant</TableCell>
             <TableCell align="right">Res Success</TableCell>
             <TableCell align="right">Non Res Applicant</TableCell>
@@ -99,6 +90,8 @@ export default function DrawOdds({searchResults, loading, error}) {
   }
 
   return (
-    displayResultsTable()
+    <Box>
+      {displayResultsTable()}
+    </Box>
   );
 }
