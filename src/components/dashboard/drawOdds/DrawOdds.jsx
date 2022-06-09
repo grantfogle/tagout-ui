@@ -22,13 +22,6 @@ const rows = [
   createData('0', 10, 20, 20, 20),
 ];
 
-
-// preference points on the y axis
-// res non res, pre draw applicants, post draw success
-// get all units
-// calculate percent
-// 0 points res 183
-
 function loadingState() {
   return (
     <Typography>LOADING...</Typography>
@@ -57,7 +50,6 @@ function secondChoiceRow(secondChoice) {
 }
 
 function resultsTable(results) {
-  console.log(results.firstChoice);
   const firstChoiceMap = results.firstChoice.map((firstStats, index) => {
     return (
       <TableRow>
@@ -74,7 +66,6 @@ function resultsTable(results) {
 }
 
 function searchResultTable(results) {
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 375 }} aria-label="simple table">
