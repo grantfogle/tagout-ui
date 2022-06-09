@@ -9,19 +9,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('5', 10, 20, 20, 20),
-  createData('4', 10, 20, 20, 20),
-  createData('3', 10, 20, 20, 20),
-  createData('2', 10, 20, 20, 20),
-  createData('1', 10, 20, 20, 20),
-  createData('0', 10, 20, 20, 20),
-];
-
 function loadingState() {
   return (
     <Typography>LOADING...</Typography>
@@ -52,7 +39,7 @@ function secondChoiceRow(secondChoice) {
 function resultsTable(results) {
   const firstChoiceMap = results.firstChoice.map((firstStats, index) => {
     return (
-      <TableRow>
+      <TableRow key={index + 'firstStats'}>
         <TableCell>{index}</TableCell>
         <TableCell>{firstStats.resident.success}</TableCell>
         <TableCell>{firstStats.resident.applications}</TableCell>
