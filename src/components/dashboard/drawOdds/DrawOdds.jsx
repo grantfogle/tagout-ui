@@ -41,20 +41,36 @@ function errorState() {
   )
 }
 
+function secondChoiceRow(secondChoice) {
+  if (secondChoice) {  
+    return (
+      <TableRow>
+        <TableCell>2nd Choice</TableCell>
+        <TableCell>{secondChoice.resident.success}</TableCell>
+        <TableCell>{secondChoice.resident.applications}</TableCell>
+        <TableCell>{secondChoice.nonResident.success}</TableCell>
+        <TableCell>{secondChoice.resident.applications}</TableCell>
+      </TableRow>
+    )
+
+  }
+}
+
 function resultsTable(results) {
   console.log(results.firstChoice);
   const firstChoiceMap = results.firstChoice.map((firstStats, index) => {
     return (
       <TableRow>
-      <TableCell>{index}</TableCell>
-      <TableCell>{firstStats.resident.success}</TableCell>
-      <TableCell>{firstStats.resident.applications}</TableCell>
-      <TableCell>{firstStats.nonResident.success}</TableCell>
-      <TableCell>{firstStats.resident.applications}</TableCell>
-    </TableRow>
+        <TableCell>{index}</TableCell>
+        <TableCell>{firstStats.resident.success}</TableCell>
+        <TableCell>{firstStats.resident.applications}</TableCell>
+        <TableCell>{firstStats.nonResident.success}</TableCell>
+        <TableCell>{firstStats.resident.applications}</TableCell>
+      </TableRow>
     )
   })
-  return firstChoiceMap
+
+  return firstChoiceMap;
 }
 
 function searchResultTable(results) {
@@ -73,6 +89,7 @@ function searchResultTable(results) {
         </TableHead>
         <TableBody>
           {resultsTable(results)}
+          {secondChoiceRow(results.secondChoice)}
         </TableBody>
       </Table>
     </TableContainer>
