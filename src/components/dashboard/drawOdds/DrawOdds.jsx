@@ -7,53 +7,61 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+export default function DrawOdds({ displayStats }) {
+  const displayFirstChoiceRows = () => {
+    const firstChoiceObj = displayStats.firstChoice;
+    let objMap = [];
+    if (firstChoiceObj) {
+      for (let key in firstChoiceObj) {
+        const resInfo = firstChoiceObj[key].res;
+        const nonResInfo = firstChoiceObj[key].nonRes;
+        objMap.push(
+          <TableRow>
+            <TableCell>{key}</TableCell>
+            <TableCell>{resInfo.applications}</TableCell>
+            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.applications, resInfo.success)})</TableCell>
+            <TableCell>{nonResInfo.applications}</TableCell>
+            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.applications, nonResInfo.success)})</TableCell>
+          </TableRow>
+        )
+      }
+      return objMap;
+    }
+  }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+  const displaySecondChoiceRows = () => {
+    const secondChoiceObj = displayStats.secondChoice;
+    return (
+      <TableRow>
+        <TableCell>2nd Choice</TableCell>
+        <TableCell>{secondChoiceObj.res.applications}</TableCell>
+        <TableCell>{secondChoiceObj.res.success} ({getSuccessPercentage(secondChoiceObj.res.applications, secondChoiceObj.res.success)})</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.applications}</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.success} ({getSuccessPercentage(secondChoiceObj.nonRes.applications, secondChoiceObj.nonRes.success)})</TableCell>
+      </TableRow>
+    )
+  }
 
+  const getSuccessPercentage = (applicants, success) => {
+    const successPercentage = (success / applicants) * 100;
+    return successPercentage + '%';
+  }
 
-// preference points on the y axis
-// res non res, pre draw applicants, post draw success
-// get all units
-// calculate percent
-// 0 points res 183
-
-export default function DrawOdds({tableData}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Preference Points</TableCell>
-            <TableCell align="right">Res Applicant</TableCell>
-            <TableCell align="right">Res Success</TableCell>
-            <TableCell align="right">Non Res Applicant</TableCell>
-            <TableCell align="right">Non Res Success</TableCell>
+            <TableCell>Res Applicant</TableCell>
+            <TableCell>Res Success</TableCell>
+            <TableCell>Non Res Applicant</TableCell>
+            <TableCell>Non Res Success</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
+          {displayFirstChoiceRows()}
+          {displaySecondChoiceRows()}
         </TableBody>
       </Table>
     </TableContainer>
