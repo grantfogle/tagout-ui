@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,99 +6,64 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+export default function DrawOdds({ displayStats }) {
+  const displayFirstChoiceRows = () => {
+    const firstChoiceObj = displayStats.firstChoice;
+    let objMap = [];
+    if (firstChoiceObj) {
+      for (let key in firstChoiceObj) {
+        const resInfo = firstChoiceObj[key].res;
+        const nonResInfo = firstChoiceObj[key].nonRes;
+        objMap.push(
+          <TableRow key={'first-choice-' + key}>
+            <TableCell>{key}</TableCell>
+            <TableCell>{resInfo.applications}</TableCell>
+            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.applications, resInfo.success)})</TableCell>
+            <TableCell>{nonResInfo.applications}</TableCell>
+            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.applications, nonResInfo.success)})</TableCell>
+          </TableRow>
+        )
+      }
+      return objMap;
+    }
+  }
 
-const rows = [
-  createData('5', 10, 20, 20, 20),
-  createData('4', 10, 20, 20, 20),
-  createData('3', 10, 20, 20, 20),
-  createData('2', 10, 20, 20, 20),
-  createData('1', 10, 20, 20, 20),
-  createData('0', 10, 20, 20, 20),
-];
-
-function loadingState() {
-  return (
-    <Typography>LOADING...</Typography>
-  )
-}
-
-function errorState() {
-  return (
-    <Typography>There's nothing here blud</Typography>
-  )
-}
-
-function secondChoiceRow(secondChoice) {
-  if (secondChoice) {  
+  const displaySecondChoiceRows = () => {
+    const secondChoiceObj = displayStats.secondChoice;
     return (
       <TableRow>
         <TableCell>2nd Choice</TableCell>
-        <TableCell>{secondChoice.resident.success}</TableCell>
-        <TableCell>{secondChoice.resident.applications}</TableCell>
-        <TableCell>{secondChoice.nonResident.success}</TableCell>
-        <TableCell>{secondChoice.resident.applications}</TableCell>
+        <TableCell>{secondChoiceObj.res.applications}</TableCell>
+        <TableCell>{secondChoiceObj.res.success} ({getSuccessPercentage(secondChoiceObj.res.applications, secondChoiceObj.res.success)})</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.applications}</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.success} ({getSuccessPercentage(secondChoiceObj.nonRes.applications, secondChoiceObj.nonRes.success)})</TableCell>
       </TableRow>
     )
-
   }
-}
 
-function resultsTable(results) {
-  const firstChoiceMap = results.firstChoice.map((firstStats, index) => {
-    return (
-      <TableRow>
-        <TableCell>{index}</TableCell>
-        <TableCell>{firstStats.resident.success}</TableCell>
-        <TableCell>{firstStats.resident.applications}</TableCell>
-        <TableCell>{firstStats.nonResident.success}</TableCell>
-        <TableCell>{firstStats.resident.applications}</TableCell>
-      </TableRow>
-    )
-  })
+  const getSuccessPercentage = (applicants, success) => {
+    const successPercentage = (success / applicants) * 100;
+    return successPercentage + '%';
+  }
 
-  return firstChoiceMap;
-}
-
-function searchResultTable(results) {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 375 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Preference Pts/Choice</TableCell>
-            <TableCell align="right">Res Applicant</TableCell>
-            <TableCell align="right">Res Success</TableCell>
-            <TableCell align="right">Non Res Applicant</TableCell>
-            <TableCell align="right">Non Res Success</TableCell>
+            <TableCell>Preference Points</TableCell>
+            <TableCell>Res Applicant</TableCell>
+            <TableCell>Res Success</TableCell>
+            <TableCell>Non Res Applicant</TableCell>
+            <TableCell>Non Res Success</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {resultsTable(results)}
-          {secondChoiceRow(results.secondChoice)}
+          {displayFirstChoiceRows()}
+          {displaySecondChoiceRows()}
         </TableBody>
       </Table>
     </TableContainer>
-  )
-}
-
-export default function DrawOdds({searchResults, loading, error}) {
-
-  const displayResultsTable = () => {
-    return loading ? loadingState() : (
-      error ? 
-        errorState() :
-        searchResultTable(searchResults)
-    )
-  }
-
-  return (
-    <Box>
-      {displayResultsTable()}
-    </Box>
   );
 }
