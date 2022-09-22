@@ -43,8 +43,9 @@ export default function DashboardSearch({fetchSearchResults}) {
         // get elk harvest stats
         // send up to dashboard
         console.log(searchStr);
-        // let fetchStats = await fetchDrawStats(searchStr);
         fetchSearchResults(searchStr);
+        // let fetchStats = await fetchDrawStats(searchStr);
+        // fetchSearchResults(searchStr);
     }
 
     return (
@@ -86,7 +87,6 @@ export default function DashboardSearch({fetchSearchResults}) {
                     id="combo-box-demo"
                     options={coUnits}
                     onChange={(event, newInputValue) => {
-                        console.log(newInputValue);
                         setUnit(newInputValue.unit)
                     }}
                     renderInput={(params) => <TextField {...params} label="Unit" />}/>

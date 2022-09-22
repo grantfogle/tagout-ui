@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function DrawOdds({ displayStats }) {
+  
   const displayFirstChoiceRows = () => {
     const firstChoiceObj = displayStats.firstChoice;
     let objMap = [];
@@ -18,10 +19,10 @@ export default function DrawOdds({ displayStats }) {
         objMap.push(
           <TableRow key={'first-choice-' + key}>
             <TableCell>{key}</TableCell>
-            <TableCell>{resInfo.applications}</TableCell>
-            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.applications, resInfo.success)})</TableCell>
-            <TableCell>{nonResInfo.applications}</TableCell>
-            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.applications, nonResInfo.success)})</TableCell>
+            <TableCell>{resInfo.applicants}</TableCell>
+            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.applicants, resInfo.success)})</TableCell>
+            <TableCell>{nonResInfo.applicants}</TableCell>
+            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.applicants, nonResInfo.success)})</TableCell>
           </TableRow>
         )
       }
@@ -31,20 +32,22 @@ export default function DrawOdds({ displayStats }) {
 
   const displaySecondChoiceRows = () => {
     const secondChoiceObj = displayStats.secondChoice;
+    if (secondChoiceObj) {
     return (
       <TableRow>
         <TableCell>2nd Choice</TableCell>
-        <TableCell>{secondChoiceObj.res.applications}</TableCell>
-        <TableCell>{secondChoiceObj.res.success} ({getSuccessPercentage(secondChoiceObj.res.applications, secondChoiceObj.res.success)})</TableCell>
-        <TableCell>{secondChoiceObj.nonRes.applications}</TableCell>
-        <TableCell>{secondChoiceObj.nonRes.success} ({getSuccessPercentage(secondChoiceObj.nonRes.applications, secondChoiceObj.nonRes.success)})</TableCell>
+        <TableCell>{secondChoiceObj.res.applicants}</TableCell>
+        <TableCell>{secondChoiceObj.res.success} ({getSuccessPercentage(secondChoiceObj.res.applicants, secondChoiceObj.res.success)})</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.applicants}</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.success} ({getSuccessPercentage(secondChoiceObj.nonRes.applicants, secondChoiceObj.nonRes.success)})</TableCell>
       </TableRow>
     )
   }
+}
 
   const getSuccessPercentage = (applicants, success) => {
     const successPercentage = (success / applicants) * 100;
-    return successPercentage + '%';
+    return successPercentage ?  + successPercentage.toFixed(0) + '%' : '0%';
   }
 
   return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, signInWithEmail, signInWithGoogle, logout } from '../../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-import { d } from 'firebase/database';
+import { getDatabase, ref, onValue} from "firebase/database";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { collection, getDocs } from 'firebase/firestore';
 
@@ -23,14 +23,31 @@ const Dashboard = () => {
     const [unit, setUnit] = useState('');
 
     useEffect(() => {
-        fetchDrawData();
-    }, []);
+        // fetchDrawData();
+        fetchDbDrawData(searchStr);
+    }, [searchStr]);
 
     const fetchDrawData = async () => {
         const snap = await getDoc(doc(db, 'co-elk-stats', searchStr));
         const data = snap.data();
         setDisplayStats(data);
         console.log(displayStats)
+    }
+
+    const fetchSearchResults = (searchTerm) => {
+        // updateSearchStr(searchTerm);
+        fetchDbDrawData(searchTerm)
+    }
+
+    const fetchDbDrawData = async (searchTerm) => {
+        const dbSnap = getDatabase();
+        console.log('dbSnap', dbSnap);
+        const starCountRef = ref(dbSnap, 'elkDrawStats/' + searchTerm);
+        onValue(starCountRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+            setDisplayStats(data);
+        });
     }
 
     const updateSearchStr = (updatedStr) => {
@@ -44,7 +61,7 @@ const Dashboard = () => {
         <Box sx={{ height: '100vh' }}>
             <Navbar logout={logout} />
             <Container maxWidth="lg">
-                <DashboardSearch />
+                <DashboardSearch fetchSearchResults={fetchSearchResults}/>
                 <DrawOdds displayStats={displayStats} />
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
