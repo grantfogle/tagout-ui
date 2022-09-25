@@ -114,20 +114,20 @@ export default function DashboardSearch({fetchSearchResults}) {
                         value={season}
                         label="season"
                         onChange={(e, value) => setSeason(value.props.value)}>
-                        <MenuItem value={'e1'}>E1</MenuItem>
-                        <MenuItem value={'l1'}>L1</MenuItem>
+                        <MenuItem value={'e1'} disabled>E1</MenuItem>
+                        {/* <MenuItem value={'l1'} disabled>L1</MenuItem> */}
                         <MenuItem value={'o1'}>O1</MenuItem>
                         <MenuItem value={'o2'}>O2</MenuItem>
                         <MenuItem value={'o3'}>O3</MenuItem>
                         <MenuItem value={'o4'}>O4</MenuItem>
                         <MenuItem value={'o5'} disabled>O5</MenuItem>
-                        <MenuItem value={'p1'}>P1</MenuItem>
+                        {/* <MenuItem value={'p1'}>P1</MenuItem>
                         <MenuItem value={'p2'}>P2</MenuItem>
                         <MenuItem value={'p3'}>P3</MenuItem>
                         <MenuItem value={'p4'}>P4</MenuItem>
                         <MenuItem value={'p5'}>P5</MenuItem>
                         <MenuItem value={'k2'}>K2</MenuItem>
-                        <MenuItem value={'k3'}>K3</MenuItem>
+                        <MenuItem value={'k3'}>K3</MenuItem> */}
                     </Select>
                 </FormControl>
 
