@@ -99,6 +99,7 @@ const sendPasswordReset = async (email) => {
 
 const logout = () => {
     signOut(auth);
+    return false;
 }
 
 const fetchDrawStats = async (huntCode) => {

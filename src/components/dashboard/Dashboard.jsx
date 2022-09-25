@@ -21,6 +21,7 @@ const Dashboard = () => {
     const [method, setMethod] = useState('')
     const [season, seatSeason] = useState('');
     const [unit, setUnit] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         // fetchDrawData();
@@ -35,17 +36,14 @@ const Dashboard = () => {
     }
 
     const fetchSearchResults = (searchTerm) => {
-        // updateSearchStr(searchTerm);
         fetchDbDrawData(searchTerm)
     }
 
     const fetchDbDrawData = async (searchTerm) => {
         const dbSnap = getDatabase();
-        console.log('dbSnap', dbSnap);
         const starCountRef = ref(dbSnap, 'elkDrawStats/' + searchTerm);
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
-            console.log(data);
             setDisplayStats(data);
         });
     }
@@ -53,13 +51,20 @@ const Dashboard = () => {
     const updateSearchStr = (updatedStr) => {
         setSearchStr(updateSearchStr);
     }
+
+    const logoutUser = () => {
+        const userAuthenticated = logout();
+        if (!userAuthenticated) {
+            navigate('/');
+        }
+    }
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
     // dribbble mock https://dribbble.com/search/table
     return (
         <Box sx={{ height: '100vh' }}>
-            <Navbar logout={logout} />
+            <Navbar logoutUser={logoutUser} />
             <Container maxWidth="lg">
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
                 <DrawOdds displayStats={displayStats} />
