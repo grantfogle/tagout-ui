@@ -49,7 +49,7 @@ const Dashboard = () => {
     }
 
     const updateSearchStr = (updatedStr) => {
-        setSearchStr(updateSearchStr);
+        setSearchStr(updatedStr);
     }
 
     const logoutUser = () => {
