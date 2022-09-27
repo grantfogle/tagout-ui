@@ -17,6 +17,8 @@ import { display } from '@mui/system';
 const Dashboard = () => {
     const [searchStr, setSearchStr] = useState('EE001E1R');
     const [displayStats, setDisplayStats] = useState('');
+    const [showLoading, setShowLoading] = useState(false);
+    const [showErrorLoading, setShowErrorLoading] = useState(false);
     const [species, setSpecies] = useState('');
     const [method, setMethod] = useState('')
     const [season, seatSeason] = useState('');
@@ -40,11 +42,22 @@ const Dashboard = () => {
     }
 
     const fetchDbDrawData = async (searchTerm) => {
+        setShowLoading(true);
+        setShowErrorLoading(false);
         const dbSnap = getDatabase();
         const starCountRef = ref(dbSnap, 'elkDrawStats/' + searchTerm);
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
-            setDisplayStats(data);
+            if (data) {
+                setDisplayStats(data);
+                setShowLoading(false);
+            } else {
+                setShowLoading(false);
+                setShowErrorLoading(true);
+            }
+        }, error => {
+            setShowLoading(false);
+            setShowErrorLoading(true);
         });
     }
 
@@ -58,6 +71,7 @@ const Dashboard = () => {
             navigate('/');
         }
     }
+
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
@@ -67,7 +81,7 @@ const Dashboard = () => {
             <Navbar logoutUser={logoutUser} />
             <Container maxWidth="lg">
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
-                <DrawOdds displayStats={displayStats} />
+                <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
                 {/* <Display Graph for draw odds? /> */}

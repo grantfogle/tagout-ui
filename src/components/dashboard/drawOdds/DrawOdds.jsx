@@ -6,8 +6,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Skeleton from '@mui/material/Skeleton';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-export default function DrawOdds({ displayStats }) {
+
+export default function DrawOdds({ displayStats, showLoading, showErrorLoading }) {
   
   const displayFirstChoiceRows = () => {
     const firstChoiceObj = displayStats.firstChoice;
@@ -50,8 +54,29 @@ export default function DrawOdds({ displayStats }) {
     return successPercentage ?  + successPercentage.toFixed(0) + '%' : '0%';
   }
 
-  return (
-    <TableContainer component={Paper}>
+  const displayDrawTable = () => {
+    if (showErrorLoading) {
+      return (
+        <Box>
+          <Typography variant="h2" component="h4" align="center" sx={{color: '#d35400', mt: 4}}>
+            Error loading data, please try again
+          </Typography>
+        </Box>
+      )
+      // error text
+    } else if (showLoading) {
+      return (
+        <Box>
+          <Skeleton  align="center" width={600} height={200} />
+          <Skeleton  align="center" width={600} height={200} />
+          <Skeleton  align="center" width={600} height={200} />
+        </Box>
+      )
+    } else {
+
+    }
+    return (
+      <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -68,5 +93,11 @@ export default function DrawOdds({ displayStats }) {
         </TableBody>
       </Table>
     </TableContainer>
+    )
+  }
+  return (
+    <Box>
+      {displayDrawTable()}
+    </Box>
   );
 }
