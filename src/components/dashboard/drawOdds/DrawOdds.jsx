@@ -66,10 +66,10 @@ export default function DrawOdds({ displayStats, showLoading, showErrorLoading }
       // error text
     } else if (showLoading) {
       return (
-        <Box>
-          <Skeleton  align="center" width={600} height={200} />
-          <Skeleton  align="center" width={600} height={200} />
-          <Skeleton  align="center" width={600} height={200} />
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
+          <Skeleton width={800} height={200} />
+          <Skeleton width={800} height={200} />
+          <Skeleton width={800} height={200} />
         </Box>
       )
     } else {
@@ -89,7 +89,7 @@ export default function DrawOdds({ displayStats, showLoading, showErrorLoading }
         </TableHead>
         <TableBody>
           {displayFirstChoiceRows()}
-          {displaySecondChoiceRows()}
+          {/* {displaySecondChoiceRows()} */}
         </TableBody>
       </Table>
     </TableContainer>
