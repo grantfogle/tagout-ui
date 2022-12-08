@@ -26,7 +26,6 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // fetchDrawData();
         fetchDbDrawData(searchStr);
     }, [searchStr]);
 
