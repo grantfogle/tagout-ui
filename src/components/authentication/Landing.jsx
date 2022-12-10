@@ -3,6 +3,8 @@ import {Link, useNavigate, useHistory} from 'react-router-dom';
 import {auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword} from '../../firebase';
 import {useAuthState} from 'react-firebase-hooks/auth';
 
+import Home from './home/Home';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -55,9 +57,14 @@ const Landing = () => {
             width: '100%',
             height: '100vh',
             display: 'flex',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
             alignItems: 'center',
             backgroundImage: 'url(https://images.unsplash.com/photo-1487213802982-74d73802997c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)', objectFit: 'cover'}}>
+
+            <Container sx={{marginLeft: '4em'}}>
+                <Home/>
+            </Container>
+
             <Container maxWidth="sm" sx={{height: '100%', backgroundColor: '#fff', margin: 0, padding: '2em', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                 <Box mt={4} sx={{width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                     <Typography mb={3} component="h1" variant="h2">TAGout</Typography>
