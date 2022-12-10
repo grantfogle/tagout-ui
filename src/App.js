@@ -3,16 +3,21 @@ import './App.css';
 
 import Landing from './components/authentication/Landing';
 import Dashboard from "./components/dashboard/Dashboard";
+import Navigation from './components/navigation/Navigation';
+import Home from './components/authentication/home/Home';
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<Landing/>} />
-          <Route exact path="/dashboard" element={<Dashboard/>} />
-        </Routes>
-      </Router>
+      {/* <Navigation> */}
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Landing/>} />
+            <Route exact path="/dashboard" element={<Dashboard/>} />
+            <Route exact path="home" element={<Home/>} />
+          </Routes>
+        </Router>
+      {/* </Navigation> */}
     </div>
   );
 }
