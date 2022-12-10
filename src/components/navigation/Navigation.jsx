@@ -5,11 +5,11 @@ import { LocalGroceryStoreOutlined } from '@mui/icons-material';
 
 export default function NavBar({}) {
 
-    const {user, setUser} = '';
-
+    const {loggedIn, setLoggedIn} = false;
     // login logic
     // sign in
     // sigh up
+    // 
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -18,9 +18,28 @@ export default function NavBar({}) {
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     TAGout
                 </Typography>
-                <Button onClick={e => console.log(e)} color="inherit">Sign out</Button>
                 </Toolbar>
+                {loggedIn ? LoggedInNav : LoggedOutNav}
             </AppBar>
         </Box>
   );
+}
+
+const LoggedOutNav = () => {
+    return (
+        <Box>
+            <Button onClick={e => console.log(e)} color="inherit">Login</Button>
+            <Button onClick={e => console.log(e)} color="inherit">Sign Up</Button>
+        </Box>
+    )
+}
+
+const LoggedInNav = () => {
+    return (
+        <Box>
+            <Button onClick={e => console.log(e)} color="inherit">Settings</Button>
+            <Button onClick={e => console.log(e)} color="inherit">Map View</Button>
+            <Button onClick={e => console.log(e)} color="inherit">Sign out</Button>
+        </Box>
+    )
 }
