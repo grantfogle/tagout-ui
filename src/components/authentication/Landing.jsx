@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link, useNavigate, useHistory} from 'react-router-dom';
 import {auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword} from '../../firebase';
 import {useAuthState} from 'react-firebase-hooks/auth';
-
+import ElkBg from '../../assets/home-bg.jpg';
 import Home from './home/Home';
 
 import Box from '@mui/material/Box';
@@ -59,7 +59,8 @@ const Landing = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            backgroundImage: 'url(https://images.unsplash.com/photo-1487213802982-74d73802997c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)', objectFit: 'cover'}}>
+            backgroundImage: `url(${ElkBg})`,
+            objectFit: 'fill'}}>
 
             <Container sx={{marginLeft: '4em'}}>
                 <Home/>
