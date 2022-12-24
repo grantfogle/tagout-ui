@@ -93,20 +93,6 @@ export default function DashboardSearch({fetchSearchResults}) {
                 </FormControl>
 
                 <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
-                    <InputLabel id="method-label">Method</InputLabel>
-                    <Select
-                        labelId="method-label"
-                        id="method"
-                        value={method}
-                        label="method"
-                        onChange={(e, value) => setMethod(value.props.value)}>
-                        <MenuItem value={'archery'}>Archery</MenuItem>
-                        <MenuItem value={'muzzleloader'}>Muzzleloader</MenuItem>
-                        <MenuItem value={'rifle'}>Rifle</MenuItem>
-                    </Select>
-                </FormControl>
-
-                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
                     <InputLabel id="season-label">Season</InputLabel>
                     <Select
                         labelId="season-label"
@@ -128,6 +114,20 @@ export default function DashboardSearch({fetchSearchResults}) {
                         <MenuItem value={'p5'}>P5</MenuItem>
                         <MenuItem value={'k2'}>K2</MenuItem>
                         <MenuItem value={'k3'}>K3</MenuItem> */}
+                    </Select>
+                </FormControl>
+
+                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
+                    <InputLabel id="method-label">Method</InputLabel>
+                    <Select
+                        labelId="method-label"
+                        id="method"
+                        value={method}
+                        label="method"
+                        onChange={(e, value) => setMethod(value.props.value)}>
+                        <MenuItem value={'archery'}>Archery</MenuItem>
+                        <MenuItem value={'muzzleloader'}>Muzzleloader</MenuItem>
+                        <MenuItem value={'rifle'}>Rifle</MenuItem>
                     </Select>
                 </FormControl>
 
