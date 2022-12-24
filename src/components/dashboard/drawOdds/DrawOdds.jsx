@@ -14,7 +14,13 @@ import Typography from '@mui/material/Typography';
 export default function DrawOdds({ displayStats, showLoading, showErrorLoading }) {
   
   const displayFirstChoiceRows = () => {
-    const firstChoiceObj = displayStats.firstChoice;
+    const firstChoiceArr = []
+    for (let obj in displayStats) {
+      if (!obj.includes('Total Choice')) {
+        firstChoiceArr.push(displayStats[obj])
+      }
+    }
+    const firstChoiceObj = firstChoiceArr;
     let objMap = [];
     if (firstChoiceObj) {
       for (let key in firstChoiceObj) {
@@ -23,10 +29,10 @@ export default function DrawOdds({ displayStats, showLoading, showErrorLoading }
         objMap.push(
           <TableRow key={'first-choice-' + key}>
             <TableCell>{key}</TableCell>
-            <TableCell>{resInfo.applicants}</TableCell>
-            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.applicants, resInfo.success)})</TableCell>
-            <TableCell>{nonResInfo.applicants}</TableCell>
-            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.applicants, nonResInfo.success)})</TableCell>
+            <TableCell>{resInfo.apps}</TableCell>
+            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.apps, resInfo.success)})</TableCell>
+            <TableCell>{nonResInfo.apps}</TableCell>
+            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.apps, nonResInfo.success)})</TableCell>
           </TableRow>
         )
       }
@@ -34,16 +40,46 @@ export default function DrawOdds({ displayStats, showLoading, showErrorLoading }
     }
   }
 
-  const displaySecondChoiceRows = () => {
-    const secondChoiceObj = displayStats.secondChoice;
+  const displaySecondChoiceRow = () => {
+    const secondChoiceObj = displayStats['Total Choice 2'];
     if (secondChoiceObj) {
     return (
       <TableRow>
         <TableCell>2nd Choice</TableCell>
-        <TableCell>{secondChoiceObj.res.applicants}</TableCell>
+        <TableCell>{secondChoiceObj.res.apps}</TableCell>
         <TableCell>{secondChoiceObj.res.success} ({getSuccessPercentage(secondChoiceObj.res.applicants, secondChoiceObj.res.success)})</TableCell>
-        <TableCell>{secondChoiceObj.nonRes.applicants}</TableCell>
+        <TableCell>{secondChoiceObj.nonRes.apps}</TableCell>
         <TableCell>{secondChoiceObj.nonRes.success} ({getSuccessPercentage(secondChoiceObj.nonRes.applicants, secondChoiceObj.nonRes.success)})</TableCell>
+      </TableRow>
+    )
+  }
+}
+
+const displayThirdChoiceRow = () => {
+  const thirdChoiceObj = displayStats['Total Choice 3'];
+  if (thirdChoiceObj) {
+    return (
+      <TableRow>
+        <TableCell>3nd Choice</TableCell>
+        <TableCell>{thirdChoiceObj.res.apps}</TableCell>
+        <TableCell>{thirdChoiceObj.res.success} ({getSuccessPercentage(thirdChoiceObj.res.applicants, thirdChoiceObj.res.success)})</TableCell>
+        <TableCell>{thirdChoiceObj.nonRes.apps}</TableCell>
+        <TableCell>{thirdChoiceObj.nonRes.success} ({getSuccessPercentage(thirdChoiceObj.nonRes.applicants, thirdChoiceObj.nonRes.success)})</TableCell>
+      </TableRow>
+    )
+  }
+}
+
+const displayFourthChoiceRow = () => {
+  const fourthChoiceObj = displayStats['Total Choice 4'];
+  if (fourthChoiceObj) {
+    return (
+      <TableRow>
+        <TableCell>4th Choice</TableCell>
+        <TableCell>{fourthChoiceObj.res.apps}</TableCell>
+        <TableCell>{fourthChoiceObj.res.success} ({getSuccessPercentage(fourthChoiceObj.res.applicants, fourthChoiceObj.res.success)})</TableCell>
+        <TableCell>{fourthChoiceObj.nonRes.apps}</TableCell>
+        <TableCell>{fourthChoiceObj.nonRes.success} ({getSuccessPercentage(fourthChoiceObj.nonRes.applicants, fourthChoiceObj.nonRes.success)})</TableCell>
       </TableRow>
     )
   }
@@ -80,7 +116,7 @@ export default function DrawOdds({ displayStats, showLoading, showErrorLoading }
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Preference Points</TableCell>
+            <TableCell>Preference Points (1st Choice)</TableCell>
             <TableCell>Res Applicant</TableCell>
             <TableCell>Res Success</TableCell>
             <TableCell>Non Res Applicant</TableCell>
@@ -89,7 +125,9 @@ export default function DrawOdds({ displayStats, showLoading, showErrorLoading }
         </TableHead>
         <TableBody>
           {displayFirstChoiceRows()}
-          {/* {displaySecondChoiceRows()} */}
+          {displaySecondChoiceRow()}
+          {displayThirdChoiceRow()}
+          {displayFourthChoiceRow()}
         </TableBody>
       </Table>
     </TableContainer>

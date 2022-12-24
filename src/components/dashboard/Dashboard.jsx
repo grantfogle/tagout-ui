@@ -47,6 +47,7 @@ const Dashboard = () => {
         const starCountRef = ref(dbSnap, 'elkDrawStats/' + searchTerm);
         onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
+            console.log('DATAAAA', data)
             if (data) {
                 setDisplayStats(data);
                 setShowLoading(false);
