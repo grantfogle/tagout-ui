@@ -72,6 +72,12 @@ const Dashboard = () => {
         }
     }
 
+    const displayHuntCode = () => {
+        if (searchStr.length > 0) {
+            return <Typography sx={{marginTop: '1em', marginBottom: '1em'}} variant="h5" component="h5">Selected Code: {searchStr}</Typography>
+        }
+    }
+
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
@@ -81,6 +87,7 @@ const Dashboard = () => {
             <Navbar logoutUser={logoutUser} />
             <Container maxWidth="lg">
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
+                {displayHuntCode()}
                 <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
