@@ -12,6 +12,7 @@ import { Box, Typography, Container } from '@mui/material';
 import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
 import DrawOdds from './drawOdds/DrawOdds';
+import Footer from './footer/Footer';
 import { display } from '@mui/system';
 
 const Dashboard = () => {
@@ -72,12 +73,6 @@ const Dashboard = () => {
         }
     }
 
-    const displayHuntCode = () => {
-        if (searchStr.length > 0) {
-            return <Typography sx={{marginTop: '1em', marginBottom: '1em'}} variant="h5" component="h5">Selected Code: {searchStr}</Typography>
-        }
-    }
-
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
@@ -85,9 +80,8 @@ const Dashboard = () => {
     return (
         <Box sx={{ height: '100vh' }}>
             <Navbar logoutUser={logoutUser} />
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" sx={{ marginBottom: '2em'}}>
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
-                {displayHuntCode()}
                 <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
@@ -95,6 +89,7 @@ const Dashboard = () => {
                 {/* <Display Graph for draw odds? /> */}
                 {/* < PreferencePointsMap /> */}
             </Container>
+            <Footer/>
         </Box>
     )
 }

@@ -116,7 +116,7 @@ const displayFourthChoiceRow = () => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Preference Points (1st Choice)</TableCell>
+            <TableCell>Preference Points</TableCell>
             <TableCell>Res Applicant</TableCell>
             <TableCell>Res Success</TableCell>
             <TableCell>Non Res Applicant</TableCell>
@@ -124,10 +124,10 @@ const displayFourthChoiceRow = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {displayFirstChoiceRows()}
           {displaySecondChoiceRow()}
           {displayThirdChoiceRow()}
           {displayFourthChoiceRow()}
+          {displayFirstChoiceRows()}
         </TableBody>
       </Table>
     </TableContainer>

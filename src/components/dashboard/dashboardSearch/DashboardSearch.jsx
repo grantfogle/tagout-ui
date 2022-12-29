@@ -8,6 +8,7 @@ export default function DashboardSearch({fetchSearchResults}) {
     const [method, setMethod] = useState('archery');
     const [unit, setUnit] = useState('001');
     const [season, setSeason] = useState('o1');
+    const [huntCode, setHuntCode] = useState('EE001E1R')
 
     let coUnits = [
         { label: '1', unit: '001' },
@@ -42,10 +43,14 @@ export default function DashboardSearch({fetchSearchResults}) {
         // get draw odds
         // get elk harvest stats
         // send up to dashboard
-        console.log(searchStr);
+        setHuntCode(searchStr)
         fetchSearchResults(searchStr);
         // let fetchStats = await fetchDrawStats(searchStr);
         // fetchSearchResults(searchStr);
+    }
+
+    const displayHuntCode = () => {
+        return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Selected Code: {huntCode}</Typography>
     }
 
     return (
@@ -135,6 +140,8 @@ export default function DashboardSearch({fetchSearchResults}) {
                 variant="contained"
                 sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}}>Submit</Button>
             </FormGroup>
+
+            {displayHuntCode()}
         </Box>
     );
 }
