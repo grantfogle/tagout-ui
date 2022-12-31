@@ -42,15 +42,15 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
                     <TableHead>
                         <TableRow>
                             <TableCell>DAU</TableCell>
-                            <TableCell>Units in DAU</TableCell>
-                            <TableCell>Population Estimate</TableCell>
+                            <TableCell>DAU Units</TableCell>
+                            <TableCell>Pop Estimate</TableCell>
                             <TableCell>Bull/Cow Ratio</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow key={'population-stats-' + dau}>
                             <TableCell>{dau}</TableCell>
-                            <TableCell>{dauUnits.join(',')}</TableCell>
+                            <TableCell>{dauUnits}</TableCell>
                             <TableCell>{populationEstimate}</TableCell>
                             <TableCell>{displayBullCowRatio(bullCowRatio)}</TableCell>
                         </TableRow>
@@ -62,7 +62,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     }
 
   return (
-    <Box sx={{width: '600px'}}>
+    <Box sx={{width: '600px', marginBottom: '1em'}}>
       {displayDrawTable()}
     </Box>
   );

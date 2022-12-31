@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {fetchDrawStats} from '../../../firebase';
 import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material';
 
-export default function DashboardSearch({fetchSearchResults}) {
+export default function DashboardSearch({fetchSearchResults, updateSelectedUnit}) {
     const [species, setSpecies] = useState('elk');
     const [gender, setGender] = useState('either');
     const [method, setMethod] = useState('archery');
@@ -38,15 +38,9 @@ export default function DashboardSearch({fetchSearchResults}) {
             rifle: 'r'
         }
         const searchStr = `${speciesHash[species]}${genderHash[gender]}${unit}${season}${methodHash[method]}`.toUpperCase();
-        // create code
-        // make call to firebase
-        // get draw odds
-        // get elk harvest stats
-        // send up to dashboard
+        
         setHuntCode(searchStr)
-        fetchSearchResults(searchStr);
-        // let fetchStats = await fetchDrawStats(searchStr);
-        // fetchSearchResults(searchStr);
+        fetchSearchResults(searchStr, unit);
     }
 
     const displayHuntCode = () => {
@@ -54,7 +48,7 @@ export default function DashboardSearch({fetchSearchResults}) {
     }
 
     return (
-        <Box sx={{ flexGrow: 1, marginTop: '2em', paddingBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
+        <Box sx={{ flexGrow: 1, marginTop: '2em', paddingBottom: '1em', marginBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
             <FormGroup sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
                     <InputLabel id="species-label">Species</InputLabel>

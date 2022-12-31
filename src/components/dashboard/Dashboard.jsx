@@ -25,55 +25,53 @@ const Dashboard = () => {
     const [species, setSpecies] = useState('');
     const [method, setMethod] = useState('')
     const [season, seatSeason] = useState('');
-    const [unit, setUnit] = useState('');
+    const [unit, setUnit] = useState('1');
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchDbDrawData(searchStr);
     }, [searchStr]);
 
-    const fetchSearchResults = (searchTerm) => {
-        fetchDbDrawData(searchTerm)
+    const fetchSearchResults = (searchTerm, selectedUnit) => {
+        const currentUnit = parseInt(selectedUnit)
+        fetchDbDrawData(searchTerm, currentUnit)
     }
 
-    const fetchPopStatsDrawData = async (searchTerm) => {
-        console.log('cats')
-    }
-
-    const fetchDbDrawData = async (searchTerm) => {
-        setShowLoading(true);
-        setShowErrorLoading(false);
-        const dbSnap = getDatabase();
-        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm);
-        const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + 1);
-
+    const fetchDbDrawData = async (searchTerm, selectedUnit) => {
+        setShowLoading(true)
+        setShowErrorLoading(false)
+        const dbSnap = getDatabase()
+        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
+        const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + unit)
+    
         onValue(drawStatsRef, (snapshot) => {
-            const data = snapshot.val();
+            const data = snapshot.val()
+            console.log('draw stats', data)
             if (data) {
-                setDisplayStats(data);
-                setShowLoading(false);
+                setDisplayStats(data)
+                setShowLoading(false)
             } else {
-                setShowLoading(false);
-                setShowErrorLoading(true);
+                setShowLoading(false)
+                setShowErrorLoading(true)
             }
         }, error => {
             setShowLoading(false);
-            setShowErrorLoading(true);
+            setShowErrorLoading(true)
         });
 
         onValue(populationStatsRef, (snapshot) => {
-            const data = snapshot.val();
+            const data = snapshot.val()
             console.log('pop stats', data)
             if (data) {
                 setPopulationStats(data);
-                // setShowLoading(false);
-            } else {
+            }
+            // } else {
                 // setShowLoading(false);
                 // setShowErrorLoading(true);
-            }
+            // }
         }, error => {
-            setShowLoading(false);
-            setShowErrorLoading(true);
+            setShowLoading(false)
+            setShowErrorLoading(true)
         });
     }
 
@@ -94,16 +92,12 @@ const Dashboard = () => {
     // dribbble mock https://dribbble.com/search/table
     return (
         <Box sx={{ height: '100vh' }}>
+            {/* <AppBar contains sign out and settings /> */}
             <Navbar logoutUser={logoutUser} />
             <Container maxWidth="lg" sx={{ marginBottom: '2em'}}>
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
-                <PopulationTable populationStats={populationStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
+                <PopulationTable sx={{ marginBottom: '1em'}} populationStats={populationStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
-                {/* <AppBar contains sign out and settings /> */}
-                {/* <DashboardSearch /> */}
-                {/* <Display Graph for draw odds? /> */}
-                {/* <Display Graph for draw odds? /> */}
-                {/* < PreferencePointsMap /> */}
             </Container>
             <Footer/>
         </Box>
