@@ -11,13 +11,14 @@ import { Box, Typography, Container } from '@mui/material';
 
 import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
-import DrawOdds from './drawOdds/DrawOdds';
+import DrawOdds from './dataTables/drawOddsTable/DrawOdds';
 import Footer from './footer/Footer';
 import { display } from '@mui/system';
 
 const Dashboard = () => {
     const [searchStr, setSearchStr] = useState('EE001E1R');
     const [displayStats, setDisplayStats] = useState('');
+    const [populationStats, setPopulationStats] = useState('')
     const [showLoading, setShowLoading] = useState(false);
     const [showErrorLoading, setShowErrorLoading] = useState(false);
     const [species, setSpecies] = useState('');
@@ -30,31 +31,44 @@ const Dashboard = () => {
         fetchDbDrawData(searchStr);
     }, [searchStr]);
 
-    const fetchDrawData = async () => {
-        const snap = await getDoc(doc(db, 'co-elk-stats', searchStr));
-        const data = snap.data();
-        setDisplayStats(data);
-        console.log(displayStats)
-    }
-
     const fetchSearchResults = (searchTerm) => {
         fetchDbDrawData(searchTerm)
+    }
+
+    const fetchPopStatsDrawData = async (searchTerm) => {
+        console.log('cats')
     }
 
     const fetchDbDrawData = async (searchTerm) => {
         setShowLoading(true);
         setShowErrorLoading(false);
         const dbSnap = getDatabase();
-        const starCountRef = ref(dbSnap, 'elkDrawStats/' + searchTerm);
-        onValue(starCountRef, (snapshot) => {
+        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm);
+        const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + 1);
+
+        onValue(drawStatsRef, (snapshot) => {
             const data = snapshot.val();
-            console.log('DATAAAA', data)
             if (data) {
                 setDisplayStats(data);
                 setShowLoading(false);
             } else {
                 setShowLoading(false);
                 setShowErrorLoading(true);
+            }
+        }, error => {
+            setShowLoading(false);
+            setShowErrorLoading(true);
+        });
+
+        onValue(populationStatsRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log('pop stats', data)
+            if (data) {
+                setPopulationStats(data);
+                // setShowLoading(false);
+            } else {
+                // setShowLoading(false);
+                // setShowErrorLoading(true);
             }
         }, error => {
             setShowLoading(false);
