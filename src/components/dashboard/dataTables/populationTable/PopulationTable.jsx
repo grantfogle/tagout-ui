@@ -11,20 +11,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-export default function PopulationTable({ populationStats}) {
+export default function PopulationTable({ populationStats, showErrorLoading, showLoading}) {
+    const {bullCowRatio, dau, dauUnits, populationEstimate} = populationStats;
   
-        //   <TableRow key={'first-choice-' + key}>
-        //     <TableCell>{key}</TableCell>
-        //     <TableCell>{resInfo.apps}</TableCell>
-        //     <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.apps, resInfo.success)})</TableCell>
-        //     <TableCell>{nonResInfo.apps}</TableCell>
-        //     <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.apps, nonResInfo.success)})</TableCell>
-        //   </TableRow>
-  
-//   const getSuccessPercentage = (applicants, success) => {
-//     const successPercentage = (success / applicants) * 100;
-//     return successPercentage ?  + successPercentage.toFixed(0) + '%' : '0%';
-//   }
+    const displayBullCowRatio = (bullRatio) => {
+        return bullRatio ? bullRatio + '%' : 'N/A';
+    }
 
     const displayDrawTable = () => {
         if (showErrorLoading) {
@@ -35,41 +27,42 @@ export default function PopulationTable({ populationStats}) {
                     </Typography>
                 </Box>
             )
-      // error text
     } else if (showLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Skeleton width={800} height={200} />
-          <Skeleton width={800} height={200} />
-          <Skeleton width={800} height={200} />
+          <Skeleton width={600} height={200} />
+          <Skeleton width={600} height={200} />
+          <Skeleton width={600} height={200} />
         </Box>
       )
     } else {
         return (
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ minWidth: 600 }} aria-label="simple table">
                     <TableHead>
-                    <TableRow>
-                        <TableCell>Preference Points</TableCell>
-                        <TableCell>Res Applicant</TableCell>
-                        <TableCell>Res Success</TableCell>
-                        <TableCell>Non Res Applicant</TableCell>
-                        <TableCell>Non Res Success</TableCell>
-                    </TableRow>
+                        <TableRow>
+                            <TableCell>DAU</TableCell>
+                            <TableCell>Units in DAU</TableCell>
+                            <TableCell>Population Estimate</TableCell>
+                            <TableCell>Bull/Cow Ratio</TableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
-                    {displaySecondChoiceRow()}
-                    {displayThirdChoiceRow()}
-                    {displayFourthChoiceRow()}
-                    {displayFirstChoiceRows()}
+                        <TableRow key={'population-stats-' + dau}>
+                            <TableCell>{dau}</TableCell>
+                            <TableCell>{dauUnits.join(',')}</TableCell>
+                            <TableCell>{populationEstimate}</TableCell>
+                            <TableCell>{displayBullCowRatio(bullCowRatio)}</TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-        )
-  }
+            )
+        }
+    }
 
   return (
-    <Box>
+    <Box sx={{width: '600px'}}>
       {displayDrawTable()}
     </Box>
   );

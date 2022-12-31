@@ -11,6 +11,7 @@ import { Box, Typography, Container } from '@mui/material';
 
 import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
+import PopulationTable from './dataTables/populationTable/PopulationTable';
 import DrawOdds from './dataTables/drawOddsTable/DrawOdds';
 import Footer from './footer/Footer';
 import { display } from '@mui/system';
@@ -96,6 +97,7 @@ const Dashboard = () => {
             <Navbar logoutUser={logoutUser} />
             <Container maxWidth="lg" sx={{ marginBottom: '2em'}}>
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
+                <PopulationTable populationStats={populationStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 {/* <AppBar contains sign out and settings /> */}
                 {/* <DashboardSearch /> */}
