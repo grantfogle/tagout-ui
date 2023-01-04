@@ -7,7 +7,7 @@ import { Feedback } from '@mui/icons-material';
 export default function Footer() {
   return (
     <Box sx={{ flexGrow: 1, backgroundColor: '#27ae60', height: '60px' }}>
-        <FeedbackForm/>
+        {/* <FeedbackForm/> */}
         {/* Sign up for updates */}
         {/* Leave feedback */}
         {/* Upgrade Plan */}
