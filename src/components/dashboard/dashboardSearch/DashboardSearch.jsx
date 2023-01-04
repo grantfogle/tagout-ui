@@ -1,27 +1,15 @@
 import React, {useState} from 'react';
 import {fetchDrawStats} from '../../../firebase';
+import { colorado } from '../../../stats/searchStats'
 import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material';
 
 export default function DashboardSearch({fetchSearchResults, updateSelectedUnit}) {
     const [species, setSpecies] = useState('elk');
     const [gender, setGender] = useState('either');
-    const [method, setMethod] = useState('archery');
+    const [method, setMethod] = useState('rifle');
     const [unit, setUnit] = useState('001');
     const [season, setSeason] = useState('o1');
     const [huntCode, setHuntCode] = useState('EE001E1R')
-
-    let coUnits = [
-        { label: '1', unit: '001' },
-        { label: '201', unit: '201' },
-        { label: '2', unit: '002' },
-        { label: '3', unit: '003' },
-        { label: '4', unit: '004' },
-        { label: '5', unit: '005' },
-        { label: '6', unit: '006' },
-        { label: '7', unit: '007' },
-        { label: '8', unit: '008' },
-        { label: '9', unit: '009' },
-    ]
 
     const fetchDetails = async () => {
         const speciesHash = {
@@ -84,7 +72,7 @@ export default function DashboardSearch({fetchSearchResults, updateSelectedUnit}
                   <Autocomplete 
                     disablePortal
                     id="combo-box-demo"
-                    options={coUnits}
+                    options={colorado.units}
                     onChange={(event, newInputValue) => {
                         setUnit(newInputValue.unit)
                     }}

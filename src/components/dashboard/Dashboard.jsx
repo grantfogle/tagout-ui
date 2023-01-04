@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, signInWithEmail, signInWithGoogle, logout } from '../../firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../firebase';
 import { getDatabase, ref, onValue} from "firebase/database";
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { collection, getDocs } from 'firebase/firestore';
 
-import { db, rtDb } from '../../firebase/config';
-import { Box, Typography, Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
 import PopulationTable from './dataTables/populationTable/PopulationTable';
 import DrawOdds from './dataTables/drawOddsTable/DrawOdds';
 import Footer from './footer/Footer';
-import { display } from '@mui/system';
 
 const Dashboard = () => {
     const [searchStr, setSearchStr] = useState('EE001E1R');
