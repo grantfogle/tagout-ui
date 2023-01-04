@@ -11,53 +11,67 @@ import { Box, Typography, Container } from '@mui/material';
 
 import Navbar from './navbar/Navbar';
 import DashboardSearch from './dashboardSearch/DashboardSearch';
-import DrawOdds from './drawOdds/DrawOdds';
+import PopulationTable from './dataTables/populationTable/PopulationTable';
+import DrawOdds from './dataTables/drawOddsTable/DrawOdds';
+import Footer from './footer/Footer';
 import { display } from '@mui/system';
 
 const Dashboard = () => {
     const [searchStr, setSearchStr] = useState('EE001E1R');
     const [displayStats, setDisplayStats] = useState('');
+    const [populationStats, setPopulationStats] = useState('')
     const [showLoading, setShowLoading] = useState(false);
     const [showErrorLoading, setShowErrorLoading] = useState(false);
     const [species, setSpecies] = useState('');
     const [method, setMethod] = useState('')
     const [season, seatSeason] = useState('');
-    const [unit, setUnit] = useState('');
+    const [unit, setUnit] = useState('1');
     const navigate = useNavigate();
 
     useEffect(() => {
         fetchDbDrawData(searchStr);
     }, [searchStr]);
 
-    const fetchDrawData = async () => {
-        const snap = await getDoc(doc(db, 'co-elk-stats', searchStr));
-        const data = snap.data();
-        setDisplayStats(data);
-        console.log(displayStats)
+    const fetchSearchResults = (searchTerm, selectedUnit) => {
+        const currentUnit = parseInt(selectedUnit)
+        fetchDbDrawData(searchTerm, currentUnit)
     }
 
-    const fetchSearchResults = (searchTerm) => {
-        fetchDbDrawData(searchTerm)
-    }
-
-    const fetchDbDrawData = async (searchTerm) => {
-        setShowLoading(true);
-        setShowErrorLoading(false);
-        const dbSnap = getDatabase();
-        const starCountRef = ref(dbSnap, 'elkDrawStats/' + searchTerm);
-        onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
-            console.log('DATAAAA', data)
+    const fetchDbDrawData = async (searchTerm, selectedUnit) => {
+        setShowLoading(true)
+        setShowErrorLoading(false)
+        const dbSnap = getDatabase()
+        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
+        const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + unit)
+    
+        onValue(drawStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            console.log('draw stats', data)
             if (data) {
-                setDisplayStats(data);
-                setShowLoading(false);
+                setDisplayStats(data)
+                setShowLoading(false)
             } else {
-                setShowLoading(false);
-                setShowErrorLoading(true);
+                setShowLoading(false)
+                setShowErrorLoading(true)
             }
         }, error => {
             setShowLoading(false);
-            setShowErrorLoading(true);
+            setShowErrorLoading(true)
+        });
+
+        onValue(populationStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            console.log('pop stats', data)
+            if (data) {
+                setPopulationStats(data);
+            }
+            // } else {
+                // setShowLoading(false);
+                // setShowErrorLoading(true);
+            // }
+        }, error => {
+            setShowLoading(false)
+            setShowErrorLoading(true)
         });
     }
 
@@ -72,29 +86,20 @@ const Dashboard = () => {
         }
     }
 
-    const displayHuntCode = () => {
-        if (searchStr.length > 0) {
-            return <Typography sx={{marginTop: '1em', marginBottom: '1em'}} variant="h5" component="h5">Selected Code: {searchStr}</Typography>
-        }
-    }
-
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
     // dribbble mock https://dribbble.com/search/table
     return (
         <Box sx={{ height: '100vh' }}>
+            {/* <AppBar contains sign out and settings /> */}
             <Navbar logoutUser={logoutUser} />
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" sx={{ marginBottom: '2em'}}>
                 <DashboardSearch fetchSearchResults={fetchSearchResults}/>
-                {displayHuntCode()}
+                <PopulationTable sx={{ marginBottom: '1em'}} populationStats={populationStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
-                {/* <AppBar contains sign out and settings /> */}
-                {/* <DashboardSearch /> */}
-                {/* <Display Graph for draw odds? /> */}
-                {/* <Display Graph for draw odds? /> */}
-                {/* < PreferencePointsMap /> */}
             </Container>
+            <Footer/>
         </Box>
     )
 }

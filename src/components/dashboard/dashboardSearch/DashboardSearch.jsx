@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import {fetchDrawStats} from '../../../firebase';
 import {AppBar, Box, Toolbar, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material';
 
-export default function DashboardSearch({fetchSearchResults}) {
+export default function DashboardSearch({fetchSearchResults, updateSelectedUnit}) {
     const [species, setSpecies] = useState('elk');
     const [gender, setGender] = useState('either');
     const [method, setMethod] = useState('archery');
     const [unit, setUnit] = useState('001');
     const [season, setSeason] = useState('o1');
+    const [huntCode, setHuntCode] = useState('EE001E1R')
 
     let coUnits = [
         { label: '1', unit: '001' },
@@ -37,19 +38,17 @@ export default function DashboardSearch({fetchSearchResults}) {
             rifle: 'r'
         }
         const searchStr = `${speciesHash[species]}${genderHash[gender]}${unit}${season}${methodHash[method]}`.toUpperCase();
-        // create code
-        // make call to firebase
-        // get draw odds
-        // get elk harvest stats
-        // send up to dashboard
-        console.log(searchStr);
-        fetchSearchResults(searchStr);
-        // let fetchStats = await fetchDrawStats(searchStr);
-        // fetchSearchResults(searchStr);
+        
+        setHuntCode(searchStr)
+        fetchSearchResults(searchStr, unit);
+    }
+
+    const displayHuntCode = () => {
+        return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Selected Code: {huntCode}</Typography>
     }
 
     return (
-        <Box sx={{ flexGrow: 1, marginTop: '2em', paddingBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
+        <Box sx={{ flexGrow: 1, marginTop: '2em', paddingBottom: '1em', marginBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
             <FormGroup sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
                     <InputLabel id="species-label">Species</InputLabel>
@@ -135,6 +134,8 @@ export default function DashboardSearch({fetchSearchResults}) {
                 variant="contained"
                 sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}}>Submit</Button>
             </FormGroup>
+
+            {displayHuntCode()}
         </Box>
     );
 }
