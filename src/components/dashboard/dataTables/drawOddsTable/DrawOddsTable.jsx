@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-export default function DrawOdds({ displayStats, showLoading, showErrorLoading }) {
+export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading }) {
   
   const displayFirstChoiceRows = () => {
     const firstChoiceArr = []

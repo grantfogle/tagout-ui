@@ -1,83 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../../firebase';
-import { getDatabase, ref, onValue} from "firebase/database";
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { logout } from '../../firebase'
+import { getDatabase, ref, onValue} from "firebase/database"
 
-import { Box, Container } from '@mui/material';
+import { Box, Container } from '@mui/material'
 
-import Navbar from './navbar/Navbar';
-import Search from './search/Search';
-import PopulationTable from './dataTables/populationTable/PopulationTable';
-import DrawOdds from './dataTables/drawOddsTable/DrawOdds';
-import Footer from './footer/Footer';
+import Navbar from './navbar/Navbar'
+import Search from './search/Search'
+import PopulationTable from './dataTables/populationTable/PopulationTable'
+import DrawOddsTable from './dataTables/drawOddsTable/DrawOddsTable'
+import Footer from './footer/Footer'
 
 const Dashboard = () => {
-    const [searchStr, setSearchStr] = useState('EE001E1R');
-    const [displayStats, setDisplayStats] = useState('');
+    const [searchStr, setSearchStr] = useState('EE001E1R')
+    const [displayStats, setDisplayStats] = useState('')
     const [populationStats, setPopulationStats] = useState('')
-    const [showLoading, setShowLoading] = useState(false);
-    const [showErrorLoading, setShowErrorLoading] = useState(false);
-    const [species, setSpecies] = useState('');
-    const [method, setMethod] = useState('')
-    const [season, seatSeason] = useState('');
-    const [unit, setUnit] = useState('1');
-    const navigate = useNavigate();
+    const [drawOddsLoading, setDrawOddsLoading] = useState(false)
+    const [drawOddsError, setDrawOddsError] = useState(false)
+    const [popTableLoading, setPopTableLoading] = useState(false)
+    const [popTableError, setPopTableError] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        fetchDbDrawData(searchStr);
-    }, [searchStr]);
+        fetchDrawStats(searchStr)
+        fetchUnitStats('1')
+    }, [searchStr])
 
     const fetchSearchResults = (searchTerm, selectedUnit) => {
-        const currentUnit = parseInt(selectedUnit)
-        fetchDbDrawData(searchTerm, currentUnit)
+    
+        fetchDrawStats(searchTerm)
+        fetchUnitStats(selectedUnit)
     }
 
-    const fetchDbDrawData = async (searchTerm, selectedUnit) => {
-        setShowLoading(true)
-        setShowErrorLoading(false)
+    const fetchUnitStats = async (unit) => {
+        setPopTableLoading(true)
         const dbSnap = getDatabase()
-        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
         const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + unit)
-    
-        onValue(drawStatsRef, (snapshot) => {
-            const data = snapshot.val()
-            console.log('draw stats', data)
-            if (data) {
-                setDisplayStats(data)
-                setShowLoading(false)
-            } else {
-                setShowLoading(false)
-                setShowErrorLoading(true)
-            }
-        }, error => {
-            setShowLoading(false);
-            setShowErrorLoading(true)
-        });
 
         onValue(populationStatsRef, (snapshot) => {
             const data = snapshot.val()
-            console.log('pop stats', data)
             if (data) {
-                setPopulationStats(data);
+                setPopulationStats(data)
+                setPopTableLoading(false)
+            } else {
+                setPopTableLoading(false)
+                setPopTableError(true)
             }
-            // } else {
-                // setShowLoading(false);
-                // setShowErrorLoading(true);
-            // }
         }, error => {
-            setShowLoading(false)
-            setShowErrorLoading(true)
-        });
+            setPopTableLoading(false)
+            setPopTableError(true)
+        })
     }
 
-    const updateSearchStr = (updatedStr) => {
-        setSearchStr(updatedStr);
+    const fetchDrawStats = async (searchTerm) => {
+        setDrawOddsLoading(true)
+
+        const dbSnap = getDatabase()
+        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
+    
+        onValue(drawStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            if (data) {
+                setDisplayStats(data)
+                setDrawOddsLoading(false)
+            } else {
+                setDrawOddsLoading(false)
+                setDrawOddsError(true)
+            }
+        }, error => {
+            setDrawOddsLoading(false)
+            setDrawOddsError(true)
+        })
     }
 
     const logoutUser = () => {
-        const userAuthenticated = logout();
+        const userAuthenticated = logout()
         if (!userAuthenticated) {
-            navigate('/');
+            navigate('/')
         }
     }
 
@@ -89,15 +88,22 @@ const Dashboard = () => {
         <Box sx={{ height: '100vh' }}>
             {/* <AppBar contains sign out and settings /> */}
             <Navbar logoutUser={logoutUser} />
-            <Container maxWidth="lg" sx={{ marginBottom: '2em'}}>
+            <Container maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px'}}>
                 {/* link to big game brochure: https://cpw.state.co.us/Documents/RulesRegs/Brochure/BigGame/biggame.pdf */}
                 <Search fetchSearchResults={fetchSearchResults}/>
-                <PopulationTable sx={{ marginBottom: '1em'}} populationStats={populationStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
-                <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
+                <PopulationTable 
+                    sx={{ marginBottom: '1em'}}
+                    populationStats={populationStats}
+                    showLoading={popTableLoading}
+                    showErrorLoading={popTableError}/>
+                <DrawOddsTable
+                    displayStats={displayStats}
+                    showLoading={drawOddsLoading}
+                    showErrorLoading={drawOddsError}/>
             </Container>
             <Footer/>
         </Box>
     )
 }
 
-export default Dashboard;
+export default Dashboard
