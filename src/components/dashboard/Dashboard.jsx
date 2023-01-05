@@ -6,7 +6,7 @@ import { getDatabase, ref, onValue} from "firebase/database";
 import { Box, Container } from '@mui/material';
 
 import Navbar from './navbar/Navbar';
-import DashboardSearch from './dashboardSearch/DashboardSearch';
+import Search from './search/Search';
 import PopulationTable from './dataTables/populationTable/PopulationTable';
 import DrawOdds from './dataTables/drawOddsTable/DrawOdds';
 import Footer from './footer/Footer';
@@ -90,7 +90,8 @@ const Dashboard = () => {
             {/* <AppBar contains sign out and settings /> */}
             <Navbar logoutUser={logoutUser} />
             <Container maxWidth="lg" sx={{ marginBottom: '2em'}}>
-                <DashboardSearch fetchSearchResults={fetchSearchResults}/>
+                {/* link to big game brochure: https://cpw.state.co.us/Documents/RulesRegs/Brochure/BigGame/biggame.pdf */}
+                <Search fetchSearchResults={fetchSearchResults}/>
                 <PopulationTable sx={{ marginBottom: '1em'}} populationStats={populationStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
                 <DrawOdds displayStats={displayStats} showLoading={showLoading} showErrorLoading={showErrorLoading}/>
             </Container>
