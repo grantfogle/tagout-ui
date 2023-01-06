@@ -8,6 +8,7 @@ import { Box, Container } from '@mui/material'
 import Navbar from './navbar/Navbar'
 import Search from './search/Search'
 import PopulationTable from './dataTables/populationTable/PopulationTable'
+import HarvestStatsTable from './dataTables/harvestStatsTable/HarvestStatsTable'
 import DrawOddsTable from './dataTables/drawOddsTable/DrawOddsTable'
 import Footer from './footer/Footer'
 
@@ -94,6 +95,11 @@ const Dashboard = () => {
                 <PopulationTable 
                     sx={{ marginBottom: '1em'}}
                     populationStats={populationStats}
+                    showLoading={popTableLoading}
+                    showErrorLoading={popTableError}/>
+                <HarvestStatsTable 
+                    sx={{ marginBottom: '1em'}}
+                    // populationStats={harvestStats}
                     showLoading={popTableLoading}
                     showErrorLoading={popTableError}/>
                 <DrawOddsTable
