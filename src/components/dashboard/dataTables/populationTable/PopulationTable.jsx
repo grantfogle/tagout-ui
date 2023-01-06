@@ -1,22 +1,36 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Skeleton from '@mui/material/Skeleton';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import * as React from 'react'
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Skeleton,
+    Box,
+    Typography
+} from '@mui/material'
 
 
 export default function PopulationTable({ populationStats, showErrorLoading, showLoading}) {
-    const {bullCowRatio, dau, dauUnits, populationEstimate} = populationStats;
+    const {bullCowRatio, dau, dauUnits, populationEstimate} = populationStats
   
-    const displayBullCowRatio = (bullRatio) => {
-        return bullRatio ? bullRatio + '%' : 'N/A';
-    }
+    const displayBullCowRatio = (bullRatio) =>  bullRatio ? bullRatio + '%' : 'N/A';
+
+    const displayDauUnits = (allUnits) => {
+        if (allUnits) {
+            if (allUnits.length > 1) {
+                return allUnits.join(', ')    
+            }
+            return allUnits
+        }
+    } 
+    /*
+        TDL Before Launch
+        Ghost Loading
+        Error Message
+    */
 
     const displayDrawTable = () => {
         if (showErrorLoading) {
@@ -30,9 +44,9 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     } else if (showLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Skeleton width={600} height={200} />
-          <Skeleton width={600} height={200} />
-          <Skeleton width={600} height={200} />
+          <Skeleton width={400} height={200} />
+          <Skeleton width={400} height={200} />
+          <Skeleton width={400} height={200} />
         </Box>
       )
     } else {
@@ -50,7 +64,9 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
                     <TableBody>
                         <TableRow key={'population-stats-' + dau}>
                             <TableCell>{dau}</TableCell>
-                            <TableCell>{dauUnits}</TableCell>
+                            <TableCell>
+                                {displayDauUnits(dauUnits)}
+                            </TableCell>
                             <TableCell>{populationEstimate}</TableCell>
                             <TableCell>{displayBullCowRatio(bullCowRatio)}</TableCell>
                         </TableRow>
@@ -65,5 +81,5 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     <Box sx={{width: '600px', marginBottom: '1em'}}>
       {displayDrawTable()}
     </Box>
-  );
+  )
 }
