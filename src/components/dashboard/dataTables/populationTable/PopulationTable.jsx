@@ -16,9 +16,7 @@ import {
 export default function PopulationTable({ populationStats, showErrorLoading, showLoading}) {
     const {bullCowRatio, dau, dauUnits, populationEstimate} = populationStats
   
-    const displayBullCowRatio = (bullRatio) => {
-        return bullRatio ? bullRatio + '%' : 'N/A'
-    }
+    const displayBullCowRatio = (bullRatio) =>  bullRatio ? bullRatio + '%' : 'N/A';
 
     const displayDauUnits = (allUnits) => {
         if (allUnits) {
