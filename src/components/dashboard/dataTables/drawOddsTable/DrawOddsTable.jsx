@@ -12,76 +12,119 @@ import Typography from '@mui/material/Typography';
 
 
 export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading }) {
-  
+  const successColor = '#2ecc71'
+  const midSuccessColor = '#f1c40f'
+  const noSuccessColor = '#e74c3c'
+
+  const getConditionalBgColor = (successPercent) => {
+    return (successPercent === '100%') ? successColor :
+          (successPercent === '0%') ? noSuccessColor :
+          midSuccessColor
+  }
+
   const displayFirstChoiceRows = () => {
     const firstChoiceArr = []
+    const firstChoiceObj = firstChoiceArr;
+    let firstChoiceDisplayArr = [];
+    
     for (let obj in displayStats) {
       if (!obj.includes('Total Choice')) {
         firstChoiceArr.push(displayStats[obj])
       }
     }
-    const firstChoiceObj = firstChoiceArr;
-    let objMap = [];
+    
     if (firstChoiceObj) {
       for (let key in firstChoiceObj) {
         const resInfo = firstChoiceObj[key].res;
         const nonResInfo = firstChoiceObj[key].nonRes;
-        objMap.push(
-          <TableRow key={'first-choice-' + key}>
-            <TableCell>{key}</TableCell>
-            <TableCell>{resInfo.apps}</TableCell>
-            <TableCell>{resInfo.success} ({getSuccessPercentage(resInfo.apps, resInfo.success)})</TableCell>
-            <TableCell>{nonResInfo.apps}</TableCell>
-            <TableCell>{nonResInfo.success} ({getSuccessPercentage(nonResInfo.apps, nonResInfo.success)})</TableCell>
-          </TableRow>
-        )
+        
+        if (resInfo.apps || nonResInfo.apps) {  
+          const resSuccessPercentage = getSuccessPercentage(resInfo.apps, resInfo.success)
+          const nonResSuccessPercentage = getSuccessPercentage(nonResInfo.apps, nonResInfo.success)
+        
+          firstChoiceDisplayArr.push(
+            <TableRow key={'first-choice-' + key}>
+              <TableCell>{key}</TableCell>
+              <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
+                {resSuccessPercentage} ({resInfo.success}/{resInfo.apps})
+                </TableCell>
+              <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
+                {nonResSuccessPercentage} ({nonResInfo.success}/{nonResInfo.apps})
+                </TableCell>
+            </TableRow>
+          )
+        }
       }
-      return objMap;
+      return firstChoiceDisplayArr;
     }
   }
 
   const displaySecondChoiceRow = () => {
     const secondChoiceObj = displayStats['Total Choice 2'];
     if (secondChoiceObj) {
-    return (
-      <TableRow>
-        <TableCell>2nd Choice</TableCell>
-        <TableCell>{secondChoiceObj.res.apps}</TableCell>
-        <TableCell>{secondChoiceObj.res.success} ({getSuccessPercentage(secondChoiceObj.res.applicants, secondChoiceObj.res.success)})</TableCell>
-        <TableCell>{secondChoiceObj.nonRes.apps}</TableCell>
-        <TableCell>{secondChoiceObj.nonRes.success} ({getSuccessPercentage(secondChoiceObj.nonRes.applicants, secondChoiceObj.nonRes.success)})</TableCell>
-      </TableRow>
-    )
+      const resSecondInfo = secondChoiceObj.res
+      const nonResSecondInfo = secondChoiceObj.nonRes
+      const resSuccessPercentage = getSuccessPercentage(resSecondInfo.apps, resSecondInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResSecondInfo.apps, nonResSecondInfo.success)
+      if (resSecondInfo.apps || nonResSecondInfo.apps) {
+        return (
+          <TableRow>
+            <TableCell>2nd Choice</TableCell>
+            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
+              {resSuccessPercentage} ({resSecondInfo.success}/{resSecondInfo.apps})
+                </TableCell>
+            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
+              {nonResSuccessPercentage} ({nonResSecondInfo.success}/{nonResSecondInfo.apps})
+            </TableCell>
+          </TableRow>
+        )
+      }
   }
 }
 
 const displayThirdChoiceRow = () => {
   const thirdChoiceObj = displayStats['Total Choice 3'];
-  if (thirdChoiceObj) {
-    return (
-      <TableRow>
-        <TableCell>3nd Choice</TableCell>
-        <TableCell>{thirdChoiceObj.res.apps}</TableCell>
-        <TableCell>{thirdChoiceObj.res.success} ({getSuccessPercentage(thirdChoiceObj.res.applicants, thirdChoiceObj.res.success)})</TableCell>
-        <TableCell>{thirdChoiceObj.nonRes.apps}</TableCell>
-        <TableCell>{thirdChoiceObj.nonRes.success} ({getSuccessPercentage(thirdChoiceObj.nonRes.applicants, thirdChoiceObj.nonRes.success)})</TableCell>
-      </TableRow>
-    )
+    if (thirdChoiceObj) {
+      const resThirdInfo = thirdChoiceObj.res
+      const nonResThirdInfo = thirdChoiceObj.nonRes
+      const resSuccessPercentage = getSuccessPercentage(resThirdInfo.apps, resThirdInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResThirdInfo.apps, nonResThirdInfo.success)
+      if (resThirdInfo.apps || nonResThirdInfo.apps) {
+        return (
+          <TableRow>
+            <TableCell>3rd Choice</TableCell>
+            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
+              {resSuccessPercentage} ({resThirdInfo.success}/{resThirdInfo.apps})
+                </TableCell>
+            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
+              {nonResSuccessPercentage} ({nonResThirdInfo.success}/{nonResThirdInfo.apps})
+            </TableCell>
+          </TableRow>
+        )
+      }
   }
 }
 
 const displayFourthChoiceRow = () => {
   const fourthChoiceObj = displayStats['Total Choice 4'];
-  if (fourthChoiceObj) {
-    return (
-      <TableRow>
-        <TableCell>4th Choice</TableCell>
-        <TableCell>{fourthChoiceObj.res.apps}</TableCell>
-        <TableCell>{fourthChoiceObj.res.success} ({getSuccessPercentage(fourthChoiceObj.res.applicants, fourthChoiceObj.res.success)})</TableCell>
-        <TableCell>{fourthChoiceObj.nonRes.apps}</TableCell>
-        <TableCell>{fourthChoiceObj.nonRes.success} ({getSuccessPercentage(fourthChoiceObj.nonRes.applicants, fourthChoiceObj.nonRes.success)})</TableCell>
-      </TableRow>
-    )
+    if (fourthChoiceObj) {
+      const resFourthInfo = fourthChoiceObj.res
+      const nonResFourthInfo = fourthChoiceObj.nonRes
+      const resSuccessPercentage = getSuccessPercentage(resFourthInfo.apps, resFourthInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResFourthInfo.apps, nonResFourthInfo.success)
+      if (resFourthInfo.apps || nonResFourthInfo.apps) {
+        return (
+          <TableRow>
+            <TableCell>4th Choice</TableCell>
+            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
+              {resSuccessPercentage} ({resFourthInfo.success}/{resFourthInfo.apps})
+                </TableCell>
+            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
+              {nonResSuccessPercentage} ({nonResFourthInfo.success}/{nonResFourthInfo.apps})
+            </TableCell>
+          </TableRow>
+        )
+      }
   }
 }
 
@@ -117,10 +160,8 @@ const displayFourthChoiceRow = () => {
         <TableHead>
           <TableRow>
             <TableCell>Preference Points</TableCell>
-            <TableCell>Res Applicant</TableCell>
-            <TableCell>Res Success</TableCell>
-            <TableCell>Non Res Applicant</TableCell>
-            <TableCell>Non Res Success</TableCell>
+            <TableCell>Resident</TableCell>
+            <TableCell>Non Resident</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
