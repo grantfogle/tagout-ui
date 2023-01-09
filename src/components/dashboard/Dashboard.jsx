@@ -23,6 +23,7 @@ const Dashboard = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // check if unit is otc, if otc return unit is otc
         fetchDrawStats(searchStr)
         fetchUnitStats('1')
     }, [searchStr])
