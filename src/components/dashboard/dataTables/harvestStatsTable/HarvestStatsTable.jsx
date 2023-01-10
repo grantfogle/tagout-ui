@@ -13,19 +13,9 @@ import {
 } from '@mui/material'
 
 
-export default function PopulationTable({ populationStats, showErrorLoading, showLoading}) {
-    const {bullCowRatio, dau, dauUnits, populationEstimate} = populationStats
+export default function HarvestStatsTable({ harvestStats, showErrorLoading, showLoading}) {
+    const { bulls, calves, cows, hunters, recDays, successPercent, total } = harvestStats
   
-    const displayBullCowRatio = (bullRatio) =>  bullRatio ? bullRatio + '%' : 'N/A';
-
-    const displayDauUnits = (allUnits) => {
-        if (allUnits) {
-            if (allUnits.length > 1) {
-                return allUnits.join(', ')    
-            }
-            return allUnits
-        }
-    } 
     /*
         TDL Before Launch
         Ghost Loading
@@ -44,9 +34,9 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     } else if (showLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Skeleton width={400} height={200} />
-          <Skeleton width={400} height={200} />
-          <Skeleton width={400} height={200} />
+          <Skeleton width={500} height={200} />
+          <Skeleton width={500} height={200} />
+          <Skeleton width={500} height={200} />
         </Box>
       )
     } else {
@@ -55,20 +45,24 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
                 <Table sx={{ minWidth: 500 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>DAU</TableCell>
-                            <TableCell>DAU Units</TableCell>
-                            <TableCell>Pop Estimate</TableCell>
-                            <TableCell>Bull/Cow Ratio</TableCell>
+                            <TableCell>Bulls</TableCell>
+                            <TableCell>Cows</TableCell>
+                            <TableCell>Calves</TableCell>
+                            <TableCell>Total</TableCell>
+                            <TableCell>Hunters</TableCell>
+                            <TableCell>Success</TableCell>
+                            <TableCell>Rec Days</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow key={'population-stats-' + dau}>
-                            <TableCell>{dau}</TableCell>
-                            <TableCell>
-                                {displayDauUnits(dauUnits)}
-                            </TableCell>
-                            <TableCell>{populationEstimate}</TableCell>
-                            <TableCell>{displayBullCowRatio(bullCowRatio)}</TableCell>
+                        <TableRow key={'harvest-stats'}>
+                            <TableCell>{bulls}</TableCell>
+                            <TableCell>{cows}</TableCell>
+                            <TableCell>{calves}</TableCell>
+                            <TableCell>{total}</TableCell>
+                            <TableCell>{hunters}</TableCell>
+                            <TableCell>{successPercent + '%'}</TableCell>
+                            <TableCell>{recDays}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

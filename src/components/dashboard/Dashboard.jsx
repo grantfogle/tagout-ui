@@ -8,6 +8,7 @@ import { Box, Container } from '@mui/material'
 import Navbar from './navbar/Navbar'
 import Search from './search/Search'
 import PopulationTable from './dataTables/populationTable/PopulationTable'
+import HarvestStatsTable from './dataTables/harvestStatsTable/HarvestStatsTable'
 import DrawOddsTable from './dataTables/drawOddsTable/DrawOddsTable'
 import Footer from './footer/Footer'
 
@@ -15,21 +16,27 @@ const Dashboard = () => {
     const [searchStr, setSearchStr] = useState('EE001E1R')
     const [displayStats, setDisplayStats] = useState('')
     const [populationStats, setPopulationStats] = useState('')
+    const [harvestStats, setHarvestStats] = useState('')
     const [drawOddsLoading, setDrawOddsLoading] = useState(false)
     const [drawOddsError, setDrawOddsError] = useState(false)
     const [popTableLoading, setPopTableLoading] = useState(false)
     const [popTableError, setPopTableError] = useState(false)
+    const [harvestTableLoading, setHarvestTableLoading] = useState(false)
+    const [harvestTableError, setHarvestTableError] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
+        // check if unit is otc, if otc return unit is otc
         fetchDrawStats(searchStr)
         fetchUnitStats('1')
+        fetchHarvestStats('O1', 'R', '1')
     }, [searchStr])
 
-    const fetchSearchResults = (searchTerm, selectedUnit) => {
+    const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method) => {
     
         fetchDrawStats(searchTerm)
         fetchUnitStats(selectedUnit)
+        fetchHarvestStats(huntSeason, method, selectedUnit)
     }
 
     const fetchUnitStats = async (unit) => {
@@ -73,6 +80,29 @@ const Dashboard = () => {
         })
     }
 
+    const fetchHarvestStats = async (huntSeason, method, unit) => {
+        setHarvestTableLoading(true)
+        const harvestUrl = `colorado/harvestStats/elk/${huntSeason}${method}/${unit}`
+
+        const dbSnap = getDatabase()
+        const drawStatsRef = ref(dbSnap, harvestUrl)
+        
+        onValue(drawStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            if (data) {
+                setHarvestStats(data)
+                setHarvestTableLoading(false)
+            } else {
+                setHarvestTableLoading(false)
+                setHarvestTableError(true)
+            }
+        }, error => {
+            setHarvestTableLoading(false)
+            setHarvestTableError(true)
+        })
+
+    }
+
     const logoutUser = () => {
         const userAuthenticated = logout()
         if (!userAuthenticated) {
@@ -91,15 +121,22 @@ const Dashboard = () => {
             <Container maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px'}}>
                 {/* link to big game brochure: https://cpw.state.co.us/Documents/RulesRegs/Brochure/BigGame/biggame.pdf */}
                 <Search fetchSearchResults={fetchSearchResults}/>
-                <PopulationTable 
-                    sx={{ marginBottom: '1em'}}
-                    populationStats={populationStats}
-                    showLoading={popTableLoading}
-                    showErrorLoading={popTableError}/>
-                <DrawOddsTable
-                    displayStats={displayStats}
-                    showLoading={drawOddsLoading}
-                    showErrorLoading={drawOddsError}/>
+                <Box sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                    <PopulationTable 
+                        sx={{ marginBottom: '1em', width: '50%'}}
+                        populationStats={populationStats}
+                        showLoading={popTableLoading}
+                        showErrorLoading={popTableError}/>
+                    <HarvestStatsTable 
+                        sx={{ marginBottom: '1em', width: '50%'}}
+                        harvestStats={harvestStats}
+                        showLoading={popTableLoading}
+                        showErrorLoading={popTableError}/>
+                    <DrawOddsTable
+                        displayStats={displayStats}
+                        showLoading={drawOddsLoading}
+                        showErrorLoading={drawOddsError}/>
+                </Box>
             </Container>
             <Footer/>
         </Box>

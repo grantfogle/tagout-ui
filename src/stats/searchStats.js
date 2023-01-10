@@ -12,9 +12,10 @@ export const colorado = {
         {label: 'Muzzleloader', value: 'M'}
     ],
     seasons: [
-        'O1', 'O2', 'O3', 'O4', 'E1', 'J2', 'K2', 'K3', 'L1',
-        'L2', 'L3', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'S2',
-        'S3', 'S4', 'W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W9'
+        'O1', 'O2', 'O3', 'O4', 
+        // 'E1', 'J2', 'K2', 'K3', 'L1',
+        // 'L2', 'L3', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'S2',
+        // 'S3', 'S4', 'W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W9'
     ],
     gender: [
         {label: 'Either', value: 'E'},
@@ -140,5 +141,12 @@ export const colorado = {
         {label: '45', unit: '045'},
         {label: '47', unit: '047'},
         {label: '444', unit: '444'}
-    ]
+    ],
+    // need to add logic in crawler to see depending on an archery/rifle search for elk, whether to make call to db
+    otcUnits: {
+        'E01A': [],
+        'F01A': [],
+        'M02R': [],
+        'M03R': []
+    }
 }
