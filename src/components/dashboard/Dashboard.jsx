@@ -130,8 +130,8 @@ const Dashboard = () => {
                     <HarvestStatsTable 
                         sx={{ marginBottom: '1em', width: '50%'}}
                         harvestStats={harvestStats}
-                        showLoading={popTableLoading}
-                        showErrorLoading={popTableError}/>
+                        showLoading={harvestTableLoading}
+                        showErrorLoading={harvestTableError}/>
                     <DrawOddsTable
                         displayStats={displayStats}
                         showLoading={drawOddsLoading}
