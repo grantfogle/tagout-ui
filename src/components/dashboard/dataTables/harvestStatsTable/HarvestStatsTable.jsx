@@ -13,8 +13,8 @@ import {
 } from '@mui/material'
 
 
-export default function HarvestStatsTable({ showErrorLoading, showLoading}) {
-    // const {bullCowRatio, dau, dauUnits, populationEstimate} = harvestStats
+export default function HarvestStatsTable({ harvestStats, showErrorLoading, showLoading}) {
+    const { bulls, calves, cows, hunters, recDays, successPercent, total } = harvestStats
   
     /*
         TDL Before Launch
@@ -34,15 +34,15 @@ export default function HarvestStatsTable({ showErrorLoading, showLoading}) {
     } else if (showLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Skeleton width={400} height={200} />
-          <Skeleton width={400} height={200} />
-          <Skeleton width={400} height={200} />
+          <Skeleton width={500} height={200} />
+          <Skeleton width={500} height={200} />
+          <Skeleton width={500} height={200} />
         </Box>
       )
     } else {
         return (
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 600 }} aria-label="simple table">
+                <Table sx={{ minWidth: 500 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Bulls</TableCell>
@@ -50,19 +50,19 @@ export default function HarvestStatsTable({ showErrorLoading, showLoading}) {
                             <TableCell>Calves</TableCell>
                             <TableCell>Total</TableCell>
                             <TableCell>Hunters</TableCell>
-                            <TableCell>Success Percentage</TableCell>
-                            <TableCell>Total Rec Days</TableCell>
+                            <TableCell>Success</TableCell>
+                            <TableCell>Rec Days</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow key={'harvest-stats'}>
-                            <TableCell>20</TableCell>
-                            <TableCell>5</TableCell>
-                            <TableCell>0</TableCell>
-                            <TableCell>25</TableCell>
-                            <TableCell>100</TableCell>
-                            <TableCell>12%</TableCell>
-                            <TableCell>1000</TableCell>
+                            <TableCell>{bulls}</TableCell>
+                            <TableCell>{cows}</TableCell>
+                            <TableCell>{calves}</TableCell>
+                            <TableCell>{total}</TableCell>
+                            <TableCell>{hunters}</TableCell>
+                            <TableCell>{successPercent + '%'}</TableCell>
+                            <TableCell>{recDays}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

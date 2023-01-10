@@ -142,6 +142,7 @@ export const colorado = {
         {label: '47', unit: '047'},
         {label: '444', unit: '444'}
     ],
+    // need to add logic in crawler to see depending on an archery/rifle search for elk, whether to make call to db
     otcUnits: {
         'E01A': [],
         'F01A': [],

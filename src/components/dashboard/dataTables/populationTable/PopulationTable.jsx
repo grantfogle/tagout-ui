@@ -52,7 +52,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     } else {
         return (
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 600 }} aria-label="simple table">
+                <Table sx={{ minWidth: 500 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>DAU</TableCell>
