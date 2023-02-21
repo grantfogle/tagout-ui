@@ -26,7 +26,7 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     const firstChoiceArr = []
     const firstChoiceObj = firstChoiceArr;
     let firstChoiceDisplayArr = [];
-    
+    console.log(displayStats)
     for (let obj in displayStats) {
       if (!obj.includes('Total Choice')) {
         firstChoiceArr.push(displayStats[obj])
@@ -35,21 +35,22 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     
     if (firstChoiceObj) {
       for (let key in firstChoiceObj) {
+        console.log('FIRST CHOICE OBJ', firstChoiceObj)
         const resInfo = firstChoiceObj[key].res;
         const nonResInfo = firstChoiceObj[key].nonRes;
         
-        if (resInfo.apps || nonResInfo.apps) {  
-          const resSuccessPercentage = getSuccessPercentage(resInfo.apps, resInfo.success)
-          const nonResSuccessPercentage = getSuccessPercentage(nonResInfo.apps, nonResInfo.success)
+        if (resInfo.applicants || nonResInfo.applicants) {  
+          const resSuccessPercentage = getSuccessPercentage(resInfo.applicants, resInfo.success)
+          const nonResSuccessPercentage = getSuccessPercentage(nonResInfo.applicants, nonResInfo.success)
         
           firstChoiceDisplayArr.push(
             <TableRow key={'first-choice-' + key}>
               <TableCell>{key}</TableCell>
               <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-                {resSuccessPercentage} ({resInfo.success}/{resInfo.apps})
+                {resSuccessPercentage} ({resInfo.success}/{resInfo.applicants})
                 </TableCell>
               <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-                {nonResSuccessPercentage} ({nonResInfo.success}/{nonResInfo.apps})
+                {nonResSuccessPercentage} ({nonResInfo.success}/{nonResInfo.applicants})
                 </TableCell>
             </TableRow>
           )
@@ -64,17 +65,17 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     if (secondChoiceObj) {
       const resSecondInfo = secondChoiceObj.res
       const nonResSecondInfo = secondChoiceObj.nonRes
-      const resSuccessPercentage = getSuccessPercentage(resSecondInfo.apps, resSecondInfo.success)
-      const nonResSuccessPercentage = getSuccessPercentage(nonResSecondInfo.apps, nonResSecondInfo.success)
-      if (resSecondInfo.apps || nonResSecondInfo.apps) {
+      const resSuccessPercentage = getSuccessPercentage(resSecondInfo.applicants, resSecondInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResSecondInfo.applicants, nonResSecondInfo.success)
+      if (resSecondInfo.applicants || nonResSecondInfo.applicants) {
         return (
           <TableRow>
             <TableCell>2nd Choice</TableCell>
             <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-              {resSuccessPercentage} ({resSecondInfo.success}/{resSecondInfo.apps})
+              {resSuccessPercentage} ({resSecondInfo.success}/{resSecondInfo.applicants})
                 </TableCell>
             <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-              {nonResSuccessPercentage} ({nonResSecondInfo.success}/{nonResSecondInfo.apps})
+              {nonResSuccessPercentage} ({nonResSecondInfo.success}/{nonResSecondInfo.applicants})
             </TableCell>
           </TableRow>
         )
@@ -87,17 +88,17 @@ const displayThirdChoiceRow = () => {
     if (thirdChoiceObj) {
       const resThirdInfo = thirdChoiceObj.res
       const nonResThirdInfo = thirdChoiceObj.nonRes
-      const resSuccessPercentage = getSuccessPercentage(resThirdInfo.apps, resThirdInfo.success)
-      const nonResSuccessPercentage = getSuccessPercentage(nonResThirdInfo.apps, nonResThirdInfo.success)
-      if (resThirdInfo.apps || nonResThirdInfo.apps) {
+      const resSuccessPercentage = getSuccessPercentage(resThirdInfo.applicants, resThirdInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResThirdInfo.applicants, nonResThirdInfo.success)
+      if (resThirdInfo.applicants || nonResThirdInfo.applicants) {
         return (
           <TableRow>
             <TableCell>3rd Choice</TableCell>
             <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-              {resSuccessPercentage} ({resThirdInfo.success}/{resThirdInfo.apps})
+              {resSuccessPercentage} ({resThirdInfo.success}/{resThirdInfo.applicants})
                 </TableCell>
             <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-              {nonResSuccessPercentage} ({nonResThirdInfo.success}/{nonResThirdInfo.apps})
+              {nonResSuccessPercentage} ({nonResThirdInfo.success}/{nonResThirdInfo.applicants})
             </TableCell>
           </TableRow>
         )
@@ -110,17 +111,17 @@ const displayFourthChoiceRow = () => {
     if (fourthChoiceObj) {
       const resFourthInfo = fourthChoiceObj.res
       const nonResFourthInfo = fourthChoiceObj.nonRes
-      const resSuccessPercentage = getSuccessPercentage(resFourthInfo.apps, resFourthInfo.success)
-      const nonResSuccessPercentage = getSuccessPercentage(nonResFourthInfo.apps, nonResFourthInfo.success)
-      if (resFourthInfo.apps || nonResFourthInfo.apps) {
+      const resSuccessPercentage = getSuccessPercentage(resFourthInfo.applicants, resFourthInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResFourthInfo.applicants, nonResFourthInfo.success)
+      if (resFourthInfo.applicants || nonResFourthInfo.applicants) {
         return (
           <TableRow>
             <TableCell>4th Choice</TableCell>
             <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-              {resSuccessPercentage} ({resFourthInfo.success}/{resFourthInfo.apps})
+              {resSuccessPercentage} ({resFourthInfo.success}/{resFourthInfo.applicants})
                 </TableCell>
             <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-              {nonResSuccessPercentage} ({nonResFourthInfo.success}/{nonResFourthInfo.apps})
+              {nonResSuccessPercentage} ({nonResFourthInfo.success}/{nonResFourthInfo.applicants})
             </TableCell>
           </TableRow>
         )

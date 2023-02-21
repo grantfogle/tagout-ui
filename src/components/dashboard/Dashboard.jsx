@@ -67,6 +67,7 @@ const Dashboard = () => {
     
         onValue(drawStatsRef, (snapshot) => {
             const data = snapshot.val()
+            console.log('DATAAAAA', data)
             if (data) {
                 setDisplayStats(data)
                 setDrawOddsLoading(false)
