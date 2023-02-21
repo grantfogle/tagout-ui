@@ -113,6 +113,8 @@ export const colorado = {
         {label: '38', unit: '038'},
         {label: '42', unit: '042'},
         {label: '44', unit: '044'},
+        {label: '45', unit: '045'},
+        {label: '47', unit: '047'},
         {label: '52', unit: '052'},
         {label: '59', unit: '059'},
         {label: '63', unit: '063'},
@@ -138,8 +140,6 @@ export const colorado = {
         {label: '711', unit: '711'},
         {label: '741', unit: '741'},
         {label: '751', unit: '751'},
-        {label: '45', unit: '045'},
-        {label: '47', unit: '047'},
         {label: '444', unit: '444'}
     ],
     // need to add logic in crawler to see depending on an archery/rifle search for elk, whether to make call to db
