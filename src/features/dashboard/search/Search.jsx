@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { colorado } from '../../../stats/searchStats'
+import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
 
 export default function Search({fetchSearchResults, updateSelectedUnit}) {

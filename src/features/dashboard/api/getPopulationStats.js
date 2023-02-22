@@ -6,7 +6,6 @@ export const getPopulationStats = async (unit) => {
 
     onValue(populationStatsRef, (snapshot) => {
         const data = snapshot.val()
-        console.log('ITLOADED')
         if (data) {
             return data
         } else {

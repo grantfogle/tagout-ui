@@ -26,7 +26,6 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     const firstChoiceArr = []
     const firstChoiceObj = firstChoiceArr;
     let firstChoiceDisplayArr = [];
-    console.log(displayStats)
     for (let obj in displayStats) {
       if (!obj.includes('Total Choice')) {
         firstChoiceArr.push(displayStats[obj])
@@ -35,7 +34,6 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     
     if (firstChoiceObj) {
       for (let key in firstChoiceObj) {
-        console.log('FIRST CHOICE OBJ', firstChoiceObj)
         const resInfo = firstChoiceObj[key].res;
         const nonResInfo = firstChoiceObj[key].nonRes;
         
