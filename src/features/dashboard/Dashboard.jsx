@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../firebase'
 import { getDatabase, ref, onValue} from "firebase/database"
+import {coloradoOTC} from './assets/otcUnits';
 
 import { Box, Container } from '@mui/material'
-
 import Navbar from './navbar/Navbar'
 import Search from './search/Search'
 import PopulationTable from './dataTables/populationTable/PopulationTable'
 import HarvestStatsTable from './dataTables/harvestStatsTable/HarvestStatsTable'
 import DrawOddsTable from './dataTables/drawOddsTable/DrawOddsTable'
+import OtcDisplay from './otcDisplay/OtcDisplay'
 import Footer from './footer/Footer'
 
 const Dashboard = () => {
@@ -23,21 +24,46 @@ const Dashboard = () => {
     const [popTableError, setPopTableError] = useState(false)
     const [harvestTableLoading, setHarvestTableLoading] = useState(false)
     const [harvestTableError, setHarvestTableError] = useState(false)
+    const [otcUnit, setOtcUnit] = useState(false)
+    const [otcSearchString, setOtcSearchString] = useState('EE01A')
     const navigate = useNavigate()
 
     useEffect(() => {
-        // check if unit is otc, if otc return unit is otc
         fetchDrawStats(searchStr)
         fetchUnitStats('1')
         fetchHarvestStats('O1', 'R', '1')
     }, [searchStr])
 
-    const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method) => {
-    
-        fetchDrawStats(searchTerm)
+    const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
+        // check for otc units
+        // pass otc search string
+        // import coloradoOTCunits from otcUnits
+        // if is OTC, return draw table is otc
+        const isOTC = checkIfOtcUnit(genderSeasonMethod, selectedUnit)
+
+        if (!isOTC) {
+            fetchDrawStats(searchTerm)
+        } else {
+            setOtcUnit(true)
+        }
         fetchUnitStats(selectedUnit)
         fetchHarvestStats(huntSeason, method, selectedUnit)
     }
+
+    const checkIfOtcUnit = (genderSeasonMethod, unit) => {
+        // convert unit to int
+        switch (genderSeasonMethod) {
+            case 'EE01A':
+            case 'EM01A':
+                if (coloradoOTC[genderSeasonMethod].contains(unit)) {
+                    return true
+                }
+                return false
+                break;
+            case 'EF01A':
+
+        }
+    } 
 
     const fetchUnitStats = async (unit) => {
         setPopTableLoading(true)
@@ -132,6 +158,7 @@ const Dashboard = () => {
                         harvestStats={harvestStats}
                         showLoading={harvestTableLoading}
                         showErrorLoading={harvestTableError}/>
+                    <OtcDisplay isOtc otcSearchString={otcSearchString}/>
                     <DrawOddsTable
                         displayStats={displayStats}
                         showLoading={drawOddsLoading}

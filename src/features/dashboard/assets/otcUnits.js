@@ -1,4 +1,4 @@
-const coloradoOTC = {
+export const coloradoOTC = {
     // switch case to cover bull searches
     EE01A: [
         3, 6, 11, 13, 14, 15, 16, 17, 18, 21, 22, 25, 26, 27, 28, 30, 31, 32, 34, 35, 36,
