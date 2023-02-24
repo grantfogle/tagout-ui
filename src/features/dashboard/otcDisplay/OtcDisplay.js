@@ -11,7 +11,7 @@ export default function OtcDisplay({isOtcUnit, unit}) {
     // }
     return (
         <Box>
-            <Typography variant="h3" component="h2">Unit {unit} first archery is OTC</Typography>
+            <Typography variant="h3" component="h2">Unit {unit} is OTC</Typography>
             {/* <Box>
                 <OtcUnitList/>
             </Box> */}

@@ -35,18 +35,13 @@ const Dashboard = () => {
     }, [searchStr])
 
     const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
-        // check for otc units
-        // pass otc search string
-        // import coloradoOTCunits from otcUnits
-        // if is OTC, return draw table is otc
         setHuntUnit(selectedUnit)
         const isOTC = checkIfOtcUnit(genderSeasonMethod, selectedUnit)
-        console.log(isOTC)
+
         if (!isOTC) {
-            console.log('HITTTT')
+            setIsOtcUnit(false)
             fetchDrawStats(searchTerm)
         } else {
-            console.log('bingooo')
             setIsOtcUnit(true)
         }
         fetchUnitStats(selectedUnit)
@@ -54,15 +49,24 @@ const Dashboard = () => {
     }
 
     const checkIfOtcUnit = (genderSeasonMethod, unit) => {
-        console.log(genderSeasonMethod, unit)
-        console.log(coloradoOTC[genderSeasonMethod]);
+        const parseIntUnit = parseInt(unit)
         switch (genderSeasonMethod) {
-            case 'EE01A':
-            case 'EM01A':
-                console.log('inside switch case')
-                console.log(coloradoOTC[genderSeasonMethod]);
-                if (coloradoOTC[genderSeasonMethod].contains(unit)) {
-                    console.log('hit check')
+            case 'EEO1A':
+            case 'EMO1A':
+                if (coloradoOTC[genderSeasonMethod].includes(parseIntUnit)) {
+                    return true
+                }
+                return false
+                break
+            case 'EFO1A':
+                if (coloradoOTC[genderSeasonMethod].includes(parseIntUnit)) {
+                    return true
+                }
+                return false
+                break
+            case 'EMO2R':
+            case 'EMO3R':
+                if (coloradoOTC['EMO2R'].includes(parseIntUnit)) {
                     return true
                 }
                 return false
