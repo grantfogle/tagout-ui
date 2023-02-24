@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading }) {
+export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading, isOtcUnit }) {
   const successColor = '#2ecc71'
   const midSuccessColor = '#f1c40f'
   const noSuccessColor = '#e74c3c'
@@ -173,9 +173,10 @@ const displayFourthChoiceRow = () => {
     </TableContainer>
     )
   }
+
   return (
-    <Box>
-      {displayDrawTable()}
-    </Box>
-  );
+      <Box>
+        {displayDrawTable()}
+      </Box>
+    )
 }

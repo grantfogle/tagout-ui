@@ -24,8 +24,8 @@ const Dashboard = () => {
     const [popTableError, setPopTableError] = useState(false)
     const [harvestTableLoading, setHarvestTableLoading] = useState(false)
     const [harvestTableError, setHarvestTableError] = useState(false)
-    const [otcUnit, setOtcUnit] = useState(false)
-    const [otcSearchString, setOtcSearchString] = useState('EE01A')
+    const [isOtcUnit, setIsOtcUnit] = useState(false)
+    const [huntUnit, setHuntUnit] = useState('1')
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -39,29 +39,37 @@ const Dashboard = () => {
         // pass otc search string
         // import coloradoOTCunits from otcUnits
         // if is OTC, return draw table is otc
+        setHuntUnit(selectedUnit)
         const isOTC = checkIfOtcUnit(genderSeasonMethod, selectedUnit)
-
+        console.log(isOTC)
         if (!isOTC) {
+            console.log('HITTTT')
             fetchDrawStats(searchTerm)
         } else {
-            setOtcUnit(true)
+            console.log('bingooo')
+            setIsOtcUnit(true)
         }
         fetchUnitStats(selectedUnit)
         fetchHarvestStats(huntSeason, method, selectedUnit)
     }
 
     const checkIfOtcUnit = (genderSeasonMethod, unit) => {
-        // convert unit to int
+        console.log(genderSeasonMethod, unit)
+        console.log(coloradoOTC[genderSeasonMethod]);
         switch (genderSeasonMethod) {
             case 'EE01A':
             case 'EM01A':
+                console.log('inside switch case')
+                console.log(coloradoOTC[genderSeasonMethod]);
                 if (coloradoOTC[genderSeasonMethod].contains(unit)) {
+                    console.log('hit check')
                     return true
                 }
                 return false
-                break;
-            case 'EF01A':
-
+                break
+            default:
+                return false
+                break
         }
     } 
 
@@ -136,6 +144,24 @@ const Dashboard = () => {
         }
     }
 
+    const unitDrawOddsDisplay = () => {
+        if (isOtcUnit) {
+            return (
+                <OtcDisplay
+                    isOtcUnit
+                    unit={huntUnit}/>
+            )
+        }
+        return (
+        <DrawOddsTable 
+            displayStats={displayStats}
+            showLoading={drawOddsLoading}
+            showErrorLoading={drawOddsError}
+            isOtcUnit/>
+        )
+
+    }
+
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
@@ -158,11 +184,7 @@ const Dashboard = () => {
                         harvestStats={harvestStats}
                         showLoading={harvestTableLoading}
                         showErrorLoading={harvestTableError}/>
-                    <OtcDisplay isOtc otcSearchString={otcSearchString}/>
-                    <DrawOddsTable
-                        displayStats={displayStats}
-                        showLoading={drawOddsLoading}
-                        showErrorLoading={drawOddsError}/>
+                    {unitDrawOddsDisplay()}
                 </Box>
             </Container>
             <Footer/>

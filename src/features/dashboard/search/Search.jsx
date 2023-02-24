@@ -13,8 +13,9 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
 
     const fetchDetails = () => {
         const searchStr = `${species}${gender}${unit}${season}${method}`
+        const genderSznMethod = `${species}${gender}${season}${method}`
         setHuntCode(searchStr)
-        fetchSearchResults(searchStr, unitLabel, season, method)
+        fetchSearchResults(searchStr, unitLabel, season, method, genderSznMethod)
     }
 
     const displayHuntCode = () => {
