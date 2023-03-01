@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { colorado } from '../../../stats/searchStats'
+import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
 
 export default function Search({fetchSearchResults, updateSelectedUnit}) {
@@ -13,8 +13,9 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
 
     const fetchDetails = () => {
         const searchStr = `${species}${gender}${unit}${season}${method}`
+        const genderSznMethod = `${species}${gender}${season}${method}`
         setHuntCode(searchStr)
-        fetchSearchResults(searchStr, unitLabel, season, method)
+        fetchSearchResults(searchStr, unitLabel, season, method, genderSznMethod)
     }
 
     const displayHuntCode = () => {

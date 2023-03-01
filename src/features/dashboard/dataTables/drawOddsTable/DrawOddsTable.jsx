@@ -11,12 +11,16 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading }) {
+export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading, isOtcUnit }) {
   const successColor = '#2ecc71'
   const midSuccessColor = '#f1c40f'
   const noSuccessColor = '#e74c3c'
+  const noEntriesColor = '#fff';
 
-  const getConditionalBgColor = (successPercent) => {
+  const getConditionalBgColor = (successPercent, applications) => {
+    if (applications === 0) {
+      return noEntriesColor;
+    }
     return (successPercent === '100%') ? successColor :
           (successPercent === '0%') ? noSuccessColor :
           midSuccessColor
@@ -26,7 +30,6 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     const firstChoiceArr = []
     const firstChoiceObj = firstChoiceArr;
     let firstChoiceDisplayArr = [];
-    
     for (let obj in displayStats) {
       if (!obj.includes('Total Choice')) {
         firstChoiceArr.push(displayStats[obj])
@@ -38,18 +41,18 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
         const resInfo = firstChoiceObj[key].res;
         const nonResInfo = firstChoiceObj[key].nonRes;
         
-        if (resInfo.apps || nonResInfo.apps) {  
-          const resSuccessPercentage = getSuccessPercentage(resInfo.apps, resInfo.success)
-          const nonResSuccessPercentage = getSuccessPercentage(nonResInfo.apps, nonResInfo.success)
+        if (resInfo.applicants || nonResInfo.applicants) {  
+          const resSuccessPercentage = getSuccessPercentage(resInfo.applicants, resInfo.success)
+          const nonResSuccessPercentage = getSuccessPercentage(nonResInfo.applicants, nonResInfo.success)
         
           firstChoiceDisplayArr.push(
             <TableRow key={'first-choice-' + key}>
               <TableCell>{key}</TableCell>
-              <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-                {resSuccessPercentage} ({resInfo.success}/{resInfo.apps})
+              <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resInfo.applicants)}}>
+                {resSuccessPercentage} ({resInfo.success}/{resInfo.applicants})
                 </TableCell>
-              <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-                {nonResSuccessPercentage} ({nonResInfo.success}/{nonResInfo.apps})
+              <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResInfo.applicants)}}>
+                {nonResSuccessPercentage} ({nonResInfo.success}/{nonResInfo.applicants})
                 </TableCell>
             </TableRow>
           )
@@ -64,17 +67,17 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     if (secondChoiceObj) {
       const resSecondInfo = secondChoiceObj.res
       const nonResSecondInfo = secondChoiceObj.nonRes
-      const resSuccessPercentage = getSuccessPercentage(resSecondInfo.apps, resSecondInfo.success)
-      const nonResSuccessPercentage = getSuccessPercentage(nonResSecondInfo.apps, nonResSecondInfo.success)
-      if (resSecondInfo.apps || nonResSecondInfo.apps) {
+      const resSuccessPercentage = getSuccessPercentage(resSecondInfo.applicants, resSecondInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResSecondInfo.applicants, nonResSecondInfo.success)
+      if (resSecondInfo.applicants || nonResSecondInfo.applicants) {
         return (
           <TableRow>
             <TableCell>2nd Choice</TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-              {resSuccessPercentage} ({resSecondInfo.success}/{resSecondInfo.apps})
+            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resSecondInfo.applicants)}}>
+              {resSuccessPercentage} ({resSecondInfo.success}/{resSecondInfo.applicants})
                 </TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-              {nonResSuccessPercentage} ({nonResSecondInfo.success}/{nonResSecondInfo.apps})
+            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResSecondInfo.applicants)}}>
+              {nonResSuccessPercentage} ({nonResSecondInfo.success}/{nonResSecondInfo.applicants})
             </TableCell>
           </TableRow>
         )
@@ -87,17 +90,17 @@ const displayThirdChoiceRow = () => {
     if (thirdChoiceObj) {
       const resThirdInfo = thirdChoiceObj.res
       const nonResThirdInfo = thirdChoiceObj.nonRes
-      const resSuccessPercentage = getSuccessPercentage(resThirdInfo.apps, resThirdInfo.success)
-      const nonResSuccessPercentage = getSuccessPercentage(nonResThirdInfo.apps, nonResThirdInfo.success)
-      if (resThirdInfo.apps || nonResThirdInfo.apps) {
+      const resSuccessPercentage = getSuccessPercentage(resThirdInfo.applicants, resThirdInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResThirdInfo.applicants, nonResThirdInfo.success)
+      if (resThirdInfo.applicants || nonResThirdInfo.applicants) {
         return (
           <TableRow>
             <TableCell>3rd Choice</TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-              {resSuccessPercentage} ({resThirdInfo.success}/{resThirdInfo.apps})
+            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resThirdInfo.applicants)}}>
+              {resSuccessPercentage} ({resThirdInfo.success}/{resThirdInfo.applicants})
                 </TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-              {nonResSuccessPercentage} ({nonResThirdInfo.success}/{nonResThirdInfo.apps})
+            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResThirdInfo.applicants)}}>
+              {nonResSuccessPercentage} ({nonResThirdInfo.success}/{nonResThirdInfo.applicants})
             </TableCell>
           </TableRow>
         )
@@ -110,17 +113,17 @@ const displayFourthChoiceRow = () => {
     if (fourthChoiceObj) {
       const resFourthInfo = fourthChoiceObj.res
       const nonResFourthInfo = fourthChoiceObj.nonRes
-      const resSuccessPercentage = getSuccessPercentage(resFourthInfo.apps, resFourthInfo.success)
-      const nonResSuccessPercentage = getSuccessPercentage(nonResFourthInfo.apps, nonResFourthInfo.success)
-      if (resFourthInfo.apps || nonResFourthInfo.apps) {
+      const resSuccessPercentage = getSuccessPercentage(resFourthInfo.applicants, resFourthInfo.success)
+      const nonResSuccessPercentage = getSuccessPercentage(nonResFourthInfo.applicants, nonResFourthInfo.success)
+      if (resFourthInfo.applicants || nonResFourthInfo.applicants) {
         return (
           <TableRow>
             <TableCell>4th Choice</TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage)}}>
-              {resSuccessPercentage} ({resFourthInfo.success}/{resFourthInfo.apps})
+            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resFourthInfo.applicants)}}>
+              {resSuccessPercentage} ({resFourthInfo.success}/{resFourthInfo.applicants})
                 </TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage)}}>
-              {nonResSuccessPercentage} ({nonResFourthInfo.success}/{nonResFourthInfo.apps})
+            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResFourthInfo.applicants)}}>
+              {nonResSuccessPercentage} ({nonResFourthInfo.success}/{nonResFourthInfo.applicants})
             </TableCell>
           </TableRow>
         )
@@ -174,9 +177,10 @@ const displayFourthChoiceRow = () => {
     </TableContainer>
     )
   }
+
   return (
-    <Box>
-      {displayDrawTable()}
-    </Box>
-  );
+      <Box>
+        {displayDrawTable()}
+      </Box>
+    )
 }

@@ -113,6 +113,8 @@ export const colorado = {
         {label: '38', unit: '038'},
         {label: '42', unit: '042'},
         {label: '44', unit: '044'},
+        {label: '45', unit: '045'},
+        {label: '47', unit: '047'},
         {label: '52', unit: '052'},
         {label: '59', unit: '059'},
         {label: '63', unit: '063'},
@@ -138,15 +140,77 @@ export const colorado = {
         {label: '711', unit: '711'},
         {label: '741', unit: '741'},
         {label: '751', unit: '751'},
-        {label: '45', unit: '045'},
-        {label: '47', unit: '047'},
         {label: '444', unit: '444'}
     ],
     // need to add logic in crawler to see depending on an archery/rifle search for elk, whether to make call to db
     otcUnits: {
-        'E01A': [],
+        'E01A': [
+            // north colorado
+            3, 4, 5, 301, 161, 6, 301, 44, 214, 14, 16, 17, 171, 18, 181, 27, 15,
+            // flat tops
+            11, 211, 12, 13, 131, 231,
+            // central colorado n i70
+            21, 22, 23, 231, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 371,
+            // central colorado s i70
+            41, 42, 421, 411, 52, 521, 53, 54, 55, 551,
+            // aspen co
+            43, 44, 444, 45, 47, 471,
+            54, 54, 55, 551,
+            // montrose co
+            62, 63, 64, 65, 
+            // colorado springs
+            511, 581, 59, 591,
+            // sangre de cristos
+            68, 681, 82, 86, 861, 691, 79,
+            // southwest co
+            60
+            
+        ],
         'F01A': [],
-        'M02R': [],
-        'M03R': []
+        'M02R': [
+            // north colorado
+            3, 4, 5, 301, 161, 6, 301, 44, 214, 14, 16, 17, 171, 18, 181, 27, 15,
+            // flat tops
+            11, 211, 12, 13, 131, 231,
+            // central colorado n i70
+            21, 22, 23, 231, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 371,
+            // central colorado s i70
+            41, 42, 421, 411, 52, 521, 53, 54, 55, 551,
+            // aspen co
+            43, 44, 444, 45, 47, 471,
+            54, 54, 55, 551,
+            // montrose co
+            62, 63, 64, 65, 
+            // colorado springs
+            511, 581, 59, 591,
+            // sangre de cristos
+            68, 681, 82, 86, 861, 691,
+            // southwest co
+            60, 70, 71 , 711, 72, 73, 74, 741, 75, 751, 77, 771, 78, 80, 81,
+            //south co
+            85, 851, 133, 134, 140, 141, 142
+        ],
+        'M03R': [
+            3, 4, 5, 301, 161, 6, 301, 44, 214, 14, 16, 17, 171, 18, 181, 27, 15,
+            // flat tops
+            11, 211, 12, 13, 131, 231,
+            // central colorado n i70
+            21, 22, 23, 231, 24, 25, 30, 31, 32, 33, 34, 35, 36, 37, 371,
+            // central colorado s i70
+            41, 42, 421, 411, 52, 521, 53, 54, 55, 551,
+            // aspen co
+            43, 44, 444, 45, 47, 471,
+            54, 54, 55, 551,
+            // montrose co
+            62, 63, 64, 65, 
+            // colorado springs
+            511, 581, 59, 591,
+            // sangre de cristos
+            68, 681, 82, 86, 861, 691,
+            // southwest co
+            60, 70, 71 , 711, 72, 73, 74, 741, 75, 751, 77, 771, 78, 80, 81,
+            //south co
+            85, 851, 133, 134, 140, 141, 142
+        ]
     }
 }

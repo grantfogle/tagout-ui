@@ -26,11 +26,6 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
             return allUnits
         }
     } 
-    /*
-        TDL Before Launch
-        Ghost Loading
-        Error Message
-    */
 
     const displayDrawTable = () => {
         if (showErrorLoading) {

@@ -60,8 +60,8 @@ const Landing = () => {
             backgroundImage: 'url(https://images.unsplash.com/photo-1487213802982-74d73802997c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)', objectFit: 'cover'}}>
             <Container maxWidth="sm" sx={{height: '100%', backgroundColor: '#fff', margin: 0, padding: '2em', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
                 <Box mt={4} sx={{width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                    <Typography mb={3} component="h1" variant="h2">TAGout</Typography>
-                    <Typography mb={3} sx={{textAlign: 'center'}}>Explore draw odds and success statistics for top hunting units around the Western US</Typography>
+                    <Typography mb={3} component="h1" variant="h3">Welcome to Tagout, sign in to continue.</Typography>
+                    {/* <Typography mb={3} sx={{textAlign: 'center'}}>Explore draw odds and success statistics for top hunting units around the Western US</Typography> */}
                     <Tabs sx={{marginBottom: '1em'}} value={loginTabValue}
                         onChange={handleTabChange}
                         aria-label="tagout login forms">

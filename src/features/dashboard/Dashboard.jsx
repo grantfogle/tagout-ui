@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../firebase'
 import { getDatabase, ref, onValue} from "firebase/database"
+import {coloradoOTC} from './assets/otcUnits';
 
 import { Box, Container } from '@mui/material'
-
 import Navbar from './navbar/Navbar'
 import Search from './search/Search'
 import PopulationTable from './dataTables/populationTable/PopulationTable'
 import HarvestStatsTable from './dataTables/harvestStatsTable/HarvestStatsTable'
 import DrawOddsTable from './dataTables/drawOddsTable/DrawOddsTable'
+import OtcDisplay from './otcDisplay/OtcDisplay'
 import Footer from './footer/Footer'
 
 const Dashboard = () => {
@@ -23,21 +24,58 @@ const Dashboard = () => {
     const [popTableError, setPopTableError] = useState(false)
     const [harvestTableLoading, setHarvestTableLoading] = useState(false)
     const [harvestTableError, setHarvestTableError] = useState(false)
+    const [isOtcUnit, setIsOtcUnit] = useState(false)
+    const [huntUnit, setHuntUnit] = useState('1')
     const navigate = useNavigate()
 
     useEffect(() => {
-        // check if unit is otc, if otc return unit is otc
         fetchDrawStats(searchStr)
         fetchUnitStats('1')
         fetchHarvestStats('O1', 'R', '1')
     }, [searchStr])
 
-    const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method) => {
-    
-        fetchDrawStats(searchTerm)
+    const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
+        setHuntUnit(selectedUnit)
+        const isOTC = checkIfOtcUnit(genderSeasonMethod, selectedUnit)
+
+        if (!isOTC) {
+            setIsOtcUnit(false)
+            fetchDrawStats(searchTerm)
+        } else {
+            setIsOtcUnit(true)
+        }
         fetchUnitStats(selectedUnit)
         fetchHarvestStats(huntSeason, method, selectedUnit)
     }
+
+    const checkIfOtcUnit = (genderSeasonMethod, unit) => {
+        const parseIntUnit = parseInt(unit)
+        switch (genderSeasonMethod) {
+            case 'EEO1A':
+            case 'EMO1A':
+                if (coloradoOTC[genderSeasonMethod].includes(parseIntUnit)) {
+                    return true
+                }
+                return false
+                break
+            case 'EFO1A':
+                if (coloradoOTC[genderSeasonMethod].includes(parseIntUnit)) {
+                    return true
+                }
+                return false
+                break
+            case 'EMO2R':
+            case 'EMO3R':
+                if (coloradoOTC['EMO2R'].includes(parseIntUnit)) {
+                    return true
+                }
+                return false
+                break
+            default:
+                return false
+                break
+        }
+    } 
 
     const fetchUnitStats = async (unit) => {
         setPopTableLoading(true)
@@ -61,7 +99,6 @@ const Dashboard = () => {
 
     const fetchDrawStats = async (searchTerm) => {
         setDrawOddsLoading(true)
-
         const dbSnap = getDatabase()
         const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
     
@@ -70,6 +107,7 @@ const Dashboard = () => {
             if (data) {
                 setDisplayStats(data)
                 setDrawOddsLoading(false)
+                setDrawOddsError(false)
             } else {
                 setDrawOddsLoading(false)
                 setDrawOddsError(true)
@@ -110,6 +148,24 @@ const Dashboard = () => {
         }
     }
 
+    const unitDrawOddsDisplay = (huntDisplayStats) => {
+        if (isOtcUnit) {
+            return (
+                <OtcDisplay
+                    isOtcUnit
+                    unit={huntUnit}/>
+            )
+        }
+        return (
+        <DrawOddsTable 
+            displayStats={huntDisplayStats}
+            showLoading={drawOddsLoading}
+            showErrorLoading={drawOddsError}
+            isOtcUnit/>
+        )
+
+    }
+
     // check auth state, if !user false then navigate back to home page
     // error handling
     // ghost loading
@@ -130,12 +186,9 @@ const Dashboard = () => {
                     <HarvestStatsTable 
                         sx={{ marginBottom: '1em', width: '50%'}}
                         harvestStats={harvestStats}
-                        showLoading={popTableLoading}
-                        showErrorLoading={popTableError}/>
-                    <DrawOddsTable
-                        displayStats={displayStats}
-                        showLoading={drawOddsLoading}
-                        showErrorLoading={drawOddsError}/>
+                        showLoading={harvestTableLoading}
+                        showErrorLoading={harvestTableError}/>
+                    {unitDrawOddsDisplay(displayStats)}
                 </Box>
             </Container>
             <Footer/>
