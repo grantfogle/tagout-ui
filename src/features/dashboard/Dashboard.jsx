@@ -99,7 +99,6 @@ const Dashboard = () => {
 
     const fetchDrawStats = async (searchTerm) => {
         setDrawOddsLoading(true)
-
         const dbSnap = getDatabase()
         const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
     
@@ -108,6 +107,7 @@ const Dashboard = () => {
             if (data) {
                 setDisplayStats(data)
                 setDrawOddsLoading(false)
+                setDrawOddsError(false)
             } else {
                 setDrawOddsLoading(false)
                 setDrawOddsError(true)
@@ -148,7 +148,7 @@ const Dashboard = () => {
         }
     }
 
-    const unitDrawOddsDisplay = () => {
+    const unitDrawOddsDisplay = (huntDisplayStats) => {
         if (isOtcUnit) {
             return (
                 <OtcDisplay
@@ -158,7 +158,7 @@ const Dashboard = () => {
         }
         return (
         <DrawOddsTable 
-            displayStats={displayStats}
+            displayStats={huntDisplayStats}
             showLoading={drawOddsLoading}
             showErrorLoading={drawOddsError}
             isOtcUnit/>
@@ -188,7 +188,7 @@ const Dashboard = () => {
                         harvestStats={harvestStats}
                         showLoading={harvestTableLoading}
                         showErrorLoading={harvestTableError}/>
-                    {unitDrawOddsDisplay()}
+                    {unitDrawOddsDisplay(displayStats)}
                 </Box>
             </Container>
             <Footer/>
