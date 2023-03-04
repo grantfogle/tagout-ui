@@ -47,7 +47,8 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     } else {
         return (
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label="simple table">
+                <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Herd Population</Typography>
+                <Table sx={{ maxWidth: 500 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>DAU</TableCell>
@@ -74,7 +75,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
 
   return (
     <Box sx={{width: '520px', marginBottom: '1em'}}>
-      {displayDrawTable()}
+        {displayDrawTable()}
     </Box>
   )
 }

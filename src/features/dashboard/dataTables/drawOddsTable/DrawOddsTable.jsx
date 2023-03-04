@@ -159,22 +159,23 @@ const displayFourthChoiceRow = () => {
     }
     return (
       <TableContainer component={Paper}>
-      <Table sx={{ maxWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Preference Points</TableCell>
-            <TableCell>Resident</TableCell>
-            <TableCell>Non Resident</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {displaySecondChoiceRow()}
-          {displayThirdChoiceRow()}
-          {displayFourthChoiceRow()}
-          {displayFirstChoiceRows()}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Draw Odds</Typography>
+        <Table sx={{ maxWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Preference Points</TableCell>
+              <TableCell>Resident</TableCell>
+              <TableCell>Non Resident</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {displaySecondChoiceRow()}
+            {displayThirdChoiceRow()}
+            {displayFourthChoiceRow()}
+            {displayFirstChoiceRows()}
+          </TableBody>
+        </Table>
+      </TableContainer>
     )
   }
 
