@@ -31,7 +31,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
         if (showErrorLoading) {
             return (
                 <Box>
-                    <Typography variant="h2" component="h4" align="center" sx={{color: '#d35400', mt: 4}}>
+                    <Typography variant='h2' component='h4' align='center' sx={{color: '#d35400', mt: 4}}>
                         Error loading data, please try again
                     </Typography>
                 </Box>
@@ -47,8 +47,8 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     } else {
         return (
             <TableContainer>
-                <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Herd Population</Typography>
-                <Table sx={{ maxWidth: 500 }} aria-label="simple table">
+                <Typography variant='h5' component='h5' sx={{marginLeft: '.5em', marginTop: '.5em'}}>Herd Population</Typography>
+                <Table sx={{ maxWidth: 500 }} aria-label='simple table'>
                     <TableHead>
                         <TableRow>
                             <TableCell>DAU</TableCell>

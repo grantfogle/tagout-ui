@@ -5,7 +5,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -15,7 +14,7 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
   const successColor = '#2ecc71'
   const midSuccessColor = '#f1c40f'
   const noSuccessColor = '#e74c3c'
-  const noEntriesColor = '#fff';
+  const noEntriesColor = '#fff'
 
   const getConditionalBgColor = (successPercent, applications) => {
     if (applications === 0) {
@@ -58,7 +57,7 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
           )
         }
       }
-      return firstChoiceDisplayArr;
+      return firstChoiceDisplayArr
     }
   }
 
@@ -145,7 +144,6 @@ const displayFourthChoiceRow = () => {
           </Typography>
         </Box>
       )
-      // error text
     } else if (showLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
@@ -180,7 +178,7 @@ const displayFourthChoiceRow = () => {
   }
 
   return (
-      <Box sx={{width: '100%', boxShadow: 'none'}}>
+      <Box sx={{width: '100%', marginTop: '1em', borderTop: '1px solid #dfdfdf'}}>
         {displayDrawTable()}
       </Box>
     )
