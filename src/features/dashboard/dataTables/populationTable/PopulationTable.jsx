@@ -73,7 +73,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     }
 
   return (
-    <Box sx={{width: '600px', marginBottom: '1em'}}>
+    <Box sx={{width: '520px', marginBottom: '1em'}}>
       {displayDrawTable()}
     </Box>
   )

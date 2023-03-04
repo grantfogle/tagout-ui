@@ -33,16 +33,16 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
             )
     } else if (showLoading) {
       return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Skeleton width={500} height={200} />
-          <Skeleton width={500} height={200} />
-          <Skeleton width={500} height={200} />
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px'}}>
+          <Skeleton width={400} height={120} />
+          <Skeleton width={400} height={120} />
+          <Skeleton width={400} height={120} />
         </Box>
       )
     } else {
         return (
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label="simple table">
+                <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Bulls</TableCell>
@@ -72,7 +72,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
     }
 
   return (
-    <Box sx={{width: '600px', marginBottom: '1em'}}>
+    <Box sx={{maxWidth: '560px', marginBottom: '1em'}}>
       {displayDrawTable()}
     </Box>
   )

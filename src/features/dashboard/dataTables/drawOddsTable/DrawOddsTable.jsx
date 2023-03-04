@@ -159,7 +159,7 @@ const displayFourthChoiceRow = () => {
     }
     return (
       <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ maxWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Preference Points</TableCell>
@@ -179,7 +179,7 @@ const displayFourthChoiceRow = () => {
   }
 
   return (
-      <Box>
+      <Box sx={{width: '100%'}}>
         {displayDrawTable()}
       </Box>
     )
