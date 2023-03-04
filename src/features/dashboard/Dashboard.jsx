@@ -177,14 +177,14 @@ const Dashboard = () => {
             <Container maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px'}}>
                 {/* link to big game brochure: https://cpw.state.co.us/Documents/RulesRegs/Brochure/BigGame/biggame.pdf */}
                 <Search fetchSearchResults={fetchSearchResults}/>
-                <Box sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                <Box sx={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
                     <PopulationTable 
-                        sx={{ marginBottom: '1em', width: '50%'}}
+                        sx={{ marginBottom: '1em', width: '480px'}}
                         populationStats={populationStats}
                         showLoading={popTableLoading}
                         showErrorLoading={popTableError}/>
                     <HarvestStatsTable 
-                        sx={{ marginBottom: '1em', width: '50%'}}
+                        sx={{ marginBottom: '1em'}}
                         harvestStats={harvestStats}
                         showLoading={harvestTableLoading}
                         showErrorLoading={harvestTableError}/>

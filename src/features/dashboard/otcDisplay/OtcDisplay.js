@@ -10,7 +10,7 @@ export default function OtcDisplay({isOtcUnit, unit}) {
     //     return <Typography>{displayString}</Typography>
     // }
     return (
-        <Box>
+        <Box sx={{width: '100%'}}>
             <Typography variant="h3" component="h2">Unit {unit} is OTC</Typography>
             {/* <Box>
                 <OtcUnitList/>

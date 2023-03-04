@@ -33,16 +33,17 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
             )
     } else if (showLoading) {
       return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Skeleton width={500} height={200} />
-          <Skeleton width={500} height={200} />
-          <Skeleton width={500} height={200} />
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px'}}>
+          <Skeleton width={400} height={120} />
+          <Skeleton width={400} height={120} />
+          <Skeleton width={400} height={120} />
         </Box>
       )
     } else {
         return (
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 500 }} aria-label="simple table">
+            <TableContainer>
+                <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Harvest Stats</Typography>
+                <Table>
                     <TableHead>
                         <TableRow>
                             <TableCell>Bulls</TableCell>
@@ -50,8 +51,6 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                             <TableCell>Calves</TableCell>
                             <TableCell>Total</TableCell>
                             <TableCell>Hunters</TableCell>
-                            <TableCell>Success</TableCell>
-                            <TableCell>Rec Days</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -60,9 +59,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                             <TableCell>{cows}</TableCell>
                             <TableCell>{calves}</TableCell>
                             <TableCell>{total}</TableCell>
-                            <TableCell>{hunters}</TableCell>
-                            <TableCell>{successPercent + '%'}</TableCell>
-                            <TableCell>{recDays}</TableCell>
+                            <TableCell>{hunters} ({successPercent + '%'})</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -72,8 +69,8 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
     }
 
   return (
-    <Box sx={{width: '600px', marginBottom: '1em'}}>
-      {displayDrawTable()}
+    <Box sx={{maxWidth: '600px', marginBottom: '1em', boxShadow: 'none'}}>
+        {displayDrawTable()}
     </Box>
   )
 }
