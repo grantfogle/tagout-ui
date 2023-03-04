@@ -158,7 +158,7 @@ const displayFourthChoiceRow = () => {
 
     }
     return (
-      <TableContainer component={Paper}>
+      <TableContainer sx={{width: '100%'}}>
         <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Draw Odds</Typography>
         <Table sx={{ maxWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -180,7 +180,7 @@ const displayFourthChoiceRow = () => {
   }
 
   return (
-      <Box sx={{width: '100%'}}>
+      <Box sx={{width: '100%', boxShadow: 'none'}}>
         {displayDrawTable()}
       </Box>
     )

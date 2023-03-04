@@ -46,7 +46,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
       )
     } else {
         return (
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Herd Population</Typography>
                 <Table sx={{ maxWidth: 500 }} aria-label="simple table">
                     <TableHead>

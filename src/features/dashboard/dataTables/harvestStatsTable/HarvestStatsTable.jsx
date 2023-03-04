@@ -41,7 +41,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
       )
     } else {
         return (
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Harvest Stats</Typography>
                 <Table>
                     <TableHead>
@@ -69,7 +69,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
     }
 
   return (
-    <Box sx={{maxWidth: '600px', marginBottom: '1em'}}>
+    <Box sx={{maxWidth: '600px', marginBottom: '1em', boxShadow: 'none'}}>
         {displayDrawTable()}
     </Box>
   )
