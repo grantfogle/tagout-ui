@@ -50,10 +50,11 @@ const Dashboard = () => {
 
     const checkIfOtcUnit = (genderSeasonMethod, unit) => {
         const parseIntUnit = parseInt(unit)
+        console.log(genderSeasonMethod)
         switch (genderSeasonMethod) {
             case 'EEO1A':
             case 'EMO1A':
-                if (coloradoOTC[genderSeasonMethod].includes(parseIntUnit)) {
+                if (coloradoOTC['EEO1A'].includes(parseIntUnit)) {
                     return true
                 }
                 return false
