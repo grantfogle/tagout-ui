@@ -1,10 +1,10 @@
 export const colorado = {
     species: [
         {label: 'Elk', value: 'E', disabled: false},
-        {label: 'Anteloupe', value: 'A', disabled: true},
-        {label: 'Bear', value: 'B', disabled: true},
-        {label: 'Deer', value: 'D', disabled: true},
+        {label: 'Pronghorn', value: 'P', disabled: false},
+        {label: 'Deer', value: 'D', disabled: false},
         {label: 'Moose', value: 'M', disabled: true},
+        {label: 'Bear', value: 'B', disabled: true},
     ],
     method: [
         {label: 'Rifle', value: 'R'},
@@ -12,7 +12,7 @@ export const colorado = {
         {label: 'Muzzleloader', value: 'M'}
     ],
     seasons: [
-        'O1', 'O2', 'O3', 'O4', 
+        'O1', 'O2', 'O3', 'O4', 'L1', 'E1'
         // 'E1', 'J2', 'K2', 'K3', 'L1',
         // 'L2', 'L3', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'S2',
         // 'S3', 'S4', 'W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W9'

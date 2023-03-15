@@ -1,20 +1,26 @@
 import { getDatabase, ref, onValue} from 'firebase/database'
 
-export const getDrawStats = async (searchTerm) => {
-    // setDrawOddsLoading(true)
-    console.log('BANG')
-
+export const getDrawStats = async (state, species, huntCode) => {
     const dbSnap = getDatabase()
-    const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
+    const drawStatsRef = ref(dbSnap, `${state}/drawStats/${species}/${huntCode}`)
 
     onValue(drawStatsRef, (snapshot) => {
         const data = snapshot.val()
         if (data) {
-            return data
+            return {
+                error: false,
+                data
+            }
         } else {
-            return false
+            return {
+                error: false,
+                data: []
+            }
         }
     }, error => {
-        return false
+        return {
+            error: true,
+            data: []
+        }
     })
 }

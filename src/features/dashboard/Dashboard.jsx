@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { logout } from '../../firebase'
 import { getDatabase, ref, onValue} from "firebase/database"
-import {coloradoOTC} from './assets/otcUnits';
+import {coloradoOTC} from './assets/otcUnits'
+import {getDrawStats} from './api/getDrawStats'
 
 import { Box, Container } from '@mui/material'
 import Navbar from './navbar/Navbar'
@@ -14,6 +15,10 @@ import OtcDisplay from './otcDisplay/OtcDisplay'
 import Footer from './footer/Footer'
 
 const Dashboard = () => {
+    const [state, setState] = useState('colorado')
+    const [species, setSpecies] = useState('elk')
+    const [drawStatsCode, setDrawStatsCode] = useState('EE001E1R')
+
     const [searchStr, setSearchStr] = useState('EE001E1R')
     const [displayStats, setDisplayStats] = useState('')
     const [populationStats, setPopulationStats] = useState('')
@@ -40,7 +45,8 @@ const Dashboard = () => {
 
         if (!isOTC) {
             setIsOtcUnit(false)
-            fetchDrawStats(searchTerm)
+            const drawStatsSearch = getDrawStats(null, null, searchTerm)
+            // fetchDrawStats(searchTerm)
         } else {
             setIsOtcUnit(true)
         }
