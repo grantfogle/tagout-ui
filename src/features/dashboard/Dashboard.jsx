@@ -18,25 +18,30 @@ const Dashboard = () => {
     const [state, setState] = useState('colorado')
     const [species, setSpecies] = useState('elk')
     const [drawStatsCode, setDrawStatsCode] = useState('EE001E1R')
+    const [huntUnit, setHuntUnit] = useState('1')
+    const [isOtcUnit, setIsOtcUnit] = useState(false)
 
     const [searchStr, setSearchStr] = useState('EE001E1R')
     const [displayStats, setDisplayStats] = useState('')
     const [populationStats, setPopulationStats] = useState('')
     const [harvestStats, setHarvestStats] = useState('')
+
     const [drawOddsLoading, setDrawOddsLoading] = useState(false)
     const [drawOddsError, setDrawOddsError] = useState(false)
+
     const [popTableLoading, setPopTableLoading] = useState(false)
     const [popTableError, setPopTableError] = useState(false)
+
     const [harvestTableLoading, setHarvestTableLoading] = useState(false)
     const [harvestTableError, setHarvestTableError] = useState(false)
-    const [isOtcUnit, setIsOtcUnit] = useState(false)
-    const [huntUnit, setHuntUnit] = useState('1')
+
     const navigate = useNavigate()
 
     useEffect(() => {
         fetchDrawStats(searchStr)
         fetchUnitStats('1')
         fetchHarvestStats('O1', 'R', '1')
+        const drawStats= getDrawStats(state, species, drawStatsCode)
     }, [searchStr])
 
     const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
