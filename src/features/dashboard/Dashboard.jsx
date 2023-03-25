@@ -38,25 +38,53 @@ const Dashboard = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetchDrawStats(searchStr)
-        fetchUnitStats('1')
-        fetchHarvestStats('O1', 'R', '1')
-        const drawStats= getDrawStats(state, species, drawStatsCode)
+        // fetchDrawStats(searchStr)
+        // fetchUnitStats('1')
+        // fetchHarvestStats('O1', 'R', '1')
+        getDrawStats(state, species, drawStatsCode);
     }, [searchStr])
 
-    const fetchSearchResults = (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
+    const getDrawStats = async (state, species, huntCode) => {
+        const dbSnap = getDatabase()
+        const drawStatsRef = ref(dbSnap, `${state}1/${species}/drawStats/${huntCode}`)
+    
+        onValue(drawStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            if (data) {
+                setDisplayStats(data)
+                console.log(data)
+                // set
+                // return {
+                //     error: false,
+                //     data
+                // }
+            } else {
+                return {
+                    error: false,
+                    data: []
+                }
+            }
+        }, error => {
+            return {
+                error: true,
+                data: []
+            }
+        })
+    }
+
+    const fetchSearchResults = async (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
         setHuntUnit(selectedUnit)
         const isOTC = checkIfOtcUnit(genderSeasonMethod, selectedUnit)
 
         if (!isOTC) {
             setIsOtcUnit(false)
-            const drawStatsSearch = getDrawStats(null, null, searchTerm)
+            const drawStatsSearch = await getDrawStats(null, null, searchTerm)
             // fetchDrawStats(searchTerm)
         } else {
             setIsOtcUnit(true)
         }
-        fetchUnitStats(selectedUnit)
-        fetchHarvestStats(huntSeason, method, selectedUnit)
+        // fetchUnitStats(selectedUnit)
+        // fetchHarvestStats(huntSeason, method, selectedUnit)
     }
 
     const checkIfOtcUnit = (genderSeasonMethod, unit) => {
@@ -89,69 +117,69 @@ const Dashboard = () => {
         }
     } 
 
-    const fetchUnitStats = async (unit) => {
-        setPopTableLoading(true)
-        const dbSnap = getDatabase()
-        const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + unit)
+    // const fetchUnitStats = async (unit) => {
+    //     setPopTableLoading(true)
+    //     const dbSnap = getDatabase()
+    //     const populationStatsRef = ref(dbSnap, 'colorado/populationStats/elk/' + unit)
 
-        onValue(populationStatsRef, (snapshot) => {
-            const data = snapshot.val()
-            if (data) {
-                setPopulationStats(data)
-                setPopTableLoading(false)
-            } else {
-                setPopTableLoading(false)
-                setPopTableError(true)
-            }
-        }, error => {
-            setPopTableLoading(false)
-            setPopTableError(true)
-        })
-    }
+    //     onValue(populationStatsRef, (snapshot) => {
+    //         const data = snapshot.val()
+    //         if (data) {
+    //             setPopulationStats(data)
+    //             setPopTableLoading(false)
+    //         } else {
+    //             setPopTableLoading(false)
+    //             setPopTableError(true)
+    //         }
+    //     }, error => {
+    //         setPopTableLoading(false)
+    //         setPopTableError(true)
+    //     })
+    // }
 
-    const fetchDrawStats = async (searchTerm) => {
-        setDrawOddsLoading(true)
-        const dbSnap = getDatabase()
-        const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
+    // const fetchDrawStats = async (searchTerm) => {
+    //     setDrawOddsLoading(true)
+    //     const dbSnap = getDatabase()
+    //     const drawStatsRef = ref(dbSnap, 'colorado/drawStats/elk/' + searchTerm)
     
-        onValue(drawStatsRef, (snapshot) => {
-            const data = snapshot.val()
-            if (data) {
-                setDisplayStats(data)
-                setDrawOddsLoading(false)
-                setDrawOddsError(false)
-            } else {
-                setDrawOddsLoading(false)
-                setDrawOddsError(true)
-            }
-        }, error => {
-            setDrawOddsLoading(false)
-            setDrawOddsError(true)
-        })
-    }
+    //     onValue(drawStatsRef, (snapshot) => {
+    //         const data = snapshot.val()
+    //         if (data) {
+    //             setDisplayStats(data)
+    //             setDrawOddsLoading(false)
+    //             setDrawOddsError(false)
+    //         } else {
+    //             setDrawOddsLoading(false)
+    //             setDrawOddsError(true)
+    //         }
+    //     }, error => {
+    //         setDrawOddsLoading(false)
+    //         setDrawOddsError(true)
+    //     })
+    // }
 
-    const fetchHarvestStats = async (huntSeason, method, unit) => {
-        setHarvestTableLoading(true)
-        const harvestUrl = `colorado/harvestStats/elk/${huntSeason}${method}/${unit}`
+    // const fetchHarvestStats = async (huntSeason, method, unit) => {
+    //     setHarvestTableLoading(true)
+    //     const harvestUrl = `colorado/harvestStats/elk/${huntSeason}${method}/${unit}`
 
-        const dbSnap = getDatabase()
-        const drawStatsRef = ref(dbSnap, harvestUrl)
+    //     const dbSnap = getDatabase()
+    //     const drawStatsRef = ref(dbSnap, harvestUrl)
         
-        onValue(drawStatsRef, (snapshot) => {
-            const data = snapshot.val()
-            if (data) {
-                setHarvestStats(data)
-                setHarvestTableLoading(false)
-            } else {
-                setHarvestTableLoading(false)
-                setHarvestTableError(true)
-            }
-        }, error => {
-            setHarvestTableLoading(false)
-            setHarvestTableError(true)
-        })
+    //     onValue(drawStatsRef, (snapshot) => {
+    //         const data = snapshot.val()
+    //         if (data) {
+    //             setHarvestStats(data)
+    //             setHarvestTableLoading(false)
+    //         } else {
+    //             setHarvestTableLoading(false)
+    //             setHarvestTableError(true)
+    //         }
+    //     }, error => {
+    //         setHarvestTableLoading(false)
+    //         setHarvestTableError(true)
+    //     })
 
-    }
+    // }
 
     const logoutUser = () => {
         const userAuthenticated = logout()
