@@ -17,16 +17,16 @@ import Footer from './footer/Footer'
 const Dashboard = () => {
     const [state, setState] = useState('colorado')
     const [species, setSpecies] = useState('elk')
-    const [drawStatsCode, setDrawStatsCode] = useState('EE001E1R')
     const [huntUnit, setHuntUnit] = useState('1')
     const [seasonMethod, setSeasonMethod] = useState('O1R')
     const [isOtcUnit, setIsOtcUnit] = useState(false)
 
     const [searchStr, setSearchStr] = useState('EE001E1R')
-    const [displayStats, setDisplayStats] = useState('')
     const [populationStats, setPopulationStats] = useState('')
     const [harvestStats, setHarvestStats] = useState('')
 
+    const [drawStatsCode, setDrawStatsCode] = useState('EE001E1R')
+    const [drawOdds, setDrawOdds] = useState('')
     const [drawOddsLoading, setDrawOddsLoading] = useState(false)
     const [drawOddsError, setDrawOddsError] = useState(false)
 
@@ -39,39 +39,30 @@ const Dashboard = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // fetchDrawStats(searchStr)
-        // fetchUnitStats('1')
-        // fetchHarvestStats('O1', 'R', '1')
         fetchUnitStats()
-        fetchDrawStats(state, species, drawStatsCode);
+        fetchDrawStats(state, species, drawStatsCode)
+        fetchHarvestStats('11')
     }, [searchStr])
 
     const fetchDrawStats = async (state, species, huntCode) => {
         const dbSnap = getDatabase()
         const drawStatsRef = ref(dbSnap, `${state}1/${species}/drawStats/${huntCode}`)
-        setDisplayStats([])
+        // check if unit is otc
+
+        setDrawOdds([])
     
         onValue(drawStatsRef, (snapshot) => {
             const data = snapshot.val()
             if (data) {
-                setDisplayStats(data)
-                console.log(data)
-                // set
-                // return {
-                //     error: false,
-                //     data
-                // }
+                setDrawOdds(data)
+                setDrawOddsLoading(false)
             } else {
-                return {
-                    error: false,
-                    data: []
-                }
+                setDrawOddsLoading(false)
+                // set there doesn't appear to be data for this unit, please try another unit
             }
         }, error => {
-            return {
-                error: true,
-                data: []
-            }
+            setDrawOddsLoading(false)
+            setDrawOddsError(false)
         })
     }
 
@@ -162,9 +153,9 @@ const Dashboard = () => {
     //     })
     // }
 
-    const fetchHarvestStats = async (huntSeason, method, unit) => {
+    const fetchHarvestStats = async (unit) => {
         setHarvestTableLoading(true)
-        const harvestUrl = `colorado1/${species}/harvestStats/${seasonMethod}/${unit}`
+        const harvestUrl = `${state}1/${species}/harvestStats/${seasonMethod}/${unit}`
 
         const dbSnap = getDatabase()
         const drawStatsRef = ref(dbSnap, harvestUrl)
@@ -232,7 +223,7 @@ const Dashboard = () => {
                         harvestStats={harvestStats}
                         showLoading={harvestTableLoading}
                         showErrorLoading={harvestTableError}/>
-                    {unitDrawOddsDisplay(displayStats)}
+                    {unitDrawOddsDisplay(drawOdds)}
                 </Box>
             </Container>
             <Footer/>

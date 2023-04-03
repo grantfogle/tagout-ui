@@ -46,8 +46,8 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Bulls</TableCell>
-                            <TableCell>Cows</TableCell>
+                            <TableCell>Males</TableCell>
+                            <TableCell>Females</TableCell>
                             <TableCell>Calves</TableCell>
                             <TableCell>Total</TableCell>
                             <TableCell>Hunters</TableCell>
@@ -58,8 +58,8 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                             <TableCell>{bulls}</TableCell>
                             <TableCell>{cows}</TableCell>
                             <TableCell>{calves}</TableCell>
-                            <TableCell>{total}</TableCell>
-                            <TableCell>{hunters} ({successPercent + '%'})</TableCell>
+                            <TableCell>{total} ({successPercent + '%'})</TableCell>
+                            <TableCell>{hunters}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
