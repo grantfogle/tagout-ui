@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
 
-export default function Search({fetchSearchResults, updateSelectedUnit}) {
+export default function Search() {
     const [species, setSpecies] = useState('E')
     const [gender, setGender] = useState('E')
     const [unit, setUnit] = useState('')
@@ -15,8 +15,16 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
         const searchStr = `${species}${gender}${unit}${season}${method}`
         const genderSznMethod = `${species}${gender}${season}${method}`
         setHuntCode(searchStr)
-        fetchSearchResults(searchStr, unitLabel, season, method, genderSznMethod)
+        // fetchSearchResults(searchStr, unitLabel, season, method, genderSznMethod)
     }
+
+    const fetchUnitData = () => {
+        // one call for population data
+        // one call for harvest data
+        // one call for draw odds data
+    }
+    // execute search functions
+
 
     const displayHuntCode = () => {
         return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Selected Code: {huntCode}</Typography>
