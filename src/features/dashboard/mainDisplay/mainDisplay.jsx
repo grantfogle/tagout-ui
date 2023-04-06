@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { logout } from '../../../firebase'
 import { getDatabase, ref, onValue} from "firebase/database"
-import {coloradoOTC} from '../assets/otcUnits'
-import {getDrawStats} from '../api/getDrawStats'
-import { isUnitOtc } from '../utils/isUnitOtc'
+
+
 import { DashboardContext } from '../components/DashboardContextProvider'
 
 import { Box, Container } from '@mui/material'

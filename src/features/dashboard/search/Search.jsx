@@ -1,15 +1,25 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
+import { DashboardContext } from '../components/DashboardContextProvider'
+import { getDrawOddsData } from '../api/getDrawOddsData'
 
 export default function Search() {
+    const {setDrawOddsData} = useContext(DashboardContext)
+
+    const [state, setState] = useState('colorado')
     const [species, setSpecies] = useState('E')
+    const [specie, setSpecie] = useState('elk')
     const [gender, setGender] = useState('E')
     const [unit, setUnit] = useState('')
     const [unitLabel, setUnitLabel] = useState('1')
     const [season, setSeason] = useState('O1')
     const [method, setMethod] = useState('R')
     const [huntCode, setHuntCode] = useState('EE001E1R')
+
+    useEffect(() => {
+        fetchUnitData()
+    }, [])
 
     const fetchDetails = () => {
         const searchStr = `${species}${gender}${unit}${season}${method}`
@@ -22,6 +32,13 @@ export default function Search() {
         // one call for population data
         // one call for harvest data
         // one call for draw odds data
+        const drawStuff = getDrawOddsData(state, specie, `${gender}${season}${method}`, unit, huntCode)
+
+        drawStuff.then((val) => {
+            if (val) {
+                console.log(val)
+            }
+        })
     }
     // execute search functions
 
