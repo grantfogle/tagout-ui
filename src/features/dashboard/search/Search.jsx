@@ -3,9 +3,12 @@ import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
 import { DashboardContext } from '../components/DashboardContextProvider'
 import { getDrawOddsData } from '../api/getDrawOddsData'
+import { UseFetchFirebaseData } from '../hooks/fetchFirebaseData'
+import { getDatabase, ref, onValue} from 'firebase/database'
+
 
 export default function Search() {
-    const {setDrawOddsData} = useContext(DashboardContext)
+    const {setDrawOddsData, setDrawOddsLoading, setDrawOddsError} = useContext(DashboardContext)
 
     const [state, setState] = useState('colorado')
     const [species, setSpecies] = useState('E')
@@ -17,30 +20,68 @@ export default function Search() {
     const [method, setMethod] = useState('R')
     const [huntCode, setHuntCode] = useState('EE001E1R')
 
-    useEffect(() => {
-        fetchUnitData()
-    }, [])
 
-    const fetchDetails = () => {
-        const searchStr = `${species}${gender}${unit}${season}${method}`
-        const genderSznMethod = `${species}${gender}${season}${method}`
-        setHuntCode(searchStr)
-        // fetchSearchResults(searchStr, unitLabel, season, method, genderSznMethod)
-    }
-
-    const fetchUnitData = () => {
-        // one call for population data
-        // one call for harvest data
-        // one call for draw odds data
-        const drawStuff = getDrawOddsData(state, specie, `${gender}${season}${method}`, unit, huntCode)
-
-        drawStuff.then((val) => {
-            if (val) {
-                console.log(val)
-            }
-        })
-    }
     // execute search functions
+    const handleSubmit = (event) => {
+        fetchDrawOddsData()
+    }
+
+    const fetchDrawOddsData = () => {
+        const drawOddsUrl = `${state}1/elk/drawStats/${huntCode}`
+        const harvestUrl = ``
+        const populationUrl = ``
+
+        const dbSnap = getDatabase()
+
+        setDrawOddsLoading(true)
+        setDrawOddsData(null)
+        
+        const drawStatsRef = ref(dbSnap, drawOddsUrl)
+        onValue(drawStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            if (data) {
+                setDrawOddsLoading(false)
+                setDrawOddsData(data)
+            } else {
+                setDrawOddsLoading(false)
+                setDrawOddsData(null)
+            }
+        }, error => {
+            setDrawOddsLoading(false)
+            setDrawOddsError(true)
+        })
+
+        // const harvestStatsRef = ref(dbSnap, harvestUrl)
+        // onValue(harvestStatsRef, (snapshot) => {
+        //     const data = snapshot.val()
+        //     if (data) {
+        //         setDrawOddsLoading(false)
+        //         setDrawOddsData(data)
+        //     } else {
+        //         setDrawOddsLoading(false)
+        //         setDrawOddsData(null)
+        //     }
+        // }, error => {
+        //     setDrawOddsLoading(false)
+        //     setDrawOddsError(true)
+        // })
+
+        //const populationStatsRef = ref(dbSnap, harvestUrl)
+        // onValue(populationStatsRef, (snapshot) => {
+        //     const data = snapshot.val()
+        //     if (data) {
+        //         setDrawOddsLoading(false)
+        //         setDrawOddsData(data)
+        //     } else {
+        //         setDrawOddsLoading(false)
+        //         setDrawOddsData(null)
+        //     }
+        // }, error => {
+        //     setDrawOddsLoading(false)
+        //     setDrawOddsError(true)
+        // })
+    }
+
 
 
     const displayHuntCode = () => {
@@ -149,7 +190,7 @@ export default function Search() {
                     </Select>
                 </FormControl>
 
-            <Button onClick={() => fetchDetails()}
+            <Button onClick={() => handleSubmit()}
                 variant="contained"
                 sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}}
                 disabled={checkFormVerification()}>Submit</Button>

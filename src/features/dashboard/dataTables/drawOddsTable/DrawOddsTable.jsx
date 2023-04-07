@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,9 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { DashboardContext } from '../../components/DashboardContextProvider';
 
 
-export default function DrawOddsTable({ displayStats, showLoading, showErrorLoading, isOtcUnit }) {
+export default function DrawOddsTable() {
+  const {drawOddsData, drawOddsLoading, drawOddsError} = useContext(DashboardContext)
   const successColor = '#2ecc71'
   const midSuccessColor = '#f1c40f'
   const noSuccessColor = '#e74c3c'
@@ -29,9 +31,9 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
     const firstChoiceArr = []
     const firstChoiceObj = firstChoiceArr;
     let firstChoiceDisplayArr = [];
-    for (let obj in displayStats) {
+    for (let obj in drawOddsData) {
       if (!obj.includes('Total Choice')) {
-        firstChoiceArr.push(displayStats[obj])
+        firstChoiceArr.push(drawOddsData[obj])
       }
     }
     
@@ -62,7 +64,7 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
   }
 
   const displaySecondChoiceRow = () => {
-    const secondChoiceObj = displayStats['Total Choice 2'];
+    const secondChoiceObj = drawOddsData['Total Choice 2'];
     if (secondChoiceObj) {
       const resSecondInfo = secondChoiceObj.res
       const nonResSecondInfo = secondChoiceObj.nonRes
@@ -85,7 +87,7 @@ export default function DrawOddsTable({ displayStats, showLoading, showErrorLoad
 }
 
 const displayThirdChoiceRow = () => {
-  const thirdChoiceObj = displayStats['Total Choice 3'];
+  const thirdChoiceObj = drawOddsData['Total Choice 3'];
     if (thirdChoiceObj) {
       const resThirdInfo = thirdChoiceObj.res
       const nonResThirdInfo = thirdChoiceObj.nonRes
@@ -108,7 +110,7 @@ const displayThirdChoiceRow = () => {
 }
 
 const displayFourthChoiceRow = () => {
-  const fourthChoiceObj = displayStats['Total Choice 4'];
+  const fourthChoiceObj = drawOddsData['Total Choice 4'];
     if (fourthChoiceObj) {
       const resFourthInfo = fourthChoiceObj.res
       const nonResFourthInfo = fourthChoiceObj.nonRes
@@ -136,7 +138,8 @@ const displayFourthChoiceRow = () => {
   }
 
   const displayDrawTable = () => {
-    if (showErrorLoading) {
+    console.log(drawOddsData)
+    if (drawOddsError) {
       return (
         <Box>
           <Typography variant="h2" component="h4" align="center" sx={{color: '#d35400', mt: 4}}>
@@ -144,7 +147,7 @@ const displayFourthChoiceRow = () => {
           </Typography>
         </Box>
       )
-    } else if (showLoading) {
+    } else if (drawOddsLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
           <Skeleton width={800} height={200} />
@@ -152,9 +155,14 @@ const displayFourthChoiceRow = () => {
           <Skeleton width={800} height={200} />
         </Box>
       )
-    } else {
-
+    } else if (!drawOddsData) {
+      return (
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
+          <Typography>There doesn't appear to be anything here</Typography>
+        </Box>
+      )
     }
+
     return (
       <TableContainer sx={{width: '100%'}}>
         <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '1em'}}>Draw Odds</Typography>
@@ -178,7 +186,7 @@ const displayFourthChoiceRow = () => {
   }
 
   return (
-      <Box sx={{width: '100%', marginTop: '1em', borderTop: '1px solid #dfdfdf'}}>
+      <Box sx={{width: '100%', marginTop: '1em', borderTop: '1px solid #dfdfdf'}}> 
         {displayDrawTable()}
       </Box>
     )

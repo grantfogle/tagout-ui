@@ -95,23 +95,18 @@ export const MainDisplay = () => {
 
     // }
 
-    // const unitDrawOddsDisplay = (huntDisplayStats) => {
-    //     if (isOtcUnit) {
-    //         return (
-    //             <OtcDisplay
-    //                 isOtcUnit
-    //                 unit={huntUnit}/>
-    //         )
-    //     }
-    //     return (
-    //     <DrawOddsTable 
-    //         displayStats={huntDisplayStats}
-    //         showLoading={drawOddsLoading}
-    //         showErrorLoading={drawOddsError}
-    //         isOtcUnit/>
-    //     )
-
-    // }
+    const unitDrawOddsDisplay = () => {
+        // if (isOtcUnit) {
+        //     return (
+        //         <OtcDisplay
+        //             isOtcUnit
+        //             unit={huntUnit}/>
+        //     )
+        // }
+        return (
+            <DrawOddsTable />
+        )
+    }
 
     // check auth state, if !user false then navigate back to home page
     // error handling
@@ -127,7 +122,7 @@ export const MainDisplay = () => {
                     <Box sx={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
                         {/* <PopulationTable sx={{ marginBottom: '1em', width: '480px'}}/> */}
                         {/* <HarvestStatsTable sx={{ marginBottom: '1em'}}/> */}
-                        {/* {unitDrawOddsDisplay(drawOdds)} */}
+                        {unitDrawOddsDisplay()}
                     </Box>
 
             </Container>

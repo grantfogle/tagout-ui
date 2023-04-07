@@ -2,38 +2,10 @@ import React, {createContext, useContext, useState} from 'react'
 import { logout } from '../../../firebase'
 import { useNavigate } from 'react-router-dom'
 
-
 export const DashboardContext = createContext(null)
 
 export const DashboardContextProvider = ({children}) => {
-    /*
-    state
-    species
-    gender
-    unit ie 1
-    fullUnitCode ie 001
-    season
-    method
 
-    huntcode: aggregrate string
-    isOtcUnit
-
-    popTableStats
-    popTableStatsLoading
-    popTableStatsError
-    harvestTableStats
-    harvestTableStatsLoading
-    harvestTableStatsError
-    drawOddsTableStats
-    drawOddsTableStatsLoading
-    drawOddsTableStatsError
-
-    */
-
-    // both these will be updated together...
-    
-    
-    // these will be local to search form
     const [huntState, setHuntState] = useState(null)
     const [species, setSpecies] = useState(null)
     const [gender, setGender] = useState(null)
@@ -68,32 +40,16 @@ export const DashboardContextProvider = ({children}) => {
     }
 
     const value = {
-        // huntState,
-        // setHuntState,
-        // species,
-        // setSpecies,
-        // gender,
-        // setGender,
-        // unit,
-        // setUnit,
-        // fullUnitCode,
-        // setFullUnitCode,
-        // season,
-        // setSeason,
-        // method,
-        // setMethod,
         huntCode,
         setHuntCode,
         isOtcUnit,
         setIsOtcUnit,
         drawOddsData,
-        setDrawOddsData,
         drawOddsLoading,
-        setDrawOddsLoading,
-        setDrawOddsError,
         drawOddsError,
-        setDrawOddsError,
+        setDrawOddsData,
         setDrawOddsLoading,
+        setDrawOddsError,
         logoutUser
     }    
 
