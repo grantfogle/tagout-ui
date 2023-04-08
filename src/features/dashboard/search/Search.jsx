@@ -8,38 +8,61 @@ import { getDatabase, ref, onValue} from 'firebase/database'
 
 
 export default function Search() {
-    const {setDrawOddsData, setDrawOddsLoading, setDrawOddsError} = useContext(DashboardContext)
+    const {
+        state,
+        setState,
+        setDrawOddsData,
+        setDrawOddsLoading,
+        setDrawOddsError,
+        setHarvestData,
+        setHarvestDataLoading,
+        setHarvestDataError,
+        species,
+        setSpecies
+    } = useContext(DashboardContext)
 
-    const [state, setState] = useState('colorado')
-    const [species, setSpecies] = useState('E')
-    const [specie, setSpecie] = useState('elk')
+    const [speciesCode, setSpeciesCode] = useState('E')
     const [gender, setGender] = useState('E')
-    const [unit, setUnit] = useState('')
+    const [unit, setUnit] = useState('001')
     const [unitLabel, setUnitLabel] = useState('1')
     const [season, setSeason] = useState('O1')
     const [method, setMethod] = useState('R')
-    const [huntCode, setHuntCode] = useState('EE001E1R')
+    const [huntCode, setHuntCode] = useState('EE001O1A')
 
+
+    useEffect(() => {
+        fetchFirebaseData()
+    }, [])
 
     // execute search functions
     const handleSubmit = (event) => {
-        fetchDrawOddsData()
+        fetchFirebaseData()
     }
 
-    const fetchDrawOddsData = () => {
-        const drawOddsUrl = `${state}1/elk/drawStats/${huntCode}`
-        const harvestUrl = ``
-        const populationUrl = ``
+    const fetchFirebaseData = () => {
+        const searchHuntCode = `${speciesCode}${gender}${unit}${season}${method}`
+        const urlPrefix = `${state}1/${species}`
+        const drawOddsUrl = `${urlPrefix}/drawStats/${huntCode}`
+        const harvestUrl = `${urlPrefix}/harvestStats/${season}${method}/${unitLabel}`
+        const populationUrl = `${urlPrefix}/populationStats/${unitLabel}`
+        setHuntCode(searchHuntCode)
 
         const dbSnap = getDatabase()
 
         setDrawOddsLoading(true)
+        setDrawOddsError(false)
         setDrawOddsData(null)
+
+        setHarvestDataLoading(false)
+        setHarvestData(null)
+        setHarvestDataError(false)
         
         const drawStatsRef = ref(dbSnap, drawOddsUrl)
         onValue(drawStatsRef, (snapshot) => {
             const data = snapshot.val()
-            if (data) {
+            console.log(drawOddsUrl)
+            console.log(data)
+            if (data) {  
                 setDrawOddsLoading(false)
                 setDrawOddsData(data)
             } else {
@@ -51,20 +74,21 @@ export default function Search() {
             setDrawOddsError(true)
         })
 
-        // const harvestStatsRef = ref(dbSnap, harvestUrl)
-        // onValue(harvestStatsRef, (snapshot) => {
-        //     const data = snapshot.val()
-        //     if (data) {
-        //         setDrawOddsLoading(false)
-        //         setDrawOddsData(data)
-        //     } else {
-        //         setDrawOddsLoading(false)
-        //         setDrawOddsData(null)
-        //     }
-        // }, error => {
-        //     setDrawOddsLoading(false)
-        //     setDrawOddsError(true)
-        // })
+        const harvestStatsRef = ref(dbSnap, harvestUrl)
+        onValue(harvestStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            console.log(harvestUrl)
+            console.log(data)
+            setHarvestDataLoading(false)
+            if (data) {
+                setHarvestData(data)
+            } else {
+                setHarvestData(null)
+            }
+        }, error => {
+            setHarvestDataLoading(false)
+            setHarvestDataError(true)
+        })
 
         //const populationStatsRef = ref(dbSnap, harvestUrl)
         // onValue(populationStatsRef, (snapshot) => {
@@ -90,7 +114,7 @@ export default function Search() {
 
     const speciesMenuItems = (menuSpecies) => {
         return menuSpecies.map((animal) => {
-            return <MenuItem key={animal.label} value={animal.value} disabled={animal.disabled}>{animal.label}</MenuItem>
+            return <MenuItem key={animal.label} name={animal.label.toLowerCase()} value={animal.value} disabled={animal.disabled}>{animal.label}</MenuItem>
         })
     }
 
@@ -113,7 +137,7 @@ export default function Search() {
     }
 
     const checkFormVerification = () => {
-        if (species && gender && unit && season && method) {
+        if (speciesCode && gender && unit && season && method) {
             return false
         }
         return true
@@ -127,9 +151,13 @@ export default function Search() {
                     <Select
                         labelId="species-label"
                         id="species"
-                        value={species}
+                        value={speciesCode}
                         label="species"
-                        onChange={(e, value) => setSpecies(value.props.value)}>
+                        onChange={(e, value) => {
+                            console.log(value.props.value)
+                            setSpeciesCode(value.props.value)
+                            setSpecies(value.props.name)
+                        }}>
 
                         {speciesMenuItems(colorado.species)}
 

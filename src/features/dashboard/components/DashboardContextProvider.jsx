@@ -7,12 +7,13 @@ export const DashboardContext = createContext(null)
 export const DashboardContextProvider = ({children}) => {
 
     const [huntState, setHuntState] = useState(null)
-    const [species, setSpecies] = useState(null)
     const [gender, setGender] = useState(null)
     const [unit, setUnit] = useState(null)
     const [fullUnitCode, setFullUnitCode] = useState(null)
     const [season, setSeason] = useState(null)
     const [method, setMethod] = useState(null)
+    const [state, setState] = useState('colorado')
+    const [species, setSpecies] = useState('elk')
 
     const [huntCode, setHuntCode] = useState(null)
     const [isOtcUnit, setIsOtcUnit] = useState(false)
@@ -40,6 +41,10 @@ export const DashboardContextProvider = ({children}) => {
     }
 
     const value = {
+        state,
+        setState,
+        species,
+        setSpecies,
         huntCode,
         setHuntCode,
         isOtcUnit,
@@ -50,6 +55,12 @@ export const DashboardContextProvider = ({children}) => {
         setDrawOddsData,
         setDrawOddsLoading,
         setDrawOddsError,
+        harvestData,
+        harvestDataLoading,
+        harvestDataError,
+        setHarvestData,
+        setHarvestDataLoading,
+        setHarvestDataError,
         logoutUser
     }    
 

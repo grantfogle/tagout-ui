@@ -121,7 +121,7 @@ export const MainDisplay = () => {
                     <Search/>
                     <Box sx={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
                         {/* <PopulationTable sx={{ marginBottom: '1em', width: '480px'}}/> */}
-                        {/* <HarvestStatsTable sx={{ marginBottom: '1em'}}/> */}
+                        <HarvestStatsTable sx={{ marginBottom: '1em'}}/>
                         {unitDrawOddsDisplay()}
                     </Box>
 

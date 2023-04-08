@@ -11,11 +11,45 @@ import {
     Box,
     Typography
 } from '@mui/material'
+import { useContext } from 'react'
+import { DashboardContext } from '../../components/DashboardContextProvider'
 
 
-export default function HarvestStatsTable({ harvestStats, showErrorLoading, showLoading}) {
-    const { bulls, calves, cows, hunters, recDays, successPercent, total } = harvestStats
-  
+export default function HarvestStatsTable() {
+    // const { bulls, calves, cows, hunters, recDays, successPercent, total } = harvestStats
+    const {
+        animal,
+        harvestData,
+        harvestDataLoading,
+        harvestDataError
+    } = useContext(DashboardContext)
+
+    // let formattedHarvestData = {}
+
+    // if (animal == 'elk') {
+    //     const {bulls, calves, cows, hunters, recDays, successPercent, total } = harvestData
+    //     formattedHarvestData = {
+    //         males: bulls,
+    //         calves,
+    //         females: cows,
+    //         hunters,
+    //         recDays,
+    //         successPercent,
+    //         total
+    //     }
+    // } else {
+    //     const {bucks, does, fawns, hunters, recDays, successPercent, total } = harvestData
+    //     formattedHarvestData = {
+    //         males: bucks,
+    //         fawns,
+    //         females: does,
+    //         hunters,
+    //         recDays,
+    //         successPercent,
+    //         total
+    //     }
+    // }
+    // const otherData 
     /*
         TDL Before Launch
         Ghost Loading
@@ -23,7 +57,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
     */
 
     const displayDrawTable = () => {
-        if (showErrorLoading) {
+        if (harvestDataError) {
             return (
                 <Box>
                     <Typography variant="h2" component="h4" align="center" sx={{color: '#d35400', mt: 4}}>
@@ -31,7 +65,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                     </Typography>
                 </Box>
             )
-    } else if (showLoading) {
+    } else if (harvestDataLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px'}}>
           <Skeleton width={400} height={120} />
@@ -39,7 +73,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
           <Skeleton width={400} height={120} />
         </Box>
       )
-    } else {
+    } else if (harvestData) {
         return (
             <TableContainer>
                 <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Harvest Stats</Typography>
@@ -55,11 +89,11 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                     </TableHead>
                     <TableBody>
                         <TableRow key={'harvest-stats'}>
-                            <TableCell>{bulls}</TableCell>
-                            <TableCell>{cows}</TableCell>
-                            <TableCell>{calves}</TableCell>
-                            <TableCell>{total} ({successPercent + '%'})</TableCell>
-                            <TableCell>{hunters}</TableCell>
+                            <TableCell>{harvestData.bulls}</TableCell>
+                            <TableCell>{harvestData.cows}</TableCell>
+                            <TableCell>{(harvestData.calves ? harvestData.calves : harvestData.fawns)}</TableCell>
+                            <TableCell>{harvestData.total} ({harvestData.successPercent + '%'})</TableCell>
+                            <TableCell>{harvestData.hunters}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

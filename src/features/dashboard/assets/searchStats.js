@@ -1,7 +1,7 @@
 export const colorado = {
     species: [
         {label: 'Elk', value: 'E', disabled: false},
-        {label: 'Pronghorn', value: 'P', disabled: false},
+        {label: 'Pronghorn', value: 'A', disabled: false},
         {label: 'Deer', value: 'D', disabled: false},
         {label: 'Moose', value: 'M', disabled: true},
         {label: 'Bear', value: 'B', disabled: true},
