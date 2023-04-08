@@ -54,7 +54,7 @@ export default function PopulationTable() {
                             <TableCell>DAU</TableCell>
                             <TableCell>DAU Units</TableCell>
                             <TableCell>Pop Estimate</TableCell>
-                            <TableCell>M/F Ratio</TableCell>
+                            <TableCell>{(species == 'elk' ? 'Bull/Cow' : 'Buck/Doe')} Ratio</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

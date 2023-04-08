@@ -2,8 +2,6 @@ import React, {useState, useContext, useEffect} from 'react'
 import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
 import { DashboardContext } from '../components/DashboardContextProvider'
-import { getDrawOddsData } from '../api/getDrawOddsData'
-import { UseFetchFirebaseData } from '../hooks/fetchFirebaseData'
 import { getDatabase, ref, onValue} from 'firebase/database'
 
 
@@ -37,7 +35,6 @@ export default function Search() {
         fetchFirebaseData()
     }, [])
 
-    // execute search functions
     const handleSubmit = (event) => {
         fetchFirebaseData()
     }
@@ -50,7 +47,7 @@ export default function Search() {
         const drawOddsUrl = `${urlPrefix}/drawStats/${searchHuntCode}`
         const harvestUrl = `${urlPrefix}/harvestStats/${season}${method}/${unitLabel}`
         const populationUrl = `${urlPrefix}/populationStats/${unitLabel}`
-        
+
         setHuntCode(searchHuntCode)
 
         setDrawOddsLoading(true)

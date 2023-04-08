@@ -6,7 +6,6 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
     Skeleton,
     Box,
     Typography

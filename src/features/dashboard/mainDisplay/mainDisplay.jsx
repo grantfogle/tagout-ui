@@ -1,9 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { getDatabase, ref, onValue} from "firebase/database"
-
-
-import { DashboardContext } from '../components/DashboardContextProvider'
-
+import React from 'react'
 import { Box, Container } from '@mui/material'
 import Navbar from '../navbar/Navbar'
 import Search from '../search/Search'
@@ -14,86 +9,6 @@ import OtcDisplay from '../otcDisplay/OtcDisplay'
 import Footer from '../footer/Footer'
 
 export const MainDisplay = () => {
-    // const fetchDrawStats = async (state, species, huntCode) => {
-    //     const dbSnap = getDatabase()
-    //     const drawStatsRef = ref(dbSnap, `${state}1/${species}/drawStats/${huntCode}`)
-    //     // check if unit is otc
-
-    //     setDrawOdds([])
-    
-    //     onValue(drawStatsRef, (snapshot) => {
-    //         const data = snapshot.val()
-    //         if (data) {
-    //             setDrawOdds(data)
-    //             setDrawOddsLoading(false)
-    //         } else {
-    //             setDrawOddsLoading(false)
-    //             // set there doesn't appear to be data for this unit, please try another unit
-    //         }
-    //     }, error => {
-    //         setDrawOddsLoading(false)
-    //         setDrawOddsError(false)
-    //     })
-    // }
-
-    // const fetchSearchResults = async (searchTerm, selectedUnit, huntSeason, method, genderSeasonMethod) => {
-    //     setHuntUnit(selectedUnit)
-    //     const isOTC = isUnitOtc(species, genderSeasonMethod, selectedUnit)
-
-    //     if (!isOTC) {
-    //         setIsOtcUnit(false)
-    //         // const drawStatsSearch = await getDrawStats(null, null, searchTerm)
-    //         // fetchDrawStats(searchTerm)
-    //     } else {
-    //         setIsOtcUnit(true)
-    //     }
-    //     // fetchUnitStats(selectedUnit)
-    //     // fetchHarvestStats(huntSeason, method, selectedUnit)
-    // }
-
-    // const fetchUnitStats = async () => {
-    //     setPopTableLoading(true)
-    //     const dbSnap = getDatabase()
-    //     const populationStatsRef = ref(dbSnap, `colorado1/${species}/populationStats/${huntUnit}`)
-    //     setPopulationStats([])
-
-    //     onValue(populationStatsRef, (snapshot) => {
-    //         const data = snapshot.val()
-    //         if (data) {
-    //             setPopulationStats(data)
-    //             setPopTableLoading(false)
-    //         } else {
-    //             setPopTableLoading(false)
-    //             setPopTableError(true)
-    //         }
-    //     }, error => {
-    //         setPopTableLoading(false)
-    //         setPopTableError(true)
-    //     })
-    // }
-
-    // const fetchHarvestStats = async (unit) => {
-    //     setHarvestTableLoading(true)
-    //     const harvestUrl = `${state}1/${species}/harvestStats/${seasonMethod}/${unit}`
-
-    //     const dbSnap = getDatabase()
-    //     const drawStatsRef = ref(dbSnap, harvestUrl)
-        
-    //     onValue(drawStatsRef, (snapshot) => {
-    //         const data = snapshot.val()
-    //         if (data) {
-    //             setHarvestStats(data)
-    //             setHarvestTableLoading(false)
-    //         } else {
-    //             setHarvestTableLoading(false)
-    //             setHarvestTableError(true)
-    //         }
-    //     }, error => {
-    //         setHarvestTableLoading(false)
-    //         setHarvestTableError(true)
-    //     })
-
-    // }
 
     const unitDrawOddsDisplay = () => {
         // if (isOtcUnit) {
@@ -107,10 +22,6 @@ export const MainDisplay = () => {
             <DrawOddsTable />
         )
     }
-
-    // check auth state, if !user false then navigate back to home page
-    // error handling
-    // ghost loading
     // dribbble mock https://dribbble.com/search/table
     return (
         <Box sx={{ height: '100vh' }}>
