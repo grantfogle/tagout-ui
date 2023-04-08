@@ -17,6 +17,9 @@ export default function Search() {
         setHarvestData,
         setHarvestDataLoading,
         setHarvestDataError,
+        setPopulationData,
+        setPopulationDataLoading,
+        setPopulationDataError,
         species,
         setSpecies
     } = useContext(DashboardContext)
@@ -40,33 +43,35 @@ export default function Search() {
     }
 
     const fetchFirebaseData = () => {
+        const dbSnap = getDatabase()
+
         const searchHuntCode = `${speciesCode}${gender}${unit}${season}${method}`
         const urlPrefix = `${state}1/${species}`
         const drawOddsUrl = `${urlPrefix}/drawStats/${searchHuntCode}`
         const harvestUrl = `${urlPrefix}/harvestStats/${season}${method}/${unitLabel}`
         const populationUrl = `${urlPrefix}/populationStats/${unitLabel}`
+        
         setHuntCode(searchHuntCode)
-
-        const dbSnap = getDatabase()
 
         setDrawOddsLoading(true)
         setDrawOddsError(false)
         setDrawOddsData(null)
 
-        setHarvestDataLoading(false)
-        setHarvestData(null)
+        setHarvestDataLoading(true)
         setHarvestDataError(false)
+        setHarvestData(null)
+
+        setPopulationDataLoading(true)
+        setPopulationDataError(false)
+        setPopulationData(null)
         
         const drawStatsRef = ref(dbSnap, drawOddsUrl)
         onValue(drawStatsRef, (snapshot) => {
             const data = snapshot.val()
-            console.log(drawOddsUrl)
-            console.log(data)
+            setDrawOddsLoading(false)
             if (data) {  
-                setDrawOddsLoading(false)
                 setDrawOddsData(data)
             } else {
-                setDrawOddsLoading(false)
                 setDrawOddsData(null)
             }
         }, error => {
@@ -90,20 +95,19 @@ export default function Search() {
             setHarvestDataError(true)
         })
 
-        //const populationStatsRef = ref(dbSnap, harvestUrl)
-        // onValue(populationStatsRef, (snapshot) => {
-        //     const data = snapshot.val()
-        //     if (data) {
-        //         setDrawOddsLoading(false)
-        //         setDrawOddsData(data)
-        //     } else {
-        //         setDrawOddsLoading(false)
-        //         setDrawOddsData(null)
-        //     }
-        // }, error => {
-        //     setDrawOddsLoading(false)
-        //     setDrawOddsError(true)
-        // })
+        const populationStatsRef = ref(dbSnap, populationUrl)
+        onValue(populationStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            setPopulationDataLoading(false)
+            if (data) {
+                setPopulationData(data)
+            } else {
+                setPopulationData(null)
+            }
+        }, error => {
+            setPopulationDataLoading(false)
+            setPopulationDataError(true)
+        })
     }
 
 

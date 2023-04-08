@@ -120,7 +120,7 @@ export const MainDisplay = () => {
                 {/* link to big game brochure: https://cpw.state.co.us/Documents/RulesRegs/Brochure/BigGame/biggame.pdf */}
                     <Search/>
                     <Box sx={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
-                        {/* <PopulationTable sx={{ marginBottom: '1em', width: '480px'}}/> */}
+                        <PopulationTable sx={{ marginBottom: '1em', width: '480px'}}/>
                         <HarvestStatsTable sx={{ marginBottom: '1em'}}/>
                         {unitDrawOddsDisplay()}
                     </Box>

@@ -61,6 +61,12 @@ export const DashboardContextProvider = ({children}) => {
         setHarvestData,
         setHarvestDataLoading,
         setHarvestDataError,
+        populationData,
+        populationDataLoading,
+        populationDataError,
+        setPopulationData,
+        setPopulationDataLoading,
+        setPopulationDataError,
         logoutUser
     }    
 

@@ -10,9 +10,6 @@ export const UseFetchFirebaseData = (type, url) => {
     // call for draw stats
     // call for harvest stats
     // call for population stats
-
-
-
     useEffect(() => {
         const dbSnap = getDatabase()
         const drawStatsRef = ref(dbSnap, url)
@@ -26,7 +23,6 @@ export const UseFetchFirebaseData = (type, url) => {
                 setData(response)
                 setLoading(false)
             } else {
-                // there doesn't appear to be any data
                 setLoading(false)
             }
         }, error => {
