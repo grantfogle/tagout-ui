@@ -1,22 +1,113 @@
-import React, {useState} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
+import { DashboardContext } from '../components/DashboardContextProvider'
+import { getDatabase, ref, onValue} from 'firebase/database'
 
-export default function Search({fetchSearchResults, updateSelectedUnit}) {
-    const [species, setSpecies] = useState('E')
+
+export default function Search() {
+    const {
+        state,
+        setState,
+        setDrawOddsData,
+        setDrawOddsLoading,
+        setDrawOddsError,
+        setHarvestData,
+        setHarvestDataLoading,
+        setHarvestDataError,
+        setPopulationData,
+        setPopulationDataLoading,
+        setPopulationDataError,
+        species,
+        setSpecies
+    } = useContext(DashboardContext)
+
+    const [speciesCode, setSpeciesCode] = useState('E')
     const [gender, setGender] = useState('E')
-    const [unit, setUnit] = useState('')
+    const [unit, setUnit] = useState('001')
     const [unitLabel, setUnitLabel] = useState('1')
     const [season, setSeason] = useState('O1')
-    const [method, setMethod] = useState('R')
-    const [huntCode, setHuntCode] = useState('EE001E1R')
+    const [method, setMethod] = useState('A')
+    const [huntCode, setHuntCode] = useState('EE001O1A')
 
-    const fetchDetails = () => {
-        const searchStr = `${species}${gender}${unit}${season}${method}`
-        const genderSznMethod = `${species}${gender}${season}${method}`
-        setHuntCode(searchStr)
-        fetchSearchResults(searchStr, unitLabel, season, method, genderSznMethod)
+
+    useEffect(() => {
+        fetchFirebaseData()
+    }, [])
+
+    const handleSubmit = (event) => {
+        fetchFirebaseData()
     }
+
+    const fetchFirebaseData = () => {
+        const dbSnap = getDatabase()
+
+        const searchHuntCode = `${speciesCode}${gender}${unit}${season}${method}`
+        const urlPrefix = `${state}1/${species}`
+        const drawOddsUrl = `${urlPrefix}/drawStats/${searchHuntCode}`
+        const harvestUrl = `${urlPrefix}/harvestStats/${season}${method}/${unitLabel}`
+        const populationUrl = `${urlPrefix}/populationStats/${unitLabel}`
+
+        setHuntCode(searchHuntCode)
+
+        setDrawOddsLoading(true)
+        setDrawOddsError(false)
+        setDrawOddsData(null)
+
+        setHarvestDataLoading(true)
+        setHarvestDataError(false)
+        setHarvestData(null)
+
+        setPopulationDataLoading(true)
+        setPopulationDataError(false)
+        setPopulationData(null)
+        
+        const drawStatsRef = ref(dbSnap, drawOddsUrl)
+        onValue(drawStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            setDrawOddsLoading(false)
+            if (data) {  
+                setDrawOddsData(data)
+            } else {
+                setDrawOddsData(null)
+            }
+        }, error => {
+            setDrawOddsLoading(false)
+            setDrawOddsError(true)
+        })
+
+        const harvestStatsRef = ref(dbSnap, harvestUrl)
+        onValue(harvestStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            console.log(harvestUrl)
+            console.log(data)
+            setHarvestDataLoading(false)
+            if (data) {
+                setHarvestData(data)
+            } else {
+                setHarvestData(null)
+            }
+        }, error => {
+            setHarvestDataLoading(false)
+            setHarvestDataError(true)
+        })
+
+        const populationStatsRef = ref(dbSnap, populationUrl)
+        onValue(populationStatsRef, (snapshot) => {
+            const data = snapshot.val()
+            setPopulationDataLoading(false)
+            if (data) {
+                setPopulationData(data)
+            } else {
+                setPopulationData(null)
+            }
+        }, error => {
+            setPopulationDataLoading(false)
+            setPopulationDataError(true)
+        })
+    }
+
+
 
     const displayHuntCode = () => {
         return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Selected Code: {huntCode}</Typography>
@@ -24,7 +115,7 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
 
     const speciesMenuItems = (menuSpecies) => {
         return menuSpecies.map((animal) => {
-            return <MenuItem key={animal.label} value={animal.value} disabled={animal.disabled}>{animal.label}</MenuItem>
+            return <MenuItem key={animal.label} name={animal.label.toLowerCase()} value={animal.value} disabled={animal.disabled}>{animal.label}</MenuItem>
         })
     }
 
@@ -47,7 +138,7 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
     }
 
     const checkFormVerification = () => {
-        if (species && gender && unit && season && method) {
+        if (speciesCode && gender && unit && season && method) {
             return false
         }
         return true
@@ -61,9 +152,13 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
                     <Select
                         labelId="species-label"
                         id="species"
-                        value={species}
+                        value={speciesCode}
                         label="species"
-                        onChange={(e, value) => setSpecies(value.props.value)}>
+                        onChange={(e, value) => {
+                            console.log(value.props.value)
+                            setSpeciesCode(value.props.value)
+                            setSpecies(value.props.name)
+                        }}>
 
                         {speciesMenuItems(colorado.species)}
 
@@ -124,7 +219,7 @@ export default function Search({fetchSearchResults, updateSelectedUnit}) {
                     </Select>
                 </FormControl>
 
-            <Button onClick={() => fetchDetails()}
+            <Button onClick={() => handleSubmit()}
                 variant="contained"
                 sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}}
                 disabled={checkFormVerification()}>Submit</Button>

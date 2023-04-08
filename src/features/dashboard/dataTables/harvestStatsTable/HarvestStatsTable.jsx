@@ -6,24 +6,25 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
     Skeleton,
     Box,
     Typography
 } from '@mui/material'
+import { useContext } from 'react'
+import { DashboardContext } from '../../components/DashboardContextProvider'
+import { HARVEST_TABLE } from '../../constants/constants.js';
 
 
-export default function HarvestStatsTable({ harvestStats, showErrorLoading, showLoading}) {
-    const { bulls, calves, cows, hunters, recDays, successPercent, total } = harvestStats
-  
-    /*
-        TDL Before Launch
-        Ghost Loading
-        Error Message
-    */
+export default function HarvestStatsTable() {
+    const {
+        species,
+        harvestData,
+        harvestDataLoading,
+        harvestDataError
+    } = useContext(DashboardContext)
 
     const displayDrawTable = () => {
-        if (showErrorLoading) {
+        if (harvestDataError) {
             return (
                 <Box>
                     <Typography variant="h2" component="h4" align="center" sx={{color: '#d35400', mt: 4}}>
@@ -31,7 +32,7 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
                     </Typography>
                 </Box>
             )
-    } else if (showLoading) {
+    } else if (harvestDataLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px'}}>
           <Skeleton width={400} height={120} />
@@ -39,27 +40,32 @@ export default function HarvestStatsTable({ harvestStats, showErrorLoading, show
           <Skeleton width={400} height={120} />
         </Box>
       )
-    } else {
+    } else if (harvestData) {
+        const tableHeaders = HARVEST_TABLE.headers
+        const harvestDataMales = (harvestData.bulls ? harvestData.bulls : harvestData.bucks)
+        const harvestDataFemales = (harvestData.cows ? harvestData.cows : harvestData.does)
+        const harvestDataCalves = (harvestData.calves ? harvestData.calves : harvestData.fawns)
+
         return (
             <TableContainer>
                 <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '.5em'}}>Harvest Stats</Typography>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Bulls</TableCell>
-                            <TableCell>Cows</TableCell>
-                            <TableCell>Calves</TableCell>
-                            <TableCell>Total</TableCell>
-                            <TableCell>Hunters</TableCell>
+                            <TableCell>{tableHeaders[species].males}</TableCell>
+                            <TableCell>{tableHeaders[species].females}</TableCell>
+                            <TableCell>{tableHeaders[species].young}</TableCell>
+                            <TableCell>{tableHeaders.total}</TableCell>
+                            <TableCell>{tableHeaders.hunters}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow key={'harvest-stats'}>
-                            <TableCell>{bulls}</TableCell>
-                            <TableCell>{cows}</TableCell>
-                            <TableCell>{calves}</TableCell>
-                            <TableCell>{total}</TableCell>
-                            <TableCell>{hunters} ({successPercent + '%'})</TableCell>
+                            <TableCell>{harvestDataMales}</TableCell>
+                            <TableCell>{harvestDataFemales}</TableCell>
+                            <TableCell>{harvestDataCalves}</TableCell>
+                            <TableCell>{harvestData.total} ({harvestData.successPercent + '%'})</TableCell>
+                            <TableCell>{harvestData.hunters}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

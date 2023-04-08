@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {useContext} from 'react'
 import {
     Table,
     TableBody,
@@ -6,17 +6,17 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
     Skeleton,
     Box,
     Typography
 } from '@mui/material'
+import { DashboardContext } from '../../components/DashboardContextProvider'
 
 
-export default function PopulationTable({ populationStats, showErrorLoading, showLoading}) {
-    const {bullCowRatio, dau, dauUnits, populationEstimate} = populationStats
+export default function PopulationTable() {
+    const {populationData, populationDataLoading, populationDataError, species} = useContext(DashboardContext)
   
-    const displayBullCowRatio = (bullRatio) =>  bullRatio ? bullRatio + '%' : 'N/A';
+    const displayMaleFemaleRatio = (ratio) =>  ratio ? ratio + '%' : 'N/A';
 
     const displayDauUnits = (allUnits) => {
         if (allUnits) {
@@ -28,7 +28,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
     } 
 
     const displayDrawTable = () => {
-        if (showErrorLoading) {
+        if (populationDataError) {
             return (
                 <Box>
                     <Typography variant='h2' component='h4' align='center' sx={{color: '#d35400', mt: 4}}>
@@ -36,7 +36,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
                     </Typography>
                 </Box>
             )
-    } else if (showLoading) {
+    } else if (populationDataLoading) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
           <Skeleton width={400} height={200} />
@@ -44,7 +44,7 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
           <Skeleton width={400} height={200} />
         </Box>
       )
-    } else {
+    } else if (populationData) {
         return (
             <TableContainer>
                 <Typography variant='h5' component='h5' sx={{marginLeft: '.5em', marginTop: '.5em'}}>Herd Population</Typography>
@@ -54,17 +54,17 @@ export default function PopulationTable({ populationStats, showErrorLoading, sho
                             <TableCell>DAU</TableCell>
                             <TableCell>DAU Units</TableCell>
                             <TableCell>Pop Estimate</TableCell>
-                            <TableCell>Bull/Cow Ratio</TableCell>
+                            <TableCell>{(species == 'elk' ? 'Bull/Cow' : 'Buck/Doe')} Ratio</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow key={'population-stats-' + dau}>
-                            <TableCell>{dau}</TableCell>
+                        <TableRow key={'population-stats-' + populationData.dau}>
+                            <TableCell>{populationData.dau}</TableCell>
                             <TableCell>
-                                {displayDauUnits(dauUnits)}
+                                {displayDauUnits(populationData.dauUnits)}
                             </TableCell>
-                            <TableCell>{populationEstimate}</TableCell>
-                            <TableCell>{displayBullCowRatio(bullCowRatio)}</TableCell>
+                            <TableCell>{populationData.populationEstimate}</TableCell>
+                            <TableCell>{displayMaleFemaleRatio(populationData.maleFemaleRatio)}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
