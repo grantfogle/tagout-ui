@@ -26,7 +26,7 @@ export default function Search() {
     const [unit, setUnit] = useState('001')
     const [unitLabel, setUnitLabel] = useState('1')
     const [season, setSeason] = useState('O1')
-    const [method, setMethod] = useState('R')
+    const [method, setMethod] = useState('A')
     const [huntCode, setHuntCode] = useState('EE001O1A')
 
 
@@ -42,7 +42,7 @@ export default function Search() {
     const fetchFirebaseData = () => {
         const searchHuntCode = `${speciesCode}${gender}${unit}${season}${method}`
         const urlPrefix = `${state}1/${species}`
-        const drawOddsUrl = `${urlPrefix}/drawStats/${huntCode}`
+        const drawOddsUrl = `${urlPrefix}/drawStats/${searchHuntCode}`
         const harvestUrl = `${urlPrefix}/harvestStats/${season}${method}/${unitLabel}`
         const populationUrl = `${urlPrefix}/populationStats/${unitLabel}`
         setHuntCode(searchHuntCode)

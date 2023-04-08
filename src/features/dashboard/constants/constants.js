@@ -1,4 +1,4 @@
-export const harvestTable = {
+export const HARVEST_TABLE = {
     headers: {
         elk: {
             males: 'Bulls',
