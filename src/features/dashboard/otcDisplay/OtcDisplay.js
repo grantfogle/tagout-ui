@@ -9,8 +9,8 @@ export default function OtcDisplay() {
     const {huntCode} = useContext(DashboardContext)
     
     return (
-        <Box sx={{width: '100%'}}>
-            <Typography variant="h4" component="h2">{huntCode} is available Over the Counter </Typography>
+        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <Typography variant="h4" component="h2">{huntCode} is available OTC</Typography>
         </Box>
     )
 }
