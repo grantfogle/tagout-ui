@@ -7,10 +7,10 @@ export const DashboardContext = createContext(null)
 export const DashboardContextProvider = ({children}) => {
 
     const [gender, setGender] = useState(null)
-    const [unit, setUnit] = useState(null)
-    const [fullUnitCode, setFullUnitCode] = useState(null)
-    const [season, setSeason] = useState(null)
-    const [method, setMethod] = useState(null)
+    // const [unit, setUnit] = useState(null)
+    // const [fullUnitCode, setFullUnitCode] = useState(null)
+    // const [season, setSeason] = useState(null)
+    // const [method, setMethod] = useState(null)
     const [state, setState] = useState('colorado')
     const [species, setSpecies] = useState('elk')
 

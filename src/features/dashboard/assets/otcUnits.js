@@ -32,6 +32,4 @@ export const coloradoOTC = {
         371, 421, 444, 461, 471, 511, 521, 591, 691, 711, 741, 751,
         771, 851, 861, 951
     ]
-    // EM03R: coloradoOTC.EMO2R
-    // add antelopeeeeee tag
 }
