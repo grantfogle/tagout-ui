@@ -138,7 +138,6 @@ const displayFourthChoiceRow = () => {
   }
 
   const displayDrawTable = () => {
-    console.log(drawOddsData)
     if (drawOddsError) {
       return (
         <Box>
@@ -157,8 +156,9 @@ const displayFourthChoiceRow = () => {
       )
     } else if (!drawOddsData) {
       return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
-          <Typography>There doesn't appear to be anything here</Typography>
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px', marginTop: '1em'}}>
+          <Typography variant="h5" component="h5">There doesn't appear to be anything here</Typography>
+          <Typography variant="h5" component="h5">Please try another search</Typography>
         </Box>
       )
     }
