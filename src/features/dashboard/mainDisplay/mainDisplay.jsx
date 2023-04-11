@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Box, Container } from '@mui/material'
 import Navbar from '../navbar/Navbar'
 import Search from '../search/Search'
@@ -7,17 +7,19 @@ import HarvestStatsTable from '../dataTables/harvestStatsTable/HarvestStatsTable
 import DrawOddsTable from '../dataTables/drawOddsTable/DrawOddsTable'
 import OtcDisplay from '../otcDisplay/OtcDisplay'
 import Footer from '../footer/Footer'
+import { DashboardContext } from '../components/DashboardContextProvider'
 
 export const MainDisplay = () => {
+    const {
+        otcUnitStatus,
+    } = useContext(DashboardContext)
 
     const unitDrawOddsDisplay = () => {
-        // if (isOtcUnit) {
-        //     return (
-        //         <OtcDisplay
-        //             isOtcUnit
-        //             unit={huntUnit}/>
-        //     )
-        // }
+        if (otcUnitStatus) {
+            return (
+                <OtcDisplay/>
+            )
+        }
         return (
             <DrawOddsTable />
         )

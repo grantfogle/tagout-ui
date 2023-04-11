@@ -3,12 +3,14 @@ import { colorado } from '../assets/searchStats'
 import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
 import { DashboardContext } from '../components/DashboardContextProvider'
 import { getDatabase, ref, onValue} from 'firebase/database'
+import { isUnitOtc } from '../utils/isUnitOtc'
 
 
 export default function Search() {
     const {
         state,
-        setState,
+        huntCode,
+        setHuntCode,
         setDrawOddsData,
         setDrawOddsLoading,
         setDrawOddsError,
@@ -19,17 +21,17 @@ export default function Search() {
         setPopulationDataLoading,
         setPopulationDataError,
         species,
-        setSpecies
+        setSpecies,
+        setOtcUnitStatus,
     } = useContext(DashboardContext)
 
     const [speciesCode, setSpeciesCode] = useState('E')
+    const [speciesStr, setSpeciesStr] = useState('elk')
     const [gender, setGender] = useState('E')
     const [unit, setUnit] = useState('001')
     const [unitLabel, setUnitLabel] = useState('1')
     const [season, setSeason] = useState('O1')
     const [method, setMethod] = useState('A')
-    const [huntCode, setHuntCode] = useState('EE001O1A')
-
 
     useEffect(() => {
         fetchFirebaseData()
@@ -41,13 +43,12 @@ export default function Search() {
 
     const fetchFirebaseData = () => {
         const dbSnap = getDatabase()
-
         const searchHuntCode = `${speciesCode}${gender}${unit}${season}${method}`
-        const urlPrefix = `${state}1/${species}`
+        const urlPrefix = `${state}1/${speciesStr}`
         const drawOddsUrl = `${urlPrefix}/drawStats/${searchHuntCode}`
         const harvestUrl = `${urlPrefix}/harvestStats/${season}${method}/${unitLabel}`
         const populationUrl = `${urlPrefix}/populationStats/${unitLabel}`
-
+        const isOtc = isUnitOtc(`${speciesCode}${gender}${season}${method}`, unit)
         setHuntCode(searchHuntCode)
 
         setDrawOddsLoading(true)
@@ -61,26 +62,31 @@ export default function Search() {
         setPopulationDataLoading(true)
         setPopulationDataError(false)
         setPopulationData(null)
+        setOtcUnitStatus(isOtc)
+        setSpecies(speciesStr)
         
-        const drawStatsRef = ref(dbSnap, drawOddsUrl)
-        onValue(drawStatsRef, (snapshot) => {
-            const data = snapshot.val()
+        if (!isOtc) {
+            const drawStatsRef = ref(dbSnap, drawOddsUrl)
+            onValue(drawStatsRef, (snapshot) => {
+                const data = snapshot.val()
+                setDrawOddsLoading(false)
+                if (data) {  
+                    setDrawOddsData(data)
+                } else {
+                    setDrawOddsData(null)
+                }
+            }, error => {
+                setDrawOddsLoading(false)
+                setDrawOddsError(true)
+            })
+        } else {
             setDrawOddsLoading(false)
-            if (data) {  
-                setDrawOddsData(data)
-            } else {
-                setDrawOddsData(null)
-            }
-        }, error => {
-            setDrawOddsLoading(false)
-            setDrawOddsError(true)
-        })
+            setDrawOddsError(false)
+        }
 
         const harvestStatsRef = ref(dbSnap, harvestUrl)
         onValue(harvestStatsRef, (snapshot) => {
             const data = snapshot.val()
-            console.log(harvestUrl)
-            console.log(data)
             setHarvestDataLoading(false)
             if (data) {
                 setHarvestData(data)
@@ -110,7 +116,7 @@ export default function Search() {
 
 
     const displayHuntCode = () => {
-        return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Selected Code: {huntCode}</Typography>
+        return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Results for {huntCode}</Typography>
     }
 
     const speciesMenuItems = (menuSpecies) => {
@@ -155,9 +161,8 @@ export default function Search() {
                         value={speciesCode}
                         label="species"
                         onChange={(e, value) => {
-                            console.log(value.props.value)
                             setSpeciesCode(value.props.value)
-                            setSpecies(value.props.name)
+                            setSpeciesStr(value.props.name)
                         }}>
 
                         {speciesMenuItems(colorado.species)}
