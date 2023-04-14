@@ -11,6 +11,13 @@ export const theme = createTheme({
     },
     typography: {},
     components: {
+        MuiTypography: {
+            styleOverrides: {
+                h5: {
+                    color: '#2c3e50'
+                }
+            }
+        },
         MuiButton: {
             styleOverrides: {
                 contained: {
