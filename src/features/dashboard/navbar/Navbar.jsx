@@ -11,13 +11,23 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{backgroundColor: '#27ae60'}}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography 
+            variant="h6" 
+            component="div"
+            color="white"
+            sx={{ flexGrow: 1 }}>
             TAGout
           </Typography>
           {/* <Box>
             <img style={{height: '40px'}} src={TagoutLogo} alt="Tagout Logo"></img>
           </Box> */}
-          <Button onClick={e => logoutUser()} color="inherit">Sign out</Button>
+          <Button 
+            color="inherit"
+            sx={{color: '#fff'}}
+            onClick={e => logoutUser()}
+            >
+            Sign out
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
