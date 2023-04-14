@@ -12,7 +12,11 @@ import { DashboardContext } from '../../components/DashboardContextProvider';
 
 
 export default function DrawOddsTable() {
-  const {drawOddsData, drawOddsLoading, drawOddsError} = useContext(DashboardContext)
+  const {
+    drawOddsData,
+    drawOddsLoading,
+    drawOddsError
+  } = useContext(DashboardContext)
   const successColor = '#2ecc71'
   const midSuccessColor = '#f1c40f'
   const noSuccessColor = '#e74c3c'
@@ -157,15 +161,19 @@ const displayFourthChoiceRow = () => {
     } else if (!drawOddsData) {
       return (
         <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px', marginTop: '1em'}}>
-          <Typography variant="h5" component="h5">There doesn't appear to be anything here</Typography>
-          <Typography variant="h5" component="h5">Please try another search</Typography>
+          <Typography variant="h5" component="h5" color="textPrimary">
+              There doesn't appear to be anything here
+          </Typography>
+          <Typography variant="h5" component="h5" color="textPrimary">
+            Please try another search
+          </Typography>
         </Box>
       )
     }
 
     return (
       <TableContainer sx={{width: '100%'}}>
-        <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '1em'}}>Draw Odds</Typography>
+        <Typography variant="h5" component="h5" color="textPrimary" sx={{marginLeft: '.5em', marginTop: '1em'}}>Draw Odds</Typography>
         <Table sx={{ maxWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
