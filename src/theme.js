@@ -20,10 +20,10 @@ export const theme = createTheme({
         },
         MuiButton: {
             styleOverrides: {
-                contained: {
-                    backgroundColor:'#27ae60',
-                    color: '#fff'
-                },
+                // contained: {
+                //     backgroundColor:'#27ae60',
+                //     color: '#fff'
+                // },
             }
         }
     }
