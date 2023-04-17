@@ -4,6 +4,7 @@ import './App.css';
 import {theme} from './theme'
 
 import Landing from './features/auth/Landing';
+import LandingTwo from './features/auth/LandingTwo';
 import Dashboard from './features/dashboard/Dashboard'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Landing/>} />
               <Route exact path="/dashboard" element={<Dashboard/>} />
+              <Route exact path="/landing" element={<LandingTwo /> } />
             </Routes>
           </Router>
         </ThemeProvider>
