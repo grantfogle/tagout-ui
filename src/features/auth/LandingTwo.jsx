@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { BrowserRouter as Router, Switch, Route, Link, useNavigate } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 
 // import {Link, useNavigate, useHistory} from 'react-router-dom'
 import {auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword} from '../../firebase'
@@ -27,7 +27,7 @@ const LandingCopy = () => {
         <>
             <Typography variant="h2" component="h1" color="white" sx={{mb: 1, mt: 15}}>Find your next Western Hunt with TAGOUT</Typography>
             <Typography variant="h4" component="h2" color="#2c3e50" sx={{mb: 2}}>Research draw odds, success rates, and herd numbers</Typography>
-            <Button variant="contained" color="warning" onClick={() => navigate('/dashboard')}>Sign up for free</Button>
+            <Button variant="contained" color="warning" sx={{mb: 4}} onClick={() => navigate('/dashboard')}>Sign up for free</Button>
         </>
     )
 }
@@ -36,7 +36,7 @@ const LandingTwo = () => {
     return (
             <Box sx={{
                 width: '100%',
-                height: '100vh',
+                minHeight: '100vh',
                 alignItems: 'center',
                 // background: 'linear-gradient(to right bottom, #2c3e50, #27ae60)'
                 backgroundColor: "#27ae60"
@@ -45,7 +45,7 @@ const LandingTwo = () => {
                 {/* Navigation - probably up, make it universal*/}
                 <NavBar/>
                 <Container maxWidth="md">
-                    <LandingCopy/>
+                    <Outlet/>
                 </Container>
             </Box>
     )
