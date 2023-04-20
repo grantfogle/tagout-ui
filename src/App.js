@@ -6,7 +6,8 @@ import { theme } from './theme'
 import Landing from './features/auth/Landing'
 import LandingTwo from './features/auth/LandingTwo'
 import Dashboard from './features/dashboard/Dashboard'
-import AuthForm from './features/auth/authForm/AuthForm';
+import AuthForm from './features/auth/authForm/AuthForm'
+import Welcome from './features/auth/components/welcome/Welcome'
 
 function App() {
   return (
@@ -17,9 +18,8 @@ function App() {
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/dashboard" element={<Dashboard />} />
             <Route exact path="/landing" element={<LandingTwo />}>
-              <Route path="welcome" element={<LandingTwo />} />
+              <Route path="welcome" element={<Welcome />} />
               <Route path="auth" element={<AuthForm />} />
-              {/* <LandingTwo></LandingTwo> */}
             </Route>
           </Routes>
         </Router>

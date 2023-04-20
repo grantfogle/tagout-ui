@@ -4,13 +4,14 @@ import {
     Box,
     Typography,
     Tabs,
-    Tab
+    Tab,
+    Container
 } from '@mui/material'
 import Login from '../login/Login'
 import Register from '../register/Register'
 
 const AuthForm = () => {
-    const [loginTabValue, setLoginTabValue] = useState('login')
+    const [loginTabValue, setLoginTabValue] = useState('register')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -43,8 +44,20 @@ const AuthForm = () => {
     }
 
     return (
-        <Box mt={4} sx={{ width: "400px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-            <Typography mb={3} component="h1" variant="h3">Welcome to Tagout, sign in to continue.</Typography>
+        <Container maxWidth="sm"
+            sx={{
+                backgroundColor: '#fff',
+                borderRadius: "20px",
+                mt: 10,
+                p: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}>
+            {/* <Box mt={4} sx={{ width: '100%', display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}> */}
+
+            <Typography mb={3} component="h1" variant="h4">Welcome to Tagout</Typography>
+            <Typography mb={3} component="h2" variant="h5">Sign in to continue</Typography>
             {/* <Typography mb={3} sx={{textAlign: "center"}}>Explore draw odds and success statistics for top hunting units around the Western US</Typography> */}
             <Tabs sx={{ marginBottom: "1em" }} value={loginTabValue}
                 onChange={handleTabChange}
@@ -53,7 +66,9 @@ const AuthForm = () => {
                 <Tab value="register" label="Sign Up" />
             </Tabs>
             {displayLoginForm()}
-        </Box>
+            {/* </Box> */}
+        </Container >
+
     )
 }
 
