@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
+
 import './App.css'
 import { theme } from './theme'
-
+import { AuthContextProvider } from './features/auth/components/AuthContextProvider'
 import Landing from './features/auth/Landing'
 import Dashboard from './features/dashboard/Dashboard'
 import AuthForm from './features/auth/authForm/AuthForm'
 import Welcome from './features/auth/components/welcome/Welcome'
-import { AuthContextProvider } from './features/auth/components/AuthContextProvider'
 
 function App() {
   return (

@@ -13,9 +13,9 @@ const SignUp = () => {
     return (
         <Box>
             <FormControl>
-                <TextField sx={{ marginBottom: '8px' }} id="password" label="Email" variant="outlined"
+                <TextField sx={{ marginBottom: "8px" }} id="password" label="Email" variant="outlined"
                     onChange={event => setEmail(event.target.value)} />
-                <TextField sx={{ marginBottom: '8px' }} id="email" label="Password" variant="outlined"
+                <TextField sx={{ marginBottom: "8px" }} id="email" label="Password" variant="outlined"
                     onChange={event => setPassword(event.target.value)} />
                 <Button onClick={submitNewUser} variant="contained" color="primary">Submit</Button>
                 <Button onClick={loginWithGoogle}>Sign Up With Google</Button>
@@ -24,4 +24,4 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+export default SignUp

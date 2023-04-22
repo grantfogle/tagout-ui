@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Skeleton from '@mui/material/Skeleton';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { DashboardContext } from '../../components/DashboardContextProvider';
+import React, { useContext } from 'react'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Skeleton,
+  Box,
+  Typography
+} from '@mui/material'
+import { DashboardContext } from '../../components/DashboardContextProvider'
 
 
 export default function DrawOddsTable() {
@@ -31,7 +33,7 @@ export default function DrawOddsTable() {
 
   const getConditionalBgColor = (successPercent, applications) => {
     if (applications === 0) {
-      return noEntriesColor;
+      return noEntriesColor
     }
     return (successPercent === '100%') ? successColor :
       (successPercent === '0%') ? noSuccessColor :
@@ -40,8 +42,8 @@ export default function DrawOddsTable() {
 
   const displayFirstChoiceRows = () => {
     const firstChoiceArr = []
-    const firstChoiceObj = firstChoiceArr;
-    let firstChoiceDisplayArr = [];
+    const firstChoiceObj = firstChoiceArr
+    let firstChoiceDisplayArr = []
     for (let obj in drawOddsData) {
       if (!obj.includes('Total Choice')) {
         firstChoiceArr.push(drawOddsData[obj])
@@ -50,8 +52,8 @@ export default function DrawOddsTable() {
 
     if (firstChoiceObj) {
       for (let key in firstChoiceObj) {
-        const resInfo = firstChoiceObj[key].res;
-        const nonResInfo = firstChoiceObj[key].nonRes;
+        const resInfo = firstChoiceObj[key].res
+        const nonResInfo = firstChoiceObj[key].nonRes
 
         if (resInfo.applicants || nonResInfo.applicants) {
           const resSuccessPercentage = getSuccessPercentage(resInfo.applicants, resInfo.success)
@@ -75,7 +77,7 @@ export default function DrawOddsTable() {
   }
 
   const displaySecondChoiceRow = () => {
-    const secondChoiceObj = drawOddsData['Total Choice 2'];
+    const secondChoiceObj = drawOddsData['Total Choice 2']
     if (secondChoiceObj) {
       const resSecondInfo = secondChoiceObj.res
       const nonResSecondInfo = secondChoiceObj.nonRes
@@ -98,7 +100,7 @@ export default function DrawOddsTable() {
   }
 
   const displayThirdChoiceRow = () => {
-    const thirdChoiceObj = drawOddsData['Total Choice 3'];
+    const thirdChoiceObj = drawOddsData['Total Choice 3']
     if (thirdChoiceObj) {
       const resThirdInfo = thirdChoiceObj.res
       const nonResThirdInfo = thirdChoiceObj.nonRes
@@ -121,7 +123,7 @@ export default function DrawOddsTable() {
   }
 
   const displayFourthChoiceRow = () => {
-    const fourthChoiceObj = drawOddsData['Total Choice 4'];
+    const fourthChoiceObj = drawOddsData['Total Choice 4']
     if (fourthChoiceObj) {
       const resFourthInfo = fourthChoiceObj.res
       const nonResFourthInfo = fourthChoiceObj.nonRes
@@ -144,22 +146,22 @@ export default function DrawOddsTable() {
   }
 
   const getSuccessPercentage = (applicants, success) => {
-    const successPercentage = (success / applicants) * 100;
-    return successPercentage ? + successPercentage.toFixed(0) + '%' : '0%';
+    const successPercentage = (success / applicants) * 100
+    return successPercentage ? + successPercentage.toFixed(0) + '%' : '0%'
   }
 
   const displayDrawTable = () => {
     if (drawOddsError) {
       return (
         <Box>
-          <Typography variant="h2" component="h4" align="center" sx={{ color: '#d35400', mt: 4 }}>
+          <Typography variant="h2" component="h4" align="center" sx={{ color: "#d35400", mt: 4 }}>
             Error loading data, please try again
           </Typography>
         </Box>
       )
     } else if (drawOddsLoading) {
       return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", height: "800px" }}>
           <Skeleton width={800} height={200} />
           <Skeleton width={800} height={200} />
           <Skeleton width={800} height={200} />
@@ -167,7 +169,7 @@ export default function DrawOddsTable() {
       )
     } else if (!drawOddsData) {
       return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px', marginTop: '1em' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", height: "800px", marginTop: "1em" }}>
           <Typography variant="h5" component="h5">
             There doesn't appear to be anything here
           </Typography>
@@ -179,9 +181,9 @@ export default function DrawOddsTable() {
     }
 
     return (
-      <TableContainer sx={{ width: '100%' }}>
-        <Typography variant="h5" component="h5" sx={{ marginLeft: '.5em', marginTop: '1em' }}>Draw Odds</Typography>
-        <Table sx={{ maxWidth: 650 }} aria-label="simple table">
+      <TableContainer sx={{ width: "100%" }}>
+        <Typography variant="h5" component="h5" sx={{ marginLeft: ".5em", marginTop: "1em" }}>Draw Odds</Typography>
+        <Table sx={{ maxWidth: 650 }} aria-label="draw-odds-table">
           <TableHead>
             <TableRow>
               <TableCell>Preference Points</TableCell>
@@ -201,7 +203,7 @@ export default function DrawOddsTable() {
   }
 
   return (
-    <Box sx={{ width: '100%', marginTop: '1em', borderTop: '1px solid #dfdfdf' }}>
+    <Box sx={{ width: "100%", marginTop: "1em", borderTop: "1px solid #dfdfdf" }}>
       {displayDrawTable()}
     </Box>
   )

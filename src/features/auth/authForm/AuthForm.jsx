@@ -1,20 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import {
-    Box,
     Typography,
     Tabs,
     Tab,
     Container
 } from '@mui/material'
+import { AuthContext } from '../components/AuthContextProvider'
 import Login from './logIn/LogIn'
 import SignUp from './signUp/SignUp'
-import { AuthContext } from '../components/AuthContextProvider'
 
 const AuthForm = () => {
     const {
-        submitLogin,
-        submitNewUser,
-        loginWithGoogle,
         authTabValue,
         setAuthTabValue,
     } = useContext(AuthContext)
@@ -32,7 +28,7 @@ const AuthForm = () => {
     return (
         <Container maxWidth="sm"
             sx={{
-                backgroundColor: '#fff',
+                backgroundColor: "#fff",
                 borderRadius: "20px",
                 mt: 10,
                 p: 4,
@@ -55,4 +51,4 @@ const AuthForm = () => {
     )
 }
 
-export default AuthForm;
+export default AuthForm
