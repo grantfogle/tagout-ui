@@ -1,7 +1,15 @@
-import React from 'react';
-import { Box, TextField, FormControl, Button } from '@mui/material';
+import React, { useContext } from 'react'
+import { Box, TextField, FormControl, Button } from '@mui/material'
+import { AuthContext } from '../../components/AuthContextProvider'
 
-const Login = ({ email, password, setEmail, setPassword, submitLogin, submitLoginWithGoogle }) => {
+const LogIn = () => {
+    const {
+        setEmail,
+        setPassword,
+        loginWithGoogle,
+        submitLogin
+    } = useContext(AuthContext)
+
     return (
         <Box>
             <FormControl>
@@ -10,11 +18,11 @@ const Login = ({ email, password, setEmail, setPassword, submitLogin, submitLogi
                 <TextField sx={{ marginBottom: '8px' }} id="email" label="Password" variant="outlined"
                     onChange={event => setPassword(event.target.value)} />
                 {/* <Button variant="text">Forgot Password?</Button> */}
-                <Button onClick={e => submitLogin()} variant="contained" color="primary">Submit</Button>
-                <Button onClick={e => submitLoginWithGoogle()}>Log in With Google</Button>
+                <Button onClick={submitLogin} variant="contained" color="primary">Submit</Button>
+                <Button onClick={loginWithGoogle}>Log in With Google</Button>
             </FormControl>
         </Box>
     );
 }
 
-export default Login;
+export default LogIn;

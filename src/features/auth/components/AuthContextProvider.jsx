@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword, logout } from '../../../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -6,28 +6,27 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 export const AuthContext = createContext(null)
 
 export const AuthContextProvider = ({ children }) => {
-    // const [user, setUser] = useState(null)
-    // const [userAuthenticated, setUserAuthenticated] = useState(null)
-    // hold email password here
-    // also hold value for form
     const [user, loading, error] = useAuthState(auth)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [authTabValue, setAuthTabValue] = useState('signUp')
+
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!user) {
-            navigate('/landing')
+            navigate('/')
         } else {
             navigate('/dashboard')
         }
     }, [user, loading])
 
-    // log in logic
-    const submitLogin = (email, password) => {
+    const submitLogin = () => {
+        console.log(email, password)
         logInWithEmailAndPassword(email, password);
     }
 
-    // sign up logic
-    const submitNewUser = (email, password) => {
+    const submitNewUser = () => {
         registerWithEmailAndPassword(email, password);
     }
 
@@ -35,7 +34,15 @@ export const AuthContextProvider = ({ children }) => {
         signInWithGoogle();
     }
 
-    // log out logic
+    const navigateToLogin = () => {
+        setAuthTabValue('logIn')
+        navigate('/auth')
+    }
+    const navigateToSignUp = () => {
+        setAuthTabValue('signUp')
+        navigate('/auth')
+    }
+
     const logoutUser = () => {
         const userAuthenticated = logout()
         if (!userAuthenticated) {
@@ -45,10 +52,16 @@ export const AuthContextProvider = ({ children }) => {
 
     const value = {
         user,
+        authTabValue,
+        setAuthTabValue,
+        setEmail,
+        setPassword,
         submitLogin,
         submitNewUser,
         loginWithGoogle,
-        logoutUser
+        logoutUser,
+        navigateToLogin,
+        navigateToSignUp
     }
 
     return <AuthContext.Provider value={value}> {children} </AuthContext.Provider>

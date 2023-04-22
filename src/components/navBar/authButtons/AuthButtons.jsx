@@ -1,15 +1,16 @@
 import React, { useContext } from 'react'
 import { AuthContext, AuthContextProvider } from '../../../features/auth/components/AuthContextProvider'
 import { Button } from '@mui/material';
-import { auth, logInWithEmailAndPassword, signInWithGoogle, registerWithEmailAndPassword, logout } from '../../../firebase'
+import { auth } from '../../../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { useNavigate } from 'react-router-dom'
 
 
 const AuthButtons = () => {
     const [user] = useAuthState(auth)
     const {
-        logoutUser
+        logoutUser,
+        navigateToLogin,
+        navigateToSignUp
     } = useContext(AuthContext)
 
     if (user) {
@@ -20,11 +21,9 @@ const AuthButtons = () => {
         )
     }
     return (
-        // check if auth
-        // otherwise no auth
         <>
-            <Button color="inherit" sx={{ color: '#fff', mr: 1 }}>Log in</Button>
-            <Button variant="contained" color="warning">Sign Up</Button>
+            <Button color="inherit" sx={{ color: '#fff', mr: 1 }} onClick={navigateToLogin}>Log in</Button>
+            <Button variant="contained" color="warning" onClick={navigateToSignUp}>Sign Up</Button>
         </>
     )
 }
