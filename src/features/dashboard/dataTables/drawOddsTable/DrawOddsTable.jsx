@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -34,8 +34,8 @@ export default function DrawOddsTable() {
       return noEntriesColor;
     }
     return (successPercent === '100%') ? successColor :
-          (successPercent === '0%') ? noSuccessColor :
-          midSuccessColor
+      (successPercent === '0%') ? noSuccessColor :
+        midSuccessColor
   }
 
   const displayFirstChoiceRows = () => {
@@ -47,25 +47,25 @@ export default function DrawOddsTable() {
         firstChoiceArr.push(drawOddsData[obj])
       }
     }
-    
+
     if (firstChoiceObj) {
       for (let key in firstChoiceObj) {
         const resInfo = firstChoiceObj[key].res;
         const nonResInfo = firstChoiceObj[key].nonRes;
-        
-        if (resInfo.applicants || nonResInfo.applicants) {  
+
+        if (resInfo.applicants || nonResInfo.applicants) {
           const resSuccessPercentage = getSuccessPercentage(resInfo.applicants, resInfo.success)
           const nonResSuccessPercentage = getSuccessPercentage(nonResInfo.applicants, nonResInfo.success)
-        
+
           firstChoiceDisplayArr.push(
             <TableRow key={'first-choice-' + key}>
               <TableCell>{key}</TableCell>
-              <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resInfo.applicants)}}>
+              <TableCell sx={{ backgroundColor: getConditionalBgColor(resSuccessPercentage, resInfo.applicants) }}>
                 {resSuccessPercentage} ({resInfo.success}/{resInfo.applicants})
-                </TableCell>
-              <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResInfo.applicants)}}>
+              </TableCell>
+              <TableCell sx={{ backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResInfo.applicants) }}>
                 {nonResSuccessPercentage} ({nonResInfo.success}/{nonResInfo.applicants})
-                </TableCell>
+              </TableCell>
             </TableRow>
           )
         }
@@ -85,20 +85,20 @@ export default function DrawOddsTable() {
         return (
           <TableRow>
             <TableCell>2nd Choice</TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resSecondInfo.applicants)}}>
+            <TableCell sx={{ backgroundColor: getConditionalBgColor(resSuccessPercentage, resSecondInfo.applicants) }}>
               {resSuccessPercentage} ({resSecondInfo.success}/{resSecondInfo.applicants})
-                </TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResSecondInfo.applicants)}}>
+            </TableCell>
+            <TableCell sx={{ backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResSecondInfo.applicants) }}>
               {nonResSuccessPercentage} ({nonResSecondInfo.success}/{nonResSecondInfo.applicants})
             </TableCell>
           </TableRow>
         )
       }
+    }
   }
-}
 
-const displayThirdChoiceRow = () => {
-  const thirdChoiceObj = drawOddsData['Total Choice 3'];
+  const displayThirdChoiceRow = () => {
+    const thirdChoiceObj = drawOddsData['Total Choice 3'];
     if (thirdChoiceObj) {
       const resThirdInfo = thirdChoiceObj.res
       const nonResThirdInfo = thirdChoiceObj.nonRes
@@ -108,20 +108,20 @@ const displayThirdChoiceRow = () => {
         return (
           <TableRow>
             <TableCell>3rd Choice</TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resThirdInfo.applicants)}}>
+            <TableCell sx={{ backgroundColor: getConditionalBgColor(resSuccessPercentage, resThirdInfo.applicants) }}>
               {resSuccessPercentage} ({resThirdInfo.success}/{resThirdInfo.applicants})
-                </TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResThirdInfo.applicants)}}>
+            </TableCell>
+            <TableCell sx={{ backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResThirdInfo.applicants) }}>
               {nonResSuccessPercentage} ({nonResThirdInfo.success}/{nonResThirdInfo.applicants})
             </TableCell>
           </TableRow>
         )
       }
+    }
   }
-}
 
-const displayFourthChoiceRow = () => {
-  const fourthChoiceObj = drawOddsData['Total Choice 4'];
+  const displayFourthChoiceRow = () => {
+    const fourthChoiceObj = drawOddsData['Total Choice 4'];
     if (fourthChoiceObj) {
       const resFourthInfo = fourthChoiceObj.res
       const nonResFourthInfo = fourthChoiceObj.nonRes
@@ -131,35 +131,35 @@ const displayFourthChoiceRow = () => {
         return (
           <TableRow>
             <TableCell>4th Choice</TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(resSuccessPercentage, resFourthInfo.applicants)}}>
+            <TableCell sx={{ backgroundColor: getConditionalBgColor(resSuccessPercentage, resFourthInfo.applicants) }}>
               {resSuccessPercentage} ({resFourthInfo.success}/{resFourthInfo.applicants})
-                </TableCell>
-            <TableCell sx={{backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResFourthInfo.applicants)}}>
+            </TableCell>
+            <TableCell sx={{ backgroundColor: getConditionalBgColor(nonResSuccessPercentage, nonResFourthInfo.applicants) }}>
               {nonResSuccessPercentage} ({nonResFourthInfo.success}/{nonResFourthInfo.applicants})
             </TableCell>
           </TableRow>
         )
       }
+    }
   }
-}
 
   const getSuccessPercentage = (applicants, success) => {
     const successPercentage = (success / applicants) * 100;
-    return successPercentage ?  + successPercentage.toFixed(0) + '%' : '0%';
+    return successPercentage ? + successPercentage.toFixed(0) + '%' : '0%';
   }
 
   const displayDrawTable = () => {
     if (drawOddsError) {
       return (
         <Box>
-          <Typography variant="h2" component="h4" align="center" sx={{color: '#d35400', mt: 4}}>
+          <Typography variant="h2" component="h4" align="center" sx={{ color: '#d35400', mt: 4 }}>
             Error loading data, please try again
           </Typography>
         </Box>
       )
     } else if (drawOddsLoading) {
       return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px' }}>
           <Skeleton width={800} height={200} />
           <Skeleton width={800} height={200} />
           <Skeleton width={800} height={200} />
@@ -167,9 +167,9 @@ const displayFourthChoiceRow = () => {
       )
     } else if (!drawOddsData) {
       return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px', marginTop: '1em'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '800px', marginTop: '1em' }}>
           <Typography variant="h5" component="h5">
-              There doesn't appear to be anything here
+            There doesn't appear to be anything here
           </Typography>
           <Typography variant="h5" component="h5">
             Please try another search
@@ -179,8 +179,8 @@ const displayFourthChoiceRow = () => {
     }
 
     return (
-      <TableContainer sx={{width: '100%'}}>
-        <Typography variant="h5" component="h5" sx={{marginLeft: '.5em', marginTop: '1em'}}>Draw Odds</Typography>
+      <TableContainer sx={{ width: '100%' }}>
+        <Typography variant="h5" component="h5" sx={{ marginLeft: '.5em', marginTop: '1em' }}>Draw Odds</Typography>
         <Table sx={{ maxWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -201,8 +201,8 @@ const displayFourthChoiceRow = () => {
   }
 
   return (
-      <Box sx={{width: '100%', marginTop: '1em', borderTop: '1px solid #dfdfdf'}}> 
-        {displayDrawTable()}
-      </Box>
-    )
+    <Box sx={{ width: '100%', marginTop: '1em', borderTop: '1px solid #dfdfdf' }}>
+      {displayDrawTable()}
+    </Box>
+  )
 }

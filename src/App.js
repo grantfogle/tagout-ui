@@ -8,20 +8,24 @@ import LandingTwo from './features/auth/LandingTwo'
 import Dashboard from './features/dashboard/Dashboard'
 import AuthForm from './features/auth/authForm/AuthForm'
 import Welcome from './features/auth/components/welcome/Welcome'
+import { AuthContextProvider } from './features/auth/components/AuthContextProvider';
 
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+
         <Router>
-          <Routes>
-            <Route exact path="/" element={<Landing />} />
-            <Route exact path="/dashboard" element={<Dashboard />} />
-            <Route exact path="/landing" element={<LandingTwo />}>
-              <Route path="welcome" element={<Welcome />} />
-              <Route path="auth" element={<AuthForm />} />
-            </Route>
-          </Routes>
+          <AuthContextProvider>
+            <Routes>
+              <Route exact path="/" element={<Landing />} />
+              <Route exact path="/dashboard" element={<Dashboard />} />
+              <Route exact path="/landing" element={<LandingTwo />}>
+                <Route path="" element={<Welcome />} />
+                <Route path="auth" element={<AuthForm />} />
+              </Route>
+            </Routes>
+          </AuthContextProvider>
         </Router>
       </ThemeProvider>
     </div>

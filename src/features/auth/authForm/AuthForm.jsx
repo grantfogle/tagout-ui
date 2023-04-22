@@ -9,8 +9,14 @@ import {
 } from '@mui/material'
 import Login from '../login/Login'
 import Register from '../register/Register'
+import { AuthContext } from '../components/AuthContextProvider'
 
 const AuthForm = () => {
+    const {
+        submitLogin,
+        submitNewUser,
+        loginWithGoogle,
+    } = useContext(AuthContext)
     const [loginTabValue, setLoginTabValue] = useState('register')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,17 +27,17 @@ const AuthForm = () => {
     // submit new user
     // submit login with google (other auth providers?)
     // loading, error...?
-    const submitLogin = () => {
-        logInWithEmailAndPassword(email, password);
-    }
+    // const submitLogin = () => {
+    //     logInWithEmailAndPassword(email, password);
+    // }
 
-    const submitNewUser = () => {
-        registerWithEmailAndPassword(email, password);
-    }
+    // const submitNewUser = () => {
+    //     registerWithEmailAndPassword(email, password);
+    // }
 
-    const submitLoginWithGoogle = () => {
-        signInWithGoogle();
-    }
+    // const submitLoginWithGoogle = () => {
+    //     signInWithGoogle();
+    // }
 
     const handleTabChange = (event, newValue) => {
         setLoginTabValue(newValue);
@@ -39,8 +45,8 @@ const AuthForm = () => {
 
     const displayLoginForm = () => {
         return loginTabValue === 'login' ?
-            <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitLogin={submitLogin} submitLoginWithGoogle={submitLoginWithGoogle} /> :
-            <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitNewUser={submitNewUser} submitLoginWithGoogle={submitLoginWithGoogle} />
+            <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitLogin={submitLogin} submitLoginWithGoogle={loginWithGoogle} /> :
+            <Register email={email} setEmail={setEmail} password={password} setPassword={setPassword} submitNewUser={submitNewUser} submitLoginWithGoogle={loginWithGoogle} />
     }
 
     return (

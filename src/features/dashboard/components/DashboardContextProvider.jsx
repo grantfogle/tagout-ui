@@ -1,10 +1,10 @@
-import React, {createContext, useContext, useState} from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { logout } from '../../../firebase'
 import { useNavigate } from 'react-router-dom'
 
 export const DashboardContext = createContext(null)
 
-export const DashboardContextProvider = ({children}) => {
+export const DashboardContextProvider = ({ children }) => {
 
     const [gender, setGender] = useState(null)
     // const [unit, setUnit] = useState(null)
@@ -24,20 +24,11 @@ export const DashboardContextProvider = ({children}) => {
     const [populationData, setPopulationData] = useState(null)
     const [populationDataLoading, setPopulationDataLoading] = useState(false)
     const [populationDataError, setPopulationDataError] = useState(false)
-    
+
     const [harvestData, setHarvestData] = useState(null)
     const [harvestDataLoading, setHarvestDataLoading] = useState(false)
     const [harvestDataError, setHarvestDataError] = useState(false)
 
-
-    const navigate = useNavigate()
-
-    const logoutUser = () => {
-        const userAuthenticated = logout()
-        if (!userAuthenticated) {
-            navigate('/')
-        }
-    }
 
     const value = {
         state,
@@ -66,8 +57,7 @@ export const DashboardContextProvider = ({children}) => {
         setPopulationData,
         setPopulationDataLoading,
         setPopulationDataError,
-        logoutUser
-    }    
+    }
 
     return <DashboardContext.Provider value={value}> {children} </DashboardContext.Provider>
 }
