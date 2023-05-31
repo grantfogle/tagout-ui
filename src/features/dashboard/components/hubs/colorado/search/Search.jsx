@@ -1,9 +1,9 @@
-import React, {useState, useContext, useEffect} from 'react'
-import { colorado } from '../assets/searchStats'
-import {Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete} from '@mui/material'
-import { DashboardContext } from '../components/DashboardContextProvider'
-import { getDatabase, ref, onValue} from 'firebase/database'
-import { isUnitOtc } from '../utils/isUnitOtc'
+import React, { useState, useContext, useEffect } from 'react'
+import { colorado } from '../../../../assets/searchStats'
+import { Box, Typography, Button, FormGroup, FormControl, InputLabel, Select, MenuItem, TextField, Autocomplete } from '@mui/material'
+import { DashboardContext } from '../../../DashboardContextProvider'
+import { getDatabase, ref, onValue } from 'firebase/database'
+import { isUnitOtc } from '../../../../utils/isUnitOtc'
 
 
 export default function Search() {
@@ -64,13 +64,13 @@ export default function Search() {
         setPopulationData(null)
         setOtcUnitStatus(isOtc)
         setSpecies(speciesStr)
-        
+
         if (!isOtc) {
             const drawStatsRef = ref(dbSnap, drawOddsUrl)
             onValue(drawStatsRef, (snapshot) => {
                 const data = snapshot.val()
                 setDrawOddsLoading(false)
-                if (data) {  
+                if (data) {
                     setDrawOddsData(data)
                 } else {
                     setDrawOddsData(null)
@@ -116,7 +116,7 @@ export default function Search() {
 
 
     const displayHuntCode = () => {
-        return <Typography sx={{marginTop: '.5em', textAlign: 'center'}} variant="h5" component="h5">Results for {huntCode}</Typography>
+        return <Typography sx={{ marginTop: '.5em', textAlign: 'center' }} variant="h5" component="h5">Results for {huntCode}</Typography>
     }
 
     const speciesMenuItems = (menuSpecies) => {
@@ -152,8 +152,8 @@ export default function Search() {
 
     return (
         <Box sx={{ flexGrow: 1, marginTop: '2em', paddingBottom: '1em', marginBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
-            <FormGroup sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
-                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
+            <FormGroup sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                <FormControl sx={{ width: '120px', marginBottom: '1em', marginRight: '1em' }}>
                     <InputLabel id="species-label">Species</InputLabel>
                     <Select
                         labelId="species-label"
@@ -170,7 +170,7 @@ export default function Search() {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
+                <FormControl sx={{ width: '120px', marginBottom: '1em', marginRight: '1em' }}>
                     <InputLabel id="gender-label">Gender</InputLabel>
                     <Select
                         labelId="gender-label"
@@ -184,19 +184,19 @@ export default function Search() {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
-                  <Autocomplete 
-                    disablePortal
-                    id="units autocomplete"
-                    options={colorado.units}
-                    onChange={(event, value) => {
-                        setUnit(value.unit)
-                        setUnitLabel(value.label)
-                    }}
-                    renderInput={(params) => <TextField {...params} value={params.unit} label='Unit' />}/>
+                <FormControl sx={{ width: '120px', marginBottom: '1em', marginRight: '1em' }}>
+                    <Autocomplete
+                        disablePortal
+                        id="units autocomplete"
+                        options={colorado.units}
+                        onChange={(event, value) => {
+                            setUnit(value.unit)
+                            setUnitLabel(value.label)
+                        }}
+                        renderInput={(params) => <TextField {...params} value={params.unit} label='Unit' />} />
                 </FormControl>
 
-                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
+                <FormControl sx={{ width: '120px', marginBottom: '1em', marginRight: '1em' }}>
                     <InputLabel id="season-label">Season</InputLabel>
                     <Select
                         labelId="season-label"
@@ -210,7 +210,7 @@ export default function Search() {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{width: '120px', marginBottom: '1em', marginRight: '1em'}}>
+                <FormControl sx={{ width: '120px', marginBottom: '1em', marginRight: '1em' }}>
                     <InputLabel id="method-label">Method</InputLabel>
                     <Select
                         labelId="method-label"
@@ -224,10 +224,10 @@ export default function Search() {
                     </Select>
                 </FormControl>
 
-            <Button onClick={() => handleSubmit()}
-                variant="contained"
-                sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}}
-                disabled={checkFormVerification()}>Submit</Button>
+                <Button onClick={() => handleSubmit()}
+                    variant="contained"
+                    sx={{ backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em' }}
+                    disabled={checkFormVerification()}>Submit</Button>
             </FormGroup>
 
             {displayHuntCode()}

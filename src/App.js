@@ -8,6 +8,8 @@ import Landing from './features/auth/Landing'
 import Dashboard from './features/dashboard/Dashboard'
 import AuthForm from './features/auth/authForm/AuthForm'
 import Welcome from './features/auth/components/welcome/Welcome'
+import ColoradoDashboard from './features/dashboard/components/hubs/colorado/ColoradoDashboard'
+import WyomingDashboard from './features/dashboard/components/hubs/wyoming/WyomingDashboard'
 
 function App() {
   return (
@@ -16,11 +18,14 @@ function App() {
         <Router>
           <AuthContextProvider>
             <Routes>
-              <Route path="/" element={<Landing />}>
+              <Route path="dashboard" element={<Dashboard />} >
+                <Route path="colorado" element={<ColoradoDashboard />} />
+                <Route path="wyoming" element={<WyomingDashboard />} />
+              </Route>
+              <Route exact path="/" element={<Landing />}>
                 <Route path="" element={<Welcome />} />
                 <Route path="auth" element={<AuthForm />} />
               </Route>
-              <Route exact path="/dashboard" element={<Dashboard />} />
             </Routes>
           </AuthContextProvider>
         </Router>

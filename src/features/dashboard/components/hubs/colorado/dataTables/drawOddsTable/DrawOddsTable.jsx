@@ -10,8 +10,7 @@ import {
   Box,
   Typography
 } from '@mui/material'
-import { DashboardContext } from '../../components/DashboardContextProvider'
-
+import { DashboardContext } from '../../../../DashboardContextProvider'
 
 export default function DrawOddsTable() {
   const {

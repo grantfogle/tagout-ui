@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
         if (!user) {
             navigate('/')
         } else {
-            navigate('/dashboard')
+            navigate('/dashboard/colorado')
         }
     }, [user, loading])
 
