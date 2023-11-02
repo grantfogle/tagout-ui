@@ -40,9 +40,9 @@ const Dashboard = () => {
         <DashboardContextProvider>
             <Box sx={{ height: '100vh' }}>
                 <Navbar />
-                <Container maxWidth="lg" sx={{ marginBottom: '2em', marginTop: '2em', minHeight: '800px' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '2em', borderBottom: '1px solid #dfdfdf' }}>
-                        <Typography variant="h5" component="h4" sx={{ paddingBottom: 0, paddingRight: '1em', }}>Select a State</Typography>
+                <Container maxWidth="lg" sx={{ marginBottom: '2em', marginTop: '1em', minHeight: '800px' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '1em', borderBottom: '1px solid #dfdfdf' }}>
+                        <Typography variant="h5" component="h4" sx={{ paddingBottom: 0, paddingRight: '1em', }}>Select a state</Typography>
                         <FormControl sx={{ width: '180px' }}>
                             <Select
                                 id="stateSelect"
