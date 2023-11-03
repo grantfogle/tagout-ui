@@ -1,5 +1,17 @@
 import React, { useContext } from 'react'
-import { Box, Container, Table, TableContainer, TextField, Typography } from '@mui/material'
+import { 
+    Box,
+    Container,
+    Table,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TableCell,
+    Paper,
+    TextField,
+    Typography,
+    Toolbar, 
+    AppBar} from '@mui/material'
 
 import { DashboardContext } from '../components/DashboardContextProvider'
 import Navbar from '../../../components/navBar/NavBar'
@@ -32,6 +44,35 @@ export const MainDisplayTwo = () => {
     * then set the species state to the selected species
     */
 
+    const mockUnits = [
+        { 
+            state: 'CO',
+            code: 'EE001O1R', 
+            unit: '001', 
+            season: '01', 
+            resident: 'resident',
+            sex: 'either',
+            method: 'rifle',
+            drawStats: [
+                { firstChoice: [{points: 1, applicants: 10, success: 10, successRatio: 1}, {points: 0, applicants: 100, success: 20, successRatio: .2}] },
+                { secondChoice: [{applicants: 10, success: 10, successRatio: 1}] },
+                { thirdChoice: [{applicants: 10, success: 10, successRatio: 1}] },
+            ],
+            harvestStats: {
+                malesKilled: 5,
+                femalesKilled: 10,
+                totalKilled: 15,
+                hunters: 100,
+                successRatio: .15
+            },
+            populationStats: {
+                males: 100,
+                females: 10000,
+                maleFemaleRatio: .1
+            }
+         },
+    ]
+
 
     return (
         <Box sx={{ height: '100vh' }}>
@@ -46,17 +87,41 @@ export const MainDisplayTwo = () => {
                     <TextField label="Gender" sx={{width: '120px'}} disabled />
                     <TextField label="Season" sx={{width: '120px'}} disabled/>
                     <TextField label="Method" sx={{width: '120px'}} disabled/>
-                    {/* Change button color to orange */}
                     <Button variant="contained" sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}} disabled>Submit</Button>
                 </Container>
+                <Container>
+                    <Paper sx={{ width: '100%', marginTop: '2em' }}>
+                        <TableContainer>
+                            <Table stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Hunt Code</TableCell>
+                                        <TableCell>Units</TableCell>
+                                        <TableCell>Draw Stats</TableCell>
+                                        {/* Dynamic <TableCell>1st Choice</TableCell> */}
+                                        {/* <TableCell>2nd Choice</TableCell>
+                                        <TableCell>3rd Choice</TableCell> */}
+                                        <TableCell>Harvest Stats</TableCell>
+                                        {/* total killed (either, male, female), total hunters */}
+                                        <TableCell>Population Stats</TableCell>
+                                        {/* Male::Female Ratio */}
+                                        {/* Male::Female Ratio */}
+                                    </TableRow>
+                                </TableHead>
+                            </Table>
+                        </TableContainer>
+                    </Paper>
+                </Container>
 
-                <Box sx={{backgroundColor: '#27ae60', height: '60px'}}>
-                    <Typography variant="h6">Filters</Typography>
-                </Box>
-
-                <TableContainer>
-                    Please enter a search result
-                </TableContainer>
+                <AppBar position="fixed" sx={{ top: 'auto', backgroundColor: '#fff', bottom: 0, height: '60px', borderTop: '2px solid #f39c12' }}>
+                    <Toolbar>
+                        <Typography variant="h6">Filters</Typography>
+                        {/* draw choice (1st/2nd/3rd) */}
+                        {/* preference points: both max pts and draw percentage */}
+                        {/* success rates: slider (0-100%) */}
+                        {/* male::female ratio */}
+                    </Toolbar>
+                </AppBar>
             </Box>
             <Footer />
         </Box>
