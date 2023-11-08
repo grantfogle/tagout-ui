@@ -28,6 +28,7 @@ import Footer from '../footer/Footer'
 import { Button } from '@mui/material'
 import { TextFieldsOutlined } from '@mui/icons-material'
 import { MultiStateSearch } from '../search/MultiStateSearch'
+import { MultiUnitTable } from '../dataTables/multiUnitTable/MultiUnitTable'
 
 // const 
 
@@ -85,30 +86,7 @@ export const MainDisplayTwo = () => {
             <Navbar />
             <Box maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px' }}>
                 <MultiStateSearch />
-                <Container>
-                    <Paper sx={{ width: '100%', marginTop: '2em' }}>
-                        <TableContainer>
-                            <Table stickyHeader aria-label="sticky table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Hunt Code</TableCell>
-                                        <TableCell>Units</TableCell>
-                                        <TableCell>Draw Stats</TableCell>
-                                        {/* Dynamic <TableCell>1st Choice</TableCell> */}
-                                        {/* <TableCell>2nd Choice</TableCell>
-                                        <TableCell>3rd Choice</TableCell> */}
-                                        <TableCell>Harvest Stats</TableCell>
-                                        {/* total killed (either, male, female), total hunters */}
-                                        <TableCell>Population Stats</TableCell>
-                                        {/* Male::Female Ratio */}
-                                        {/* Male::Female Ratio */}
-                                    </TableRow>
-                                </TableHead>
-                            </Table>
-                        </TableContainer>
-                    </Paper>
-                </Container>
-
+                <MultiUnitTable />
                 <AppBar position="fixed" sx={{ top: 'auto', backgroundColor: '#fff', bottom: 0, height: '60px', borderTop: '2px solid #f39c12' }}>
                     <Toolbar>
                         <Typography variant="h6">Filters</Typography>
