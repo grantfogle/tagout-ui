@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { 
     Box,
+    Button,
     Container,
     FormControl,
-    TextField,
     InputLabel,
     Select,
     MenuItem,
@@ -13,22 +13,47 @@ import {
 export const MultiStateSearch = () => {
     const [state, setState] = useState('');
     const [resident, setResident] = useState('');
-    const [drawType, setDrawType] = useState('');
     const [species, setSpecies] = useState('');
     const [gender, setGender] = useState('');
+    const [drawType, setDrawType] = useState('');
     const [season, setSeason] = useState('');
     const [method, setMethod] = useState('');
 
     const handleSubmit = (event) => {
-        console.log('submit', event)
+        const apiUrl = `baseUrl/${state}/${resident}/${species}/${gender}/${drawType}/${season}/${method}`
+        console.log(apiUrl)
     }
 
-    const handleChange = event => {
-        console.log('change', event)
+    const checkFormVerification = () => {
+        return !!(state && resident && drawType && species && gender && season && method);
     }
 
-    const displayDrawType = () => {
-        return state && resident;
+    const handleChange = (event) => {
+        switch (event.target.name) {
+            case 'state':
+                setState(event.target.value)
+                break;
+            case 'resident':
+                setResident(event.target.value)
+                break;
+            case 'drawType':
+                setDrawType(event.target.value);
+                break;
+            case 'species':
+                setSpecies(event.target.value);
+                break;
+            case 'gender':
+                setGender(event.target.value);
+                break;
+            case 'season':
+                setSeason(event.target.value);
+                break;
+            case 'method':
+                setMethod(event.target.value);
+                break;
+            default:
+                break;
+        }
     }
 
     const coloradoSearchForm = () => {
@@ -37,7 +62,8 @@ export const MultiStateSearch = () => {
                 <FormControl sx={{width: '160px', marginRight: '1em'}}>
                     <InputLabel id="species-select-label">Species</InputLabel>
                     <Select 
-                        labelId="species-select-label" 
+                        labelId="species-select-label"
+                        name="species"
                         id="species-select" value={species} 
                         label="Species" 
                         onChange={handleChange} 
@@ -51,18 +77,20 @@ export const MultiStateSearch = () => {
                     <InputLabel id="gender-select-label">Gender</InputLabel>
                     <Select 
                         labelId="gender-select-label" 
+                        name="gender"
                         id="gender-select" value={gender} 
                         label="Gender" 
                         onChange={handleChange}>
-                        <MenuItem value="res">Male</MenuItem>
-                        <MenuItem value="nonRes">Female</MenuItem>
-                        <MenuItem value="nonRes">Either</MenuItem>
+                        <MenuItem value="E">Either</MenuItem>
+                        <MenuItem value="F">Female</MenuItem>
+                        <MenuItem value="M">Male</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl sx={{width: '160px', marginRight: '1em'}}>
                     <InputLabel id="draw-type-select-label">Draw Type</InputLabel>
                     <Select 
                         labelId="draw-type-select-label" 
+                        name="drawType"
                         id="draw-type-select" value={drawType} 
                         label="Draw Type" 
                         onChange={handleChange} 
@@ -75,7 +103,8 @@ export const MultiStateSearch = () => {
                     <InputLabel id="method-select-label">Method</InputLabel>
                     <Select 
                         labelId="method-select-label" 
-                        id="method-select" value={method} 
+                        id="method-select" value={method}
+                        name="method"
                         label="Method" 
                         onChange={handleChange} 
                     >
@@ -89,39 +118,17 @@ export const MultiStateSearch = () => {
                     <InputLabel id="season-label">Season</InputLabel>
                     <Select 
                         labelId="season-label" 
-                        id="season" value={season} 
+                        id="season" value={season}
+                        name="season"
                         label="Season" 
                         onChange={handleChange} 
                     >
                         {/* MAKE THESE VALUES DYNAMIC */}
-                        <MenuItem value="A">O1</MenuItem>
-                        {/* <MenuItem value="M">Muzzleloader</MenuItem>
-                        <MenuItem value="R">Rifle</MenuItem> */}
+                        <MenuItem value="O1">O1</MenuItem>
                     </Select>
                 </FormControl>
             </Box>
         )
-    }
-
-    const drawTypeFormGroup = () => {
-        // get draw types based on state and resident status
-        // and species/gender
-        return (
-            <FormControl sx={{width: '160px', marginRight: '1em'}}>
-                <InputLabel id="draw-type-select-label">Draw Type</InputLabel>
-                <Select 
-                    labelId="draw-type-select-label" 
-                    id="state-select" value={drawType} 
-                    label="State" 
-                    onChange={handleChange} 
-                    disabled={displayDrawType}>
-                    <MenuItem value="res">Preference Point</MenuItem>
-                    <MenuItem value="nonRes">OTC</MenuItem>
-                    <MenuItem value="nonRes">Random</MenuItem>
-                    <MenuItem value="nonRes">Special</MenuItem>
-                </Select>
-            </FormControl>
-        );
     }
 
     return (
@@ -131,7 +138,7 @@ export const MultiStateSearch = () => {
                 <Box>
                     <FormControl sx={{width: '160px', marginRight: '1em'}}>
                         <InputLabel id="state-select-label">State</InputLabel>
-                            <Select labelId="state-select-label" id="state-select" value={state} label="State" onChange={handleChange}>
+                            <Select name="state" labelId="state-select-label" id="state-select" value={state} label="State" onChange={handleChange}>
                                 <MenuItem value="CO">Colorado</MenuItem>
                                 <MenuItem value="ID" disabled>Idaho</MenuItem>
                                 <MenuItem value="MT" disabled>Montana</MenuItem>
@@ -141,7 +148,7 @@ export const MultiStateSearch = () => {
 
                     <FormControl sx={{width: '200px'}}>
                         <InputLabel id="resident-select-label">Resident Status</InputLabel>
-                        <Select labelId="state-select-label" id="state-select" value={state} label="State" onChange={handleChange}>
+                        <Select name="resident" labelId="resident-select-label" id="resident-select" value={resident} label="Resident" onChange={handleChange}>
                             <MenuItem value="res">Resident</MenuItem>
                             <MenuItem value="nonRes">Non-Resident</MenuItem>
                         </Select>
@@ -151,6 +158,13 @@ export const MultiStateSearch = () => {
                 <Box>
                     {coloradoSearchForm()}
                 </Box>
+
+                <Button onClick={() => handleSubmit()}
+                    variant="contained"
+                    sx={{backgroundColor: '#27ae60', color: '#fff', width: '120px', height: '56px', marginTop: '1em'}}
+                    disabled={!checkFormVerification()}
+                >Submit</Button>
+
             </form>
         </Container>
     )

@@ -84,15 +84,7 @@ export const MainDisplayTwo = () => {
         <Box sx={{ height: '100vh' }}>
             <Navbar />
             <Box maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px' }}>
-                <Typography variant="h4" sx={{ marginTop: '1em', marginBottom: '1em' }}>Colorado Big Game Draw Odds</Typography>
                 <MultiStateSearch />
-                {/* <Container sx={{marginBottom: '2em'}}>
-                    <TextField label="Species" sx={{width: '120px'}} disabled />
-                    <TextField label="Gender" sx={{width: '120px'}} disabled />
-                    <TextField label="Season" sx={{width: '120px'}} disabled/>
-                    <TextField label="Method" sx={{width: '120px'}} disabled/>
-                    <Button variant="contained" sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}} disabled>Submit</Button>
-                </Container> */}
                 <Container>
                     <Paper sx={{ width: '100%', marginTop: '2em' }}>
                         <TableContainer>
