@@ -1,7 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { 
     Box,
     Container,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
     Table,
     TableContainer,
     TableHead,
@@ -23,6 +27,7 @@ import OtcDisplay from '../otcDisplay/OtcDisplay'
 import Footer from '../footer/Footer'
 import { Button } from '@mui/material'
 import { TextFieldsOutlined } from '@mui/icons-material'
+import { MultiStateSearch } from '../search/MultiStateSearch'
 
 // const 
 
@@ -30,6 +35,8 @@ export const MainDisplayTwo = () => {
     const {
         otcUnitStatus,
     } = useContext(DashboardContext)
+
+    const { state, setState } = useState('CO')
 
     /* LOGIC TO DERIVE SEARCH
     * state, resident, draw type will be default
@@ -73,22 +80,19 @@ export const MainDisplayTwo = () => {
          },
     ]
 
-
     return (
         <Box sx={{ height: '100vh' }}>
             <Navbar />
             <Box maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px' }}>
                 <Typography variant="h4" sx={{ marginTop: '1em', marginBottom: '1em' }}>Colorado Big Game Draw Odds</Typography>
-                <Container sx={{marginBottom: '2em'}}>
-                    <TextField label="State" sx={{width: '120px'}}/>
-                    <TextField label="Resident" sx={{width: '120px'}}/>
-                    <TextField label="Draw Type" sx={{width: '120px'}} />
+                <MultiStateSearch />
+                {/* <Container sx={{marginBottom: '2em'}}>
                     <TextField label="Species" sx={{width: '120px'}} disabled />
                     <TextField label="Gender" sx={{width: '120px'}} disabled />
                     <TextField label="Season" sx={{width: '120px'}} disabled/>
                     <TextField label="Method" sx={{width: '120px'}} disabled/>
                     <Button variant="contained" sx={{backgroundColor: '#27ae60', width: '120px', height: '56px', marginRight: '1em'}} disabled>Submit</Button>
-                </Container>
+                </Container> */}
                 <Container>
                     <Paper sx={{ width: '100%', marginTop: '2em' }}>
                         <TableContainer>
