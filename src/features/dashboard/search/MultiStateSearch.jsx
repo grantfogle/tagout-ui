@@ -10,6 +10,14 @@ import {
     Typography,
 } from '@mui/material';
 
+import {
+    displayDrawTypes,
+    displayMethod,
+    displaySeason,
+    coloradoOtcCheck,
+    coloradoMethodCheck
+} from '../utils/formChecks';
+
 export const MultiStateSearch = () => {
     const [state, setState] = useState('');
     const [resident, setResident] = useState('');
@@ -18,6 +26,25 @@ export const MultiStateSearch = () => {
     const [drawType, setDrawType] = useState('');
     const [season, setSeason] = useState('');
     const [method, setMethod] = useState('');
+
+    /*
+    * orange border for incomplete value on form
+    * green border for valid value on form
+    *
+    */
+   const resetStateRelatedData = () => {
+         setSpecies('');
+         setGender('');
+         setDrawType('');
+         setMethod('');
+         setSeason('');
+   }
+
+   const resetDrawMethodSeason = () => {
+         setDrawType('');
+         setMethod('');
+         setSeason('');
+   }
 
     const handleSubmit = (event) => {
         const apiUrl = `baseUrl/${state}/${resident}/${species}/${gender}/${drawType}/${season}/${method}`
@@ -31,25 +58,29 @@ export const MultiStateSearch = () => {
     const handleChange = (event) => {
         switch (event.target.name) {
             case 'state':
-                setState(event.target.value)
+                setState(event.target.value);
+                resetStateRelatedData();
                 break;
             case 'resident':
-                setResident(event.target.value)
+                setResident(event.target.value);
+                resetStateRelatedData();
+                break;
+            case 'species':
+                setSpecies(event.target.value);
+                resetDrawMethodSeason();
+                break;
+            case 'gender':
+                setGender(event.target.value);
+                resetDrawMethodSeason();
                 break;
             case 'drawType':
                 setDrawType(event.target.value);
                 break;
-            case 'species':
-                setSpecies(event.target.value);
-                break;
-            case 'gender':
-                setGender(event.target.value);
+            case 'method':
+                setMethod(event.target.value);
                 break;
             case 'season':
                 setSeason(event.target.value);
-                break;
-            case 'method':
-                setMethod(event.target.value);
                 break;
             default:
                 break;
@@ -93,10 +124,11 @@ export const MultiStateSearch = () => {
                         name="drawType"
                         id="draw-type-select" value={drawType} 
                         label="Draw Type" 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        disabled={!displayDrawTypes(species, gender)}
                     >
                         <MenuItem value="pref">Preference Pt</MenuItem>
-                        <MenuItem value="otc">OTC</MenuItem>
+                        <MenuItem value="otc" disabled={!coloradoOtcCheck(species)}>OTC</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl sx={{width: '160px', marginRight: '1em'}}>
@@ -106,10 +138,11 @@ export const MultiStateSearch = () => {
                         id="method-select" value={method}
                         name="method"
                         label="Method" 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        disabled={!displayMethod(drawType)}
                     >
                         <MenuItem value="A">Archery</MenuItem>
-                        <MenuItem value="M">Muzzleloader</MenuItem>
+                        <MenuItem value="M" disabled={!coloradoMethodCheck(drawType)}>Muzzleloader</MenuItem>
                         <MenuItem value="R">Rifle</MenuItem>
                     </Select>
                 </FormControl>
@@ -121,7 +154,8 @@ export const MultiStateSearch = () => {
                         id="season" value={season}
                         name="season"
                         label="Season" 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        disabled={!displaySeason(method)}
                     >
                         {/* MAKE THESE VALUES DYNAMIC */}
                         <MenuItem value="O1">O1</MenuItem>
