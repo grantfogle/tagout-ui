@@ -48,7 +48,6 @@ export const MultiStateSearch = () => {
 
     const handleSubmit = (event) => {
         const apiUrl = `baseUrl/${state}/${resident}/${species}/${gender}/${drawType}/${season}/${method}`
-        console.log(apiUrl)
     }
 
     const checkFormVerification = () => {
