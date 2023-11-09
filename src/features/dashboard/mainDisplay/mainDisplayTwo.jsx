@@ -1,34 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { 
-    Box,
-    Container,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Table,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TableCell,
-    Paper,
-    TextField,
-    Typography,
-    Toolbar, 
-    AppBar} from '@mui/material'
+import { Box } from '@mui/material';
 
 import { DashboardContext } from '../components/DashboardContextProvider'
 import Navbar from '../../../components/navBar/NavBar'
-import Search from '../search/Search'
-import PopulationTable from '../dataTables/populationTable/PopulationTable'
-import HarvestStatsTable from '../dataTables/harvestStatsTable/HarvestStatsTable'
-import DrawOddsTable from '../dataTables/drawOddsTable/DrawOddsTable'
-import OtcDisplay from '../otcDisplay/OtcDisplay'
 import Footer from '../footer/Footer'
-import { Button } from '@mui/material'
-import { TextFieldsOutlined } from '@mui/icons-material'
 import { MultiStateSearch } from '../search/MultiStateSearch'
 import { MultiUnitTable } from '../dataTables/multiUnitTable/MultiUnitTable'
+import { FilterBar } from '../dataTables/filterBar/FilterBar';
 
 // const 
 
@@ -52,50 +30,13 @@ export const MainDisplayTwo = () => {
     * then set the species state to the selected species
     */
 
-    const mockUnits = [
-        { 
-            state: 'CO',
-            code: 'EE001O1R', 
-            unit: '001', 
-            season: '01', 
-            resident: 'resident',
-            sex: 'either',
-            method: 'rifle',
-            drawStats: [
-                { firstChoice: [{points: 1, applicants: 10, success: 10, successRatio: 1}, {points: 0, applicants: 100, success: 20, successRatio: .2}] },
-                { secondChoice: [{applicants: 10, success: 10, successRatio: 1}] },
-                { thirdChoice: [{applicants: 10, success: 10, successRatio: 1}] },
-            ],
-            harvestStats: {
-                malesKilled: 5,
-                femalesKilled: 10,
-                totalKilled: 15,
-                hunters: 100,
-                successRatio: .15
-            },
-            populationStats: {
-                males: 100,
-                females: 10000,
-                maleFemaleRatio: .1
-            }
-         },
-    ]
-
     return (
         <Box sx={{ height: '100vh' }}>
             <Navbar />
             <Box maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px' }}>
                 <MultiStateSearch />
                 <MultiUnitTable />
-                <AppBar position="fixed" sx={{ top: 'auto', backgroundColor: '#fff', bottom: 0, height: '60px', borderTop: '2px solid #f39c12' }}>
-                    <Toolbar>
-                        <Typography variant="h6">Filters</Typography>
-                        {/* draw choice (1st/2nd/3rd) */}
-                        {/* preference points: both max pts and draw percentage */}
-                        {/* success rates: slider (0-100%) */}
-                        {/* male::female ratio */}
-                    </Toolbar>
-                </AppBar>
+                <FilterBar />
             </Box>
             <Footer />
         </Box>
