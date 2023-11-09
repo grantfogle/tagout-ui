@@ -8,15 +8,44 @@ import {
     TableCell,
     Paper,
 } from '@mui/material'
-import { arrayRemove } from 'firebase/firestore';
 
 export const MultiUnitTable = () => {
-    // need to figure out how to create dynamic columns
-    // population stats
-    // loop through draw stats and get max length
-    // generate table head
-    // can i get column index
-    // 
+    // logic that goes through the table data and generates the table head
+    // how many 1st choice points do we need?
+
+    // will need a table for otc display
+    // will need a table for preference point display
+    // switch case for otc vs preference point (vs future random vs other...)?
+
+    /* PREFERENCE POINT TABLE
+        unitcode    units   first choice    second choice third choice    hunters success   population stats
+        will need to create dynamic columns that fill in for first choice draw stats
+            * iterate through all units in draw stats table
+            * get max length of first choice array
+            * generate columns based on max length
+            * generate empty columns for first choice items that are shorter than the max length array
+            * can i also make the columns collapsible?
+            * also make the columns scrollable from left to right
+            * and make columns sortable
+    */
+
+    /* OTC TABLE
+        unit    hunter success  population stats
+        a much simpler table
+    */
+
+    /* DATA COLLECTION
+        will need to get all hunt codes and units and seasons
+
+
+        1. Draw stats
+            Crawl 2022 draw stats pdf
+        2. Population Stats
+        3. Harvest Stats
+        4. Unit Stats
+            Crawl through pdf, strip out all hunt codes and units
+    */
+
     const mockUnits = [
         { 
             state: 'CO',
@@ -76,10 +105,10 @@ export const MultiUnitTable = () => {
     }
 
     const generateTableHead = () => {
-        // mock table data is where?
         return (
             <TableHead>
                 <TableRow>
+                    <TableCell>Draw Code</TableCell>
                     <TableCell>Unit</TableCell>
                     {generateDrawStatsTableHead()}
                     <TableCell>M/F</TableCell>

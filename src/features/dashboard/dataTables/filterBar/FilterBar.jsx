@@ -14,6 +14,7 @@ export const FilterBar = () => {
                 {/* preference points: both max pts and draw percentage */}
                 {/* success rates: slider (0-100%) */}
                 {/* male::female ratio */}
+                {/* unit */}
             </Toolbar>
         </AppBar>
     );
