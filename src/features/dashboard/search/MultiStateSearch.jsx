@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 
 import {
+    displaySpeciesAndGender,
     displayDrawTypes,
     displayMethod,
     displaySeason,
@@ -96,7 +97,8 @@ export const MultiStateSearch = () => {
                         name="species"
                         id="species-select" value={species} 
                         label="Species" 
-                        onChange={handleChange} 
+                        onChange={handleChange}
+                        disabled={!displaySpeciesAndGender(state, resident)}
                     >
                         <MenuItem value="P">Anteloupe</MenuItem>
                         <MenuItem value="D">Deer</MenuItem>
@@ -110,7 +112,8 @@ export const MultiStateSearch = () => {
                         name="gender"
                         id="gender-select" value={gender} 
                         label="Gender" 
-                        onChange={handleChange}>
+                        onChange={handleChange}
+                        disabled={!displaySpeciesAndGender(state, resident)}>
                         <MenuItem value="E">Either</MenuItem>
                         <MenuItem value="F">Female</MenuItem>
                         <MenuItem value="M">Male</MenuItem>

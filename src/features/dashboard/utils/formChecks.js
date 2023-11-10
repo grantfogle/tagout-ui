@@ -1,3 +1,6 @@
+export const displaySpeciesAndGender = (state, resident) => {
+    return !!(state && resident);
+}
 export const displayDrawTypes = (species, gender) => {
     return !!(species && gender);
 }
