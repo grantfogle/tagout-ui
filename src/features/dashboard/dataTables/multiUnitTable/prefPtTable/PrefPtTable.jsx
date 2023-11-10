@@ -78,7 +78,7 @@ const mockUnits = [
 
 export const PrefPtTable = () => {
     /* PREFERENCE POINT TABLE
-        unitcode    units   first choice    second choice third choice    hunters success   population stats
+        units   unitcode  first choice    second choice     third choice    hunters success   population stats
         will need to create dynamic columns that fill in for first choice draw stats
             * iterate through all units in draw stats table
             * get max length of first choice array
