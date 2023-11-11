@@ -36,7 +36,8 @@ export const MainDisplayTwo = () => {
             <Box maxWidth="lg" sx={{ marginBottom: '2em', minHeight: '800px' }}>
                 <MultiStateSearch />
                 <MultiUnitTable />
-                <FilterBar />
+                {/* Future implementation after I get data */}
+                {/* <FilterBar /> */}
             </Box>
             <Footer />
         </Box>

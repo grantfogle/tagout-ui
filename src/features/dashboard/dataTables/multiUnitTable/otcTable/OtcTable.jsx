@@ -33,8 +33,8 @@ export const OtcTable = () => {
                 females: 10000,
                 maleFemaleRatio: .1
             }
-         },
-         { 
+        },
+        { 
             state: 'CO',
             code: 'EE002O1AOTC', 
             type: 'OTC',
@@ -55,7 +55,7 @@ export const OtcTable = () => {
                 females: 10000,
                 maleFemaleRatio: .1
             }
-         },
+        },
     ]
 
     const generateOtcRows = () => {
