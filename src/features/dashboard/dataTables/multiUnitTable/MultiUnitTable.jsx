@@ -9,6 +9,7 @@ import {
     Paper,
 } from '@mui/material';
 import { PrefPtTable } from './prefPtTable/PrefPtTable';
+import { OtcTable } from './otcTable/OtcTable';
 
 export const MultiUnitTable = () => {
     // logic that goes through the table data and generates the table head
@@ -38,7 +39,8 @@ export const MultiUnitTable = () => {
     return (
         <Container>
             <Paper sx={{ width: '100%', marginTop: '2em' }}>
-                <PrefPtTable/>
+                {/* <PrefPtTable/> */}
+                <OtcTable/>
             </Paper>
         </Container>
     )
