@@ -1,0 +1,22 @@
+import React from 'react'
+import { AppBar, Box, Toolbar, Typography } from '@mui/material'
+import AuthButtons from './authButtons/AuthButtons'
+
+export default function NavBarTwo() {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" elevation={0} sx={{ backgroundColor: "#2c3e50" }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            component="div"
+            color="white"
+            sx={{ flexGrow: 1 }}>
+            TAGOUT
+          </Typography>
+          <AuthButtons />
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
