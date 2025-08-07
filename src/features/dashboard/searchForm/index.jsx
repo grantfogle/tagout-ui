@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import NavBarTwo from '../../../components/navBar/NavBarTwo';
+import SearchFormComponent from './searchFormComponent';
 
 const SearchForm = () => {
     return (
@@ -19,21 +20,11 @@ const SearchForm = () => {
                         </Box>
                         {/* other header and text */}
                     </Grid>
-                    <Grid item xs={12} md={5} lg={4} sx={{paddingTop: '1em', paddingBottom: '2em' }}>
+                    <Grid item xs={12} md={5} lg={4} sx={{paddingBottom: '2em' }}>
+                        <SearchFormComponent />
                         {/* import color from theme */}
                         {/* this will be a reusable component */}
-                        <Box px={2} py={2} sx={{borderBottom: '2px solid #2c3e50'}}>
-                            <Typography fontWeight={600} component='h2' variant='h5'>Search Draw Odds</Typography>
-                            <Box display="flex" flexDirection="row" gap={1}>
-                                <Typography fontWeight={500} component='h3' variant='subtitle1'>0</Typography>
-                                <Typography fontWeight={300} component='h3' variant='subtitle1'>Filters Applied</Typography>
-                            </Box>
-                        </Box>
-                        <Typography component='p' variant='p'>State</Typography>
-                        <Typography component='p' variant='p'>Resident Status</Typography>
-                        <Typography component='p' variant='p'>Species</Typography>
-                        <Typography component='p' variant='p'>Draw Odds</Typography>
-                        <Typography component='p' variant='p'>Season</Typography>
+                        
                         {/* search form goes here */}
                     </Grid>
                 </Grid>
